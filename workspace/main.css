@@ -1,0 +1,59 @@
+#baloldal{
+	width: 15%;
+	height: 1000px;
+	float : left;
+	display:inline-block; 
+	overflow: auto;
+}
+#fooldal{
+	margin: auto;
+	width: 50%;
+	height: 1000px;
+	display:inline-block; 
+}
+#jobboldal{
+	width: 15%;
+	float: right;
+	display:inline-block; 
+	
+}
+
+#oldal{
+	overflow:hidden;
+}
+
+#belepes{
+	background-color: #757575;
+	color: pink;
+}
+
+#wrap {
+  margin: 0 auto 30px;
+}
+
+#regbar {
+  height: 67px;
+  background: #34495e;
+}
+
+#navthing {
+  margin-left: 50px;
+}
+
+h2 {
+  padding: 20px;
+  color: #ecf0f1;
+}
+
+fieldset {
+  border: none;
+}
+
+#button_belep{
+	margin: auto;
+	text-align: center;
+	color: red;
+}
+body{
+background-color: ;
+}
