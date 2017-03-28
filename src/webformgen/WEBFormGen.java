@@ -5,12 +5,7 @@
  */
 package webformgen;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -30,7 +25,10 @@ public class WEBFormGen {
         ProcedureManager Pmgr=new ProcedureManager(conn);
         
         String rendszam="MTA662";
-        System.out.println(Pmgr.getGyarto(1, rendszam));
+        int PersonID=Pmgr.getPersonID("ASD123", "ASD123");//bejelentkezés 0val tér vissza ha nincs ilyen, PersonID ha van
+        
+        System.out.println(PersonID);
+        System.out.println(Pmgr.getGyarto(rendszam));
         
  
         

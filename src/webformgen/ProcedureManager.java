@@ -21,7 +21,7 @@ class ProcedureManager {
     public ProcedureManager(Connection con){
         this.conn=con;
     }
-    public String getGyarto(int id,String rendszam){
+    public String getGyarto(String rendszam){
         CallableStatement cStmt;
         try {   
             //  procedure neve,paraméterek száma: 2 (?,?) KIMENETI ÉS BEMENETI PARAMÉTEREK
@@ -43,4 +43,21 @@ class ProcedureManager {
         }
         
     }
+
+    public int getPersonID(String neptun,String password){
+        CallableStatement cStmt;
+        try {
+            cStmt=conn.prepareCall("{call tryBelepes(?,?,?)}");
+            cStmt.setString(1, neptun);
+            cStmt.setString(2, password);
+            cStmt.registerOutParameter("personID", java.sql.Types.INTEGER);
+            cStmt.execute();
+            return cStmt.getInt("personID");
+        } catch (SQLException ex) {
+            Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex); 
+            return 0;
+        }
+    }
+
+
 }
