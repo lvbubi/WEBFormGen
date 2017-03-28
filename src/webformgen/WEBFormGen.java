@@ -17,7 +17,8 @@ import java.util.logging.Logger;
  * @author lvbubi
  */
 public class WEBFormGen {
-String rendszam="MTA662";
+    
+    Connection conn=null;
     /**
      * @param args the command line arguments
      */
@@ -25,33 +26,12 @@ String rendszam="MTA662";
         new WEBFormGen().start();
     }
     public void start(){
+        conn=ConnectionManager.getConnection();
+        ProcedureManager Pmgr=new ProcedureManager(conn);
         
-        Connection conn;
-         CallableStatement cStmt;
-        try {
-            //csatlakozás adatbázishoz
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection("jdbc:sqlserver://adatb-mssql.mik.uni-pannon.hu;databaseName=webuser","webuser","Veszprem2017");
-            
-            
-            //  procedure neve,paraméterek száma: 2 (?,?) KIMENETI ÉS BEMENETI PARAMÉTEREK
-            cStmt=conn.prepareCall("{call getGyarto(?,?)}");
-            
-            //setString ha string a bemeneti paraméter, setInt ha int etc
-            //1-es azt jelöli hogy hanyadik BEMENETI paraméter (ha több van)
-            cStmt.setString(1, rendszam);
-            
-            
-            //Kimeneti paraméter neve, típusa
-            cStmt.registerOutParameter("parmOUT", java.sql.Types.VARCHAR);
-            cStmt.execute();
-            
-            //A Kimeneti paramétrer lekérdezése
-            System.out.println(cStmt.getString("parmOUT"));
-            
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(WEBFormGen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String rendszam="MTA662";
+        System.out.println(Pmgr.getGyarto(1, rendszam));
+        
  
         
     }
