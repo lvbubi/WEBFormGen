@@ -67,8 +67,8 @@ class ProcedureManager {
         List<String> rendszamok=new ArrayList<>();
         
         try {
-                    Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery("SELECT rdsz FROM kocsipark where id = "+Integer.toString(PersonID));
+            Statement st=conn.createStatement();
+            ResultSet rs=st.executeQuery("SELECT rdsz FROM kocsipark where id = "+Integer.toString(PersonID));
             while(rs.next()){
                 rendszamok.add(rs.getString("rdsz"));
             }
@@ -79,6 +79,46 @@ class ProcedureManager {
         
         return rendszamok;
     }
-
+    
+    public Car getCarDatas(String rdsz){
+        Car kocsi = null;
+        
+        CallableStatement cStmt;
+        try {
+            cStmt=conn.prepareCall("{call getCarDatas(?,?,?,?,?)}");
+            cStmt.setString(1, rdsz);
+            cStmt.registerOutParameter("henger", java.sql.Types.INTEGER);
+            cStmt.registerOutParameter("gyarto", java.sql.Types.VARCHAR);
+            cStmt.registerOutParameter("tipus", java.sql.Types.VARCHAR);
+            cStmt.registerOutParameter("uzemanyag", java.sql.Types.VARCHAR);
+            cStmt.execute();
+            return new Car(rdsz,cStmt.getString("gyarto"),cStmt.getString("tipus"),cStmt.getString("uzemanyag"),cStmt.getInt("henger"));
+        } catch (SQLException ex) {
+            Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex); 
+            return null;
+        }
+    }
+    
+    public Person getPersonDatas(int PersonID){
+        CallableStatement cStmt;
+        try {
+            cStmt=conn.prepareCall("{call getPersonDatas(?,?,?,?,?,?,?)}");
+            cStmt.setInt(1, PersonID);
+            cStmt.registerOutParameter("vnev", java.sql.Types.VARCHAR);
+            cStmt.registerOutParameter("knev", java.sql.Types.VARCHAR);
+            cStmt.registerOutParameter("adoszam", java.sql.Types.CHAR);
+            cStmt.registerOutParameter("bankszamlaszam", java.sql.Types.VARCHAR);
+            cStmt.registerOutParameter("nap20", java.sql.Types.INTEGER);
+            cStmt.registerOutParameter("beosztas", java.sql.Types.VARCHAR);
+            cStmt.execute();
+            return new Person(PersonID,cStmt.getString("vnev") ,cStmt.getString("knev") ,cStmt.getString("adoszam"),
+                    cStmt.getString("bankszamlaszam") ,cStmt.getString("beosztas") ,cStmt.getInt("nap20") 
+            );
+        } catch (SQLException ex) {
+            Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex); 
+            return null;
+        }
+        
+    }
 
 }

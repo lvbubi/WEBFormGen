@@ -24,16 +24,29 @@ public class WEBFormGen {
         conn=ConnectionManager.getConnection();
         ProcedureManager Pmgr=new ProcedureManager(conn);
         
-        String rendszam="MTA662";
         int PersonID=Pmgr.getPersonID("AY440J", "FakePW12");//bejelentkezés 0val tér vissza ha nincs ilyen, PersonID ha van
         
         System.out.println(PersonID);
-        System.out.println(Pmgr.getGyarto(rendszam));
+        int i=0;
         
-        for(String a :Pmgr.getRendszamok(PersonID))
-            System.out.println(a);
+        Person szemely=Pmgr.getPersonDatas(PersonID);
+        System.out.println(szemely.getAdoszam());
+        System.out.println(szemely.getBankszamlaszam());
+        System.out.println(szemely.getBeosztas());
+        System.out.println(szemely.getKnev());
+        System.out.println(szemely.getVnev());
+        System.out.println(szemely.getNap20());
+        System.out.println(szemely.getPersonID());
         
- 
-        
+        for(String rendszam :Pmgr.getRendszamok(PersonID)){
+            Car kocsi=Pmgr.getCarDatas(rendszam);
+            System.out.print(i++);
+            System.out.print(".) ");
+            System.out.println(kocsi.getHenger());
+            System.out.println(kocsi.getGyarto());
+            System.out.println(kocsi.getRdsz());
+            System.out.println(kocsi.getTipus());
+            System.out.println(kocsi.getUzemanyag());
+        }
     }
 }
