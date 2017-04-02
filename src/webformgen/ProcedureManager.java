@@ -7,7 +7,11 @@ package webformgen;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,6 +61,23 @@ class ProcedureManager {
             Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex); 
             return 0;
         }
+        
+    }
+    public List<String> getRendszamok(int PersonID){
+        List<String> rendszamok=new ArrayList<>();
+        
+        try {
+                    Statement st=conn.createStatement();
+        ResultSet rs=st.executeQuery("SELECT rdsz FROM kocsipark where id = "+Integer.toString(PersonID));
+            while(rs.next()){
+                rendszamok.add(rs.getString("rdsz"));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return rendszamok;
     }
 
 

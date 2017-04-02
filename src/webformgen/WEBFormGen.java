@@ -25,10 +25,13 @@ public class WEBFormGen {
         ProcedureManager Pmgr=new ProcedureManager(conn);
         
         String rendszam="MTA662";
-        int PersonID=Pmgr.getPersonID("ASD123", "ASD123");//bejelentkezés 0val tér vissza ha nincs ilyen, PersonID ha van
+        int PersonID=Pmgr.getPersonID("AY440J", "FakePW12");//bejelentkezés 0val tér vissza ha nincs ilyen, PersonID ha van
         
         System.out.println(PersonID);
         System.out.println(Pmgr.getGyarto(rendszam));
+        
+        for(String a :Pmgr.getRendszamok(PersonID))
+            System.out.println(a);
         
  
         
