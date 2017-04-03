@@ -7,7 +7,6 @@ package webformgen;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,9 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.ejb.PostActivate;
 import javax.ejb.Singleton;
-import javax.ejb.Stateful;
 
 /**
  *
@@ -36,14 +33,16 @@ public class ProcedureManager {
 
     public String getGyarto(String rendszam){
         CallableStatement cStmt;
-        try {   
+  
+        try {
             //  procedure neve,paraméterek száma: 2 (?,?) KIMENETI ÉS BEMENETI PARAMÉTEREK
             cStmt=conn.prepareCall("{call getGyarto(?,?)}");
+        
             
             //setString ha string a bemeneti paraméter, setInt ha int etc
             //1-es azt jelöli hogy hanyadik BEMENETI paraméter (ha több van)
             cStmt.setString(1, rendszam);
-            
+
             //Kimeneti paraméter neve, típusa
             cStmt.registerOutParameter("parmOUT", java.sql.Types.VARCHAR);
             cStmt.execute();
@@ -51,10 +50,9 @@ public class ProcedureManager {
             //A Kimeneti paramétrer lekérdezése
             return cStmt.getString("parmOUT");
         } catch (SQLException ex) {
-            Logger.getLogger(WEBFormGen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }
-        
+        }  
     }
 
     public int getPersonID(String neptun,String password){

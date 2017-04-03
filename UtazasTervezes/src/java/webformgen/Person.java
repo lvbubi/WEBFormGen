@@ -10,13 +10,13 @@ package webformgen;
  * @author lvbubi
  */
 public class Person {
-    private int personID;
-    private String vnev;
-    private String knev;
-    private String adoszam;
-    private String bankszamlaszam;
-    private String beosztas;
-    private int nap20;
+    private final int personID;
+    private final String vnev;
+    private final String knev;
+    private final String adoszam;
+    private final String bankszamlaszam;
+    private final String beosztas;
+    private final int nap20;
 
     public int getPersonID() {
         return personID;
