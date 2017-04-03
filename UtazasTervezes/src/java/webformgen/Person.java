@@ -9,7 +9,7 @@ package webformgen;
  *
  * @author lvbubi
  */
-class Person {
+public class Person {
     private int personID;
     private String vnev;
     private String knev;

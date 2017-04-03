@@ -21,7 +21,7 @@ public class WEBFormGen {
         new WEBFormGen().start();
     }
     public void start(){
-        conn=ConnectionManager.getConnection();
+      /*  conn=ConnectionManager.getConnection();
         ProcedureManager Pmgr=new ProcedureManager(conn);
         
         int PersonID=Pmgr.getPersonID("AY440J", "FakePW12");//bejelentkezés 0val tér vissza ha nincs ilyen, PersonID ha van
@@ -47,6 +47,6 @@ public class WEBFormGen {
             System.out.println(kocsi.getRdsz());
             System.out.println(kocsi.getTipus());
             System.out.println(kocsi.getUzemanyag());
-        }
+        }*/
     }
 }

@@ -9,7 +9,7 @@ package webformgen;
  *
  * @author lvbubi
  */
-class Car {
+public class Car {
     private String rdsz;
     private String gyarto;
     private String tipus;

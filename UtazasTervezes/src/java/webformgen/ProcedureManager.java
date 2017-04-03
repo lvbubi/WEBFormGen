@@ -7,6 +7,7 @@ package webformgen;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,17 +15,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.ejb.PostActivate;
+import javax.ejb.Singleton;
+import javax.ejb.Stateful;
 
 /**
  *
  * @author lvbubi
  */
-class ProcedureManager {
-    private Connection conn=null;
+
+@Singleton
+public class ProcedureManager {
+    Connection conn=null;
     
-    public ProcedureManager(Connection con){
-        this.conn=con;
+    @PostConstruct
+    public void activate(){
+        conn=ConnectionManager.getConnection();
     }
+
     public String getGyarto(String rendszam){
         CallableStatement cStmt;
         try {   
@@ -81,8 +90,6 @@ class ProcedureManager {
     }
     
     public Car getCarDatas(String rdsz){
-        Car kocsi = null;
-        
         CallableStatement cStmt;
         try {
             cStmt=conn.prepareCall("{call getCarDatas(?,?,?,?,?)}");
