@@ -10,10 +10,13 @@ package Beans;
  * and open the template in the editor.
  */
 
+import java.awt.event.ActionEvent;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import webformgen.ProcedureManager;
 
 /**
@@ -62,5 +65,14 @@ public class UserBean {
         if (PersonID == 0)
             return false;
         return true;
+    }
+    
+    public void buttonAction(ActionEvent actionEvent) {
+        addMessage("Welcome to Primefaces!!");
+    }
+     
+    public void addMessage(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }
