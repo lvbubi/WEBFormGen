@@ -24,14 +24,31 @@ import webformgen.ProcedureManager;
 @RequestScoped
 @ManagedBean
 public class UserBean {
-    
+    String neptun,password;
+
+    public String getNeptun() {
+        return neptun;
+    }
+
+    public void setNeptun(String neptun) {
+        this.neptun = neptun;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     int PersonID=-1;
     @EJB
     private ProcedureManager SingletonDBMgr;
     
 
-    public String setLoginID(String neptun,String password){
+    public String Login(){
         PersonID=SingletonDBMgr.getPersonID(neptun, password);
+        System.out.println("PERSZONID: "+PersonID);
         if(PersonID!=0)
             return "SIKERES BELÉPÉS";
         return "SIKERTELEN BELÉPÉS";
@@ -40,5 +57,10 @@ public class UserBean {
     public String getPersonDatas(){
         webformgen.Person p = SingletonDBMgr.getPersonDatas(PersonID);
         return p.getVnev()+" "+p.getKnev();
+    }
+    public boolean isLoggedIn(){
+        if (PersonID == 0)
+            return false;
+        return true;
     }
 }

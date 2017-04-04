@@ -8,9 +8,28 @@
     <h:body>
         Hello from Facelets
         
-        #{userBean.setLoginID("AY440J", "FakePW12")}
-        <br/>
-         #{userBean.personDatas} 
+            Login
+        <h:form>
+            Neptunkód: <h:inputText label="A neved!" value="#{userBean.neptun}" /> <br/>
+            Jelszó: <h:inputSecret label="A neved!" value="#{userBean.password}" /> <br/>
+            <h:commandButton onclick="#{userBean.Login()}" value="Send"/>
+        </h:form>
+            <div id="Kimenet">asd
+            </div>
+           <h:commandButton onclick="myfunction()" value="Send"/>
+        <script type="text/javascript">
+        //<![CDATA[
+        function myfunction(){
+            var check=#{userBean.isLoggedIn()};
+            if(check==true)
+                document.getElementById("Kimenet").innerHTML="Sikeres belépés";
+            else
+                document.getElementById("Kimenet").innerHTML="Sikertelen";
+            window.alert("Hello World!");
+        }
+        //]]>
+        </script>
+                
     </h:body>
 </html>
 
