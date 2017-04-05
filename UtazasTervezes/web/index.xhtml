@@ -6,22 +6,30 @@
     <h:head>
         <title>Facelet Title</title>
     </h:head>
+    
     <h:body>
-        Hello from Facelets
+        <div id="HideLogin">   
+                Login
+            <h:form>
+                Neptunkód: <h:inputText label="A neved!" value="#{userBean.neptun}" /> <br/>
+                Jelszó: <h:inputSecret label="A neved!" value="#{userBean.password}" /> <br/>
+                <h:commandButton onclick="#{userBean.Login()};" value="Bejelentkezes"/>
+            </h:form>
+        </div>
         
-            Login
-        <h:form>
-            Neptunkód: <h:inputText label="A neved!" value="#{userBean.neptun}" /> <br/>
-            Jelszó: <h:inputSecret label="A neved!" value="#{userBean.password}" /> <br/>
-            <h:commandButton onclick="#{userBean.Login()}" value="Bejelentkezes"/>
-        </h:form>
-              
+        #{userBean.personDatas}
+        
         <script type="text/javascript">
         //<![CDATA[
             function checkLogin(){
+                
+                
                 var check=#{userBean.isLoggedIn()};
-                if(check==true)
+                if(check===true){
+                    document.getElementById("HideLogin").style.display="none";
+                    window.open("http://localhost:8080/UtazasTervezes/faces/user.xhtml"); // <- This is what makes it open in a new window.
                     window.alert("Sikeres belépés");
+                }
             }
             checkLogin();
         //]]>

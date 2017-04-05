@@ -58,6 +58,7 @@ public class UserBean {
     }
     
     public String getPersonDatas(){
+        System.out.println("Szemelyadatok lekerve");
         webformgen.Person p = SingletonDBMgr.getPersonDatas(PersonID);
         return p.getVnev()+" "+p.getKnev();
     }
@@ -65,14 +66,5 @@ public class UserBean {
         if (PersonID == 0)
             return false;
         return true;
-    }
-    
-    public void buttonAction(ActionEvent actionEvent) {
-        addMessage("Welcome to Primefaces!!");
-    }
-     
-    public void addMessage(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }
