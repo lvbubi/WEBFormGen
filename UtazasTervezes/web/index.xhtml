@@ -17,21 +17,30 @@
             </h:form>
         </div>
         
-        #{userBean.personDatas}
-        
         <script type="text/javascript">
         //<![CDATA[
             function checkLogin(){
-                
-                
+
                 var check=#{userBean.isLoggedIn()};
                 if(check===true){
+                    //sleep(100000)
                     document.getElementById("HideLogin").style.display="none";
-                    window.open("http://localhost:8080/UtazasTervezes/faces/user.xhtml"); // <- This is what makes it open in a new window.
                     window.alert("Sikeres belépés");
+                    window.location.href = "http://localhost:8080/UtazasTervezes/faces/user.xhtml";
                 }
             }
             checkLogin();
+            
+            function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+              if ((new Date().getTime() - start) > milliseconds){
+                break;
+              }
+            }
+          }
+          
+          
         //]]>
         </script>
                 

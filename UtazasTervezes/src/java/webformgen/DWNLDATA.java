@@ -37,7 +37,6 @@ public class DWNLDATA {
            //System.out.println(tmp.get(i));
            tmp2.add(tmp.get(i));      
        }
-       
        String price;
        price = null;
        for(int i=0; i<tmp2.size(); i++)
