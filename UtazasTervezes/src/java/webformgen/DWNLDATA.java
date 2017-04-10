@@ -1,4 +1,4 @@
-package datascrapping;
+package webformgen;
 
 
 import java.io.IOException;
