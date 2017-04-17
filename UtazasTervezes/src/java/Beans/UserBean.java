@@ -21,6 +21,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import webformgen.Car;
 import webformgen.DWNLDATA;
 import webformgen.ProcedureManager;
 
@@ -117,22 +118,20 @@ public class UserBean {
         tmp.add("egyéb:");
         return tmp;
     }
-    public int getPrice(){
-        /*try{
-            DWNLDATA ddata=new DWNLDATA();
-            return ddata.selectUzemanyag("uzemanyagtipus", "honap");
-           
-        }
-        catch(IOException ex){
-            return -1;
-        }*/
-        return 0;
+    public double getNorma(){
+        Car kocsi=SingletonDBMgr.getCarDatas(rendszam);
+        DWNLDATA ddata=new DWNLDATA();
+        if("diesel".equals(kocsi.getUzemanyag()))
+            return ddata.selectNorma("gazolaj", kocsi.getHenger());
+        else
+            return ddata.selectNorma("benzin", kocsi.getHenger());
+    }
+    public String getUzemanyag(){
+        DWNLDATA ddata=new DWNLDATA();
+        return "Hogyiskellkinéznieahónapnak? Egy samplet írjmár pls";
+        //return ddata.selectUzemanyag("Gázolaj", "December");
     }
     
-    public void SelectedRendszam(){
-        System.out.println(rendszam);
-        System.out.println("MIAFASZVAN");
-    }
     
     public void Faszom(){
         System.out.println( honnan+hova+rendszam);

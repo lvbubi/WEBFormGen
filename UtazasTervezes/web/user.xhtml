@@ -29,7 +29,7 @@
                 <f:selectItems value="#{userBean.utazasiKeret}" />
             </h:selectOneMenu><br/>
             
-            <h:commandButton onclick="#{userBean.Faszom()};" value="Bejelentkezes"/>
+            <h:commandButton onclick="#{userBean.Faszom()};" value="Urlap kitoltese"/>
         </h:form>
         
         #{userBean.rendszam}
@@ -37,6 +37,8 @@
         #{userBean.hova}
         #{userBean.eloadas_postercim}
         #{userBean.egyebkeret}
+        <br/>Norma: #{userBean.norma}
+        <br/>Uzemanyag: #{userBean.uzemanyag}
     </h:body>
     
     <script type="text/javascript">

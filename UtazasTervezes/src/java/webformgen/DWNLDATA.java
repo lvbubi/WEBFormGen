@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -18,13 +20,17 @@ public class DWNLDATA {
     Map gazolajnorma= new HashMap();
     Map motornorma= new HashMap();
     
-    public DWNLDATA() throws IOException
+    public DWNLDATA()
     {
-         uzemanyag=getFusion();
-         benzinnorma=getBenzinFogyasztas();
-         gazolajnorma=getGazolajFogyasztas(); 
-         motornorma=getMotorFogyasztas();
-         
+        try {
+        //uzemanyag=getFusion();
+        benzinnorma=getBenzinFogyasztas();
+        gazolajnorma=getGazolajFogyasztas(); 
+        motornorma=getMotorFogyasztas();
+        } 
+        catch (IOException ex) {
+            Logger.getLogger(DWNLDATA.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private List<String> getPrices(String cim) throws IOException
@@ -125,8 +131,8 @@ public class DWNLDATA {
     
     private Document Connect(String cim) throws IOException
     {
-       System.setProperty("http.proxyHost", "proxy.vekoll.uni-pannon.hu");
-       System.setProperty("http.proxyPort", "3128"); 
+       //System.setProperty("http.proxyHost", "proxy.vekoll.uni-pannon.hu");
+       //System.setProperty("http.proxyPort", "3128"); 
        final Document document;
        document = Jsoup.connect(cim).get();
        return document;
@@ -265,8 +271,6 @@ public class DWNLDATA {
     {   int tmp = 0;
         int index=0;
         List<String> seged=getUzemanyag();             
-        
-        
        for(int i=0;i<seged.size();i++)
       {     
           if(seged.get(i).equals(honap))
@@ -274,7 +278,6 @@ public class DWNLDATA {
               index=i;
           }
       } 
-     
       int[] anyag = new int[4];
        
       int j=0;
@@ -291,9 +294,6 @@ public class DWNLDATA {
           case "Keverék": return anyag[2];
           case "LPG": return anyag[3];               
       }
-      
-        
-       
         return tmp;
     }
    
