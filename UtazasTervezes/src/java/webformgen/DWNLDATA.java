@@ -20,50 +20,16 @@ public class DWNLDATA {
     
     public DWNLDATA() throws IOException
     {
-         uzemanyag=getFusion();
+         uzemanyag=getFuel("http://www.nav.gov.hu/nav/szolgaltatasok/uzemanyag/uzemanyagarak/");
          benzinnorma=getBenzinFogyasztas();
          gazolajnorma=getGazolajFogyasztas(); 
          motornorma=getMotorFogyasztas();
          
     }
     
-    private List<String> getPrices(String cim) throws IOException
-    {
-       
-        final Document document;
-        document = Connect(cim);
-       // System.out.println(document.outerHtml());
-        Elements paragraphs = document.select("p");
-        List<String> tmp=new ArrayList();
-        List<String> tmp2=new ArrayList();
-        List<String> last=new ArrayList();
-        for (Element p : paragraphs)
-            tmp.add(p.toString());
-        
-       for(int i=0; i<tmp.size(); i++)
-       {   
-           if(tmp.get(i).matches("<p>.*[0-9][0-9][0-9].*</p>"))
-           //System.out.println(tmp.get(i));
-           tmp2.add(tmp.get(i));      
-       }
-       
-       String price;
-       price = null;
-       for(int i=0; i<tmp2.size(); i++)
-       {   
-          //System.out.println(tmp2.get(i));
-           price = tmp2.get(i).replaceAll("[^0-9]", "");  
-           last.add(price);
-       }
-       
-      //   for(int i=0; i<last.size(); i++)
-       //      System.out.println(last.get(i)); 
-         
-         
-         return last;
-    }
-      
-    private List<String> getMonths(String cim) throws IOException 
+    // Fügvéyek az adatok leszedésére a weboldalakról
+    
+    private List<String> getFuel(String cim) throws IOException 
     {   
         final Document document;
         document = Connect(cim);
@@ -74,53 +40,40 @@ public class DWNLDATA {
         List<String> last=new ArrayList();
         for (Element p : paragraphs)
             tmp.add(p.toString());
+        
+      //  for(int i=0; i<tmp.size(); i++)
+       //     System.out.println(tmp.get(i));
          
-          for(int i=0; i<tmp.size(); i++)
+        for(int i=0; i<tmp.size(); i++)
         {   
-            if(tmp.get(i).matches("<p>&nbsp;[^0123456789]*</p>|<p align=\"center\"> <strong>[^0123456789].* </strong> </p>"))
-            //System.out.println(tmp.get(i));  
+            if(tmp.get(i).matches("<p>&nbsp;.*</p>|<p> <strong>&nbsp;.*</strong> </p>|<p align=\"center\">.* </p>|<p>[0-9][0-9][0-9] </p>"))
+        //    System.out.println(tmp.get(i));  
             tmp2.add(tmp.get(i));
         }       
            for(int i=0; i<tmp2.size(); i++)
         {             
             String proba =  tmp2.get(i);
-            proba = proba.replaceAll("<p>", "");
+            proba = proba.replaceAll("<p> <strong>", "");   
             proba = proba.replaceAll(" </strong> </p>", "");
+            proba = proba.replaceAll("<p>", "");            
             proba = proba.replaceAll("</p>", "");
             proba = proba.replaceAll("&nbsp;", "");
-            proba = proba.replaceAll("<p align=\"center\"> <strong>", "");     
-          ///  System.out.println(proba);
-            last.add(proba);
-          //  System.out.println(tmp2.get(i));            
+            proba = proba.replaceAll("</strong>", "");
+            proba = proba.replaceAll("<p align=\"center\">", "");
+            proba = proba.replaceAll(" </p>", "");
+            proba = proba.replaceAll(" ", "");
+         
+            
+            if(proba.length()<=8)
+            {   
+               // System.out.println(proba);
+                last.add(proba);
+            }                     
         }       
-          // for(int i=0; i<last.size(); i++)         
-         //   System.out.println(last.get(i));  
+        
+            last.remove(last.size()-1);
+          //  System.out.println(last);
            return last;
-    }
-  
-    private List<String> getFusion() throws IOException
-    {
-        List<String> lista = new ArrayList();
-        List<String> price = getPrices("http://www.nav.gov.hu/nav/szolgaltatasok/uzemanyag/uzemanyagarak/");
-        List<String> month = getMonths("http://www.nav.gov.hu/nav/szolgaltatasok/uzemanyag/uzemanyagarak/");
-           
-        lista.add(month.get(0));
-        int index=1;
-        for(int i=0; i<price.size()-1; i++)
-        {   
-          
-            lista.add(price.get(i));
-            if(index<4)
-            {
-                if((i+1)%4==0) 
-                {   
-                lista.add(month.get(index));
-                index++;
-                 }
-            }
-        }
-    
-        return lista;
     }
     
     private Document Connect(String cim) throws IOException
@@ -222,6 +175,7 @@ public class DWNLDATA {
         return uzemanyag;
     } 
      
+
     //fontos adatok Lekérése
     
     public double selectArfolyam(String date,String valuta, String begin,String end) throws IOException
@@ -261,12 +215,12 @@ public class DWNLDATA {
         return norma;
     } // adott tipusú és meretu henger fogyasztása /100km
     
+   
     public int selectUzemanyag( String tipus,String honap )
     {   int tmp = 0;
         int index=0;
         List<String> seged=getUzemanyag();             
-        
-        
+
        for(int i=0;i<seged.size();i++)
       {     
           if(seged.get(i).equals(honap))
@@ -274,16 +228,23 @@ public class DWNLDATA {
               index=i;
           }
       } 
-     
+       
+     //  System.out.println(seged);
+    //   System.out.println(index);
+      
+      
       int[] anyag = new int[4];
        
       int j=0;
-      for(int i=index;i<index+4;i++)
-      {
-          anyag[j]=Integer.valueOf(seged.get(i+1));
+      for(int i=index+1;i<index+5;i++)
+      {     
+          anyag[j]=Integer.valueOf(seged.get(i));         
           j++;
       }
       
+     
+      
+    
       switch(tipus)
       {
           case "ESZ-95": return anyag[0];
@@ -292,13 +253,15 @@ public class DWNLDATA {
           case "LPG": return anyag[3];               
       }
       
-        
+      
        
         return tmp;
     }
    
-   
-
-
     
+    // Példa a fügvények használatára
+    
+    //System.out.println(tmp.selectNorma("benzin", 1223)); 
+    //System.out.println(tmp.selectArfolyam("2017. március 9.", "EUR","2017.03.07.","2017.04.07."));
+    //System.out.println(tmp.selectUzemanyag("ESZ-95","január"));
 }
