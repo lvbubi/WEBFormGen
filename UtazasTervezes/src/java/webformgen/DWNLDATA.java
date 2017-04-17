@@ -118,12 +118,12 @@ public class DWNLDATA {
          return norma;
     }
     
-    private Map getMNB(String valuta, String begin,String end) throws IOException
-    {   Map arfolyam = new HashMap();
-        
+    private double getMNB(String valuta, String date) throws IOException
+    {    
+        double arfolyam=-1;
          final Document document;
          String seged = 
-      "http://www.mnb.hu/arfolyam-tablazat?deviza=rbCurrencySelect&devizaSelected="+valuta+"&datefrom="+begin+"&datetill="+end+"&order=1";
+      "http://www.mnb.hu/arfolyam-tablazat?deviza=rbCurrencySelect&devizaSelected="+valuta+"&datefrom="+date+"&datetill="+date+"&order=1";
          
         document = Connect(seged);
       // System.out.println(document.outerHtml());
@@ -135,27 +135,25 @@ public class DWNLDATA {
              
         for(int i=0; i<tmp.size();i++)
         {   
-            if(tmp.get(i).matches("<span>20.*</span>|<span>[0-9][0-9][0-9].*</span>"))
+            if(tmp.get(i).matches("<span>[0-9][0-9][0-9].*</span>"))
             tmp2.add(tmp.get(i));
         }
         
-        String date=null;
-        String value=null;
-        double ertek=0;
-         for(int i=0; i<tmp2.size();i=i+2)
-        {   
-            //if(tmp.get(i).matches("<span>20.*</span>|<span>[0-9][0-9][0-9].*</span>"))
+        /*
+        for(int i=0; i<tmp2.size();i++)  
+            System.out.println(tmp2.get(i));
+        */
             
-            date=tmp2.get(i).replace("<span>", "");
-            date=date.replace("</span>", "");
-            value=tmp2.get(i+1).replace("<span>", "");
-            value=value.replace("</span>", "");
-            value=value.replace(",", ".");
-            ertek=Double.valueOf(value);
-           // System.out.println(date + " " + value);
-            arfolyam.put(date,ertek);
-        }
+      
         
+        String value=tmp2.get(1);
+       
+        //System.out.println(value);
+         value=value.replace("<span>", "");
+         value=value.replace("</span>", "");
+         value=value.replace(",", ".");
+         arfolyam=Double.valueOf(value);
+  
         return arfolyam;
     }
     
@@ -178,10 +176,9 @@ public class DWNLDATA {
 
     //fontos adatok Lekérése
     
-    public double selectArfolyam(String date,String valuta, String begin,String end) throws IOException
-    {   // date pl.: 2017. március 9.
-         Map tmp= getMNB(valuta,begin,end);
-         double value=(double) tmp.get(date);     
+    public double selectArfolyam(String valuta, String date) throws IOException
+    {   
+         double value=getMNB(valuta,date);              
          return value;
     } //egy bizonyos napon a valuta erteke
       
@@ -262,6 +259,6 @@ public class DWNLDATA {
     // Példa a fügvények használatára
     
     //System.out.println(tmp.selectNorma("benzin", 1223)); 
-    //System.out.println(tmp.selectArfolyam("2017. március 9.", "EUR","2017.03.07.","2017.04.07."));
+    //System.out.println(tmp.selectArfolyam("EUR","2017.03.07."));
     //System.out.println(tmp.selectUzemanyag("ESZ-95","január"));
 }
