@@ -34,8 +34,12 @@ import webformgen.ProcedureManager;
 public class UserBean {
     String neptun,password;
     String honnan,hova;
-    String rendszam,Eloadas_postercim,egyebkeret;
-
+    String rendszam;
+    String Eloadas_postercim,egyebkeret;
+    int PersonID=-1;
+    @EJB
+    private ProcedureManager SingletonDBMgr;
+    
     public String getEgyebkeret() {
         return egyebkeret;
     }
@@ -74,9 +78,7 @@ public class UserBean {
     public void setHova(String hova) {
         this.hova = hova;
     }
-    int PersonID=-1;
-    @EJB
-    private ProcedureManager SingletonDBMgr;
+
     
     public String getNeptun() {
         return neptun;
@@ -130,5 +132,9 @@ public class UserBean {
     public void SelectedRendszam(){
         System.out.println(rendszam);
         System.out.println("MIAFASZVAN");
+    }
+    
+    public void Faszom(){
+        System.out.println( honnan+hova+rendszam);
     }
 }
