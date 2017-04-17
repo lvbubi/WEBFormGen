@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -11,8 +12,42 @@
      
         
         Név: #{userBean.personDatas} <br/>
-        MNB ilyesmi: #{userBean.price}
-                
+        Kérem válasszon autót: 
+        <h:selectOneMenu value="#{userBean.rendszam}" id="kocsiproba">
+            <f:selectItems value="#{userBean.rendszamok}" />
+        </h:selectOneMenu>
+        
+        <h:form>
+            Honnan utazik <h:inputText label="Honnan" value="#{userBean.honnan}" /> <br/>
+            Hová <h:inputText label="Hova" value="#{userBean.hova}" /> <br/>
+            <h3>Konferencián való részvétel esetén a bejelentett előadás/poszter* címe:</h3><br/>
+            <p:inputTextarea rows="5" cols="30" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" />
+            <h:outputText id="display" />
+        </h:form>
+        <br/>
+        
+        Tanulmányút esetén milyen program keretében kerül sor az utazásra*:<br/>
+        <h:selectOneMenu id="utazasikeret" onchange="showKeretText()">
+            <f:selectItems value="#{userBean.utazasiKeret}" />
+        </h:selectOneMenu><br/>
+        <div id="hideme" style="display:none">
+            Egyéb: <h:inputText label="Egyéb utazasikeret" value="#{userBean.egyebkeret}" />
+        </div>
+        
+        
     </h:body>
+    
+    <script type="text/javascript">
+    //<![CDATA[
+    function showKeretText(){
+        var e = document.getElementById("utazasikeret");
+        var value = e.options[e.selectedIndex].value;
+        if(value==="egyéb:")
+            document.getElementById("hideme").style.display="block";
+        else
+            document.getElementById("hideme").style.display="none";
+    }
+    //]]>
+    </script>
 </html>
 
