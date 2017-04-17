@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -18,12 +20,18 @@ public class DWNLDATA {
     Map gazolajnorma= new HashMap();
     Map motornorma= new HashMap();
     
-    public DWNLDATA() throws IOException
+    public DWNLDATA()
     {
-         uzemanyag=getFuel("http://www.nav.gov.hu/nav/szolgaltatasok/uzemanyag/uzemanyagarak/");
-         benzinnorma=getBenzinFogyasztas();
-         gazolajnorma=getGazolajFogyasztas(); 
-         motornorma=getMotorFogyasztas();
+        try {
+            uzemanyag=getFuel("http://www.nav.gov.hu/nav/szolgaltatasok/uzemanyag/uzemanyagarak/");
+        
+            benzinnorma=getBenzinFogyasztas();
+        
+            gazolajnorma=getGazolajFogyasztas(); 
+            motornorma=getMotorFogyasztas();
+         } catch (IOException ex) {
+            Logger.getLogger(DWNLDATA.class.getName()).log(Level.SEVERE, null, ex);
+        }
          
     }
     
@@ -78,8 +86,8 @@ public class DWNLDATA {
     
     private Document Connect(String cim) throws IOException
     {
-       System.setProperty("http.proxyHost", "proxy.vekoll.uni-pannon.hu");
-       System.setProperty("http.proxyPort", "3128"); 
+       //System.setProperty("http.proxyHost", "proxy.vekoll.uni-pannon.hu");
+       //System.setProperty("http.proxyPort", "3128"); 
        final Document document;
        document = Jsoup.connect(cim).get();
        return document;
