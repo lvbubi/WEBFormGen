@@ -258,8 +258,6 @@ public class DWNLDATA {
           case "LPG": return anyag[3];               
       }
       
-      
-       
         return tmp;
     }
    

@@ -23,6 +23,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import webformgen.Car;
 import webformgen.DWNLDATA;
+import webformgen.PDFGEN;
 import webformgen.ProcedureManager;
 
 /**
@@ -118,7 +119,7 @@ public class UserBean {
         tmp.add("egyéb:");
         return tmp;
     }
-    public double getNorma(){
+    public double getNorma() throws IOException{
         Car kocsi=SingletonDBMgr.getCarDatas(rendszam);
         DWNLDATA ddata=new DWNLDATA();
         if("diesel".equals(kocsi.getUzemanyag()))
@@ -126,10 +127,16 @@ public class UserBean {
         else
             return ddata.selectNorma("benzin", kocsi.getHenger());
     }
-    public String getUzemanyag(){
+    public String getUzemanyag() throws IOException{
         DWNLDATA ddata=new DWNLDATA();
         return "Hogyiskellkinéznieahónapnak? Egy samplet írjmár pls";
         //return ddata.selectUzemanyag("Gázolaj", "December");
+    }
+    
+    public void genPDF()
+    {
+        PDFGEN GPDF = new PDFGEN();    
+        GPDF.genKalkulacio();
     }
     
     
