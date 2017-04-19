@@ -135,8 +135,8 @@ public class UserBean {
     
     public void genPDF()
     {
-        PDFGEN GPDF = new PDFGEN();    
-        GPDF.genKalkulacio();
+        //PDFGEN GPDF = new PDFGEN();    
+       // GPDF.genKalkulacio();
     }
     
     
