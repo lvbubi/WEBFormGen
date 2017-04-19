@@ -30,6 +30,42 @@ import java.util.Date;
  */
 public class PDFGEN {
     
+    private String nev;
+    private String beosztas;
+    private String rendszam;
+    private double henger;
+    private String uzemanyag;
+    private double norma;
+    private int amortizacio;
+    private int ar;
+    private double utvonal;
+    private String terv;
+    private String tipus;
+    private double valuta;
+    private int palya;
+    private int parkolas;
+
+    public PDFGEN(String nev, String beosztas, String rendszam, double henger, String uzemanyag, double norma, int amortizacio, int ar, double utvonal, String terv, String tipus, double valuta, int palya, int parkolas) {
+        this.nev = nev;
+        this.beosztas = beosztas;
+        this.rendszam = rendszam;
+        this.henger = henger;
+        this.uzemanyag = uzemanyag;
+        this.norma = norma;
+        this.amortizacio = amortizacio;
+        this.ar = ar;
+        this.utvonal = utvonal;
+        this.terv = terv;
+        this.tipus = tipus;
+        this.valuta=valuta;
+        this.parkolas=parkolas;
+        this.palya=palya;
+    }
+    
+  
+    
+    
+    
      public void genKalkulacio()
     {
          Document document = new Document();
@@ -41,26 +77,26 @@ public class PDFGEN {
                 p1.setAlignment(Element.ALIGN_CENTER);
             Paragraph p2 = new Paragraph("Saját szgk-val történo külföldi utazáshoz");
                  p2.setAlignment(Element.ALIGN_CENTER);             
-            Paragraph p3 = new Paragraph("Az utazo neve,beosztasa: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Paragraph p3 = new Paragraph("Az utazo neve,beosztasa: " + getNev() + " " + getBeosztas(),FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
                  p3.setLeading(30);
-            Paragraph p4 = new Paragraph("Tervezett utvonal: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Paragraph p4 = new Paragraph("Tervezett utvonal: " + getTerv(),FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
             Paragraph p5 = new Paragraph("A gépkocsi adatai: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
-                  Paragraph p6 = new Paragraph("          Rendszam: ");     
-                  Paragraph p7 = new Paragraph("          Tipus: ");  
-                  Paragraph p8 = new Paragraph("          Hengerurtatralom: ");  
-                  Paragraph p9 = new Paragraph("          Üzemanyag fajta: ");
-                  Paragraph p10 = new Paragraph("          Üzemanyag norma 1/100km(A): ");
-                  Paragraph p11 = new Paragraph("          Amortizaciós költseg Ft/km(B): ");
-                  Paragraph p12 = new Paragraph("          Üzemanyag egységára Ft-ban(C): ");
-                  Paragraph p13 = new Paragraph("          Üzemanyag egységára Ft-ban(D): ");
+                  Paragraph p6 = new Paragraph("          Rendszam: "+ getRendszam());     
+                  Paragraph p7 = new Paragraph("          Tipus: " + getTipus());  
+                  Paragraph p8 = new Paragraph("          Hengerurtatralom: " + getHenger());  
+                  Paragraph p9 = new Paragraph("          Üzemanyag fajta: " + getUzemanyag());
+                  Paragraph p10 = new Paragraph("          Üzemanyag norma 1/100km(A): " + getNorma());
+                  Paragraph p11 = new Paragraph("          Amortizaciós költseg Ft/km(B): " + getAmortizacio());
+                  Paragraph p12 = new Paragraph("          Üzemanyag egységára Ft-ban(C): " + getAr());
+                  Paragraph p13 = new Paragraph("          A teljes útvonal hossza k (D): " + getUtvonal()) ;
                   
             
             Chunk p14 = new Chunk("Atalany szerinti üzemanyag es amortizació: ");
             p14.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location
             
-            Paragraph p15 = new Paragraph("Üzemanyag költség (D/100xAxC): ");
+            Paragraph p15 = new Paragraph("Üzemanyag költség (D/100xAxC): " + (getUtvonal()/100*getNorma()*getAr()));
                 p15.setLeading(30);
-            Paragraph p16 = new Paragraph("Amortizációs költseg (BxD):");
+            Paragraph p16 = new Paragraph("Amortizációs költseg (BxD):"+ (getAmortizacio()*getUtvonal()));
                 p16.setLeading(30);
             Paragraph p17 = new Paragraph("__________________________________________________________________________");      
             
@@ -71,9 +107,11 @@ public class PDFGEN {
             Paragraph p19 = new Paragraph("Autópályadij Ft-ban: ");
             Paragraph p20 = new Paragraph("Autopalyadij valutában* és Ft-ban: ");
             Paragraph p21 = new Paragraph("Parkirozási dij valutában* és forintban: ");
-            Paragraph p22 = new Paragraph("Valuta árfolyam**: ");
+            Paragraph p22 = new Paragraph("Valuta árfolyam**: " + getValuta());
             
-            Paragraph p23 = new Paragraph("Összes költség Ft-ban: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Paragraph p23 = new Paragraph("Összes költség Ft-ban: " + 
+                    (getUtvonal()/100*getNorma()*getAr()) + (getAmortizacio()*getUtvonal()) + getParkolas() + getPalya()
+                    ,FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
                 
             Chunk p24 = new Chunk("Megjegyzesek: ");
             p24.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location   
@@ -144,5 +182,64 @@ public class PDFGEN {
         
      
     }
+
+    public String getNev() {
+        return nev;
+    }
+
+    public String getBeosztas() {
+        return beosztas;
+    }
+
+    public String getRendszam() {
+        return rendszam;
+    }
+
+    public double getHenger() {
+        return henger;
+    }
+
+    public String getUzemanyag() {
+        return uzemanyag;
+    }
+
+    public double getNorma() {
+        return norma;
+    }
+
+    public int getAmortizacio() {
+        return amortizacio;
+    }
+
+    public int getAr() {
+        return ar;
+    }
+
+    public double getUtvonal() {
+        return utvonal;
+    }
+
+    public String getTerv() {
+        return terv;
+    }
+
+    public String getTipus() {
+        return tipus;
+    }
+
+    public double getValuta() {
+        return valuta;
+    }
+
+    public int getPalya() {
+        return palya;
+    }
+
+    public int getParkolas() {
+        return parkolas;
+    }
+     
+     
+     
     
 }
