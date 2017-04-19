@@ -15,48 +15,54 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Font;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
 public class PDFGEN {
-    
+     private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     
 
      public void genKalkulacio(String nev, String beosztas, String rendszam, double henger, String uzemanyag, double norma, int amortizacio, int ar, double utvonal, String terv, String tipus, double valuta, int palya, int parkolas)
     {
          Document document = new Document();
         try{
-            PdfWriter.getInstance(document, new FileOutputStream("Kalkuláció.pdf"));
+            PdfWriter.getInstance(document, byteArrayOutputStream);
             document.open();
             
             Paragraph p1 = new Paragraph("Kalkuláció*",FontFactory.getFont(FontFactory.TIMES_BOLD,20,Font.BOLD,BaseColor.BLACK));              
                 p1.setAlignment(Element.ALIGN_CENTER);
             Paragraph p2 = new Paragraph("Saját szgk-val történo külföldi utazáshoz");
                  p2.setAlignment(Element.ALIGN_CENTER);             
-            Paragraph p3 = new Paragraph("Az utazo neve,beosztasa: " + nev + " " + beosztas,FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Paragraph p3 = new Paragraph("Az utazo neve,beosztasa: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
                  p3.setLeading(30);
-            Paragraph p4 = new Paragraph("Tervezett utvonal: " + terv ,FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Paragraph p4 = new Paragraph("Tervezett utvonal: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
             Paragraph p5 = new Paragraph("A gépkocsi adatai: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
-                  Paragraph p6 = new Paragraph("          Rendszam: "+ rendszam);     
-                  Paragraph p7 = new Paragraph("          Tipus: " + tipus);  
-                  Paragraph p8 = new Paragraph("          Hengerurtatralom: " + henger);  
-                  Paragraph p9 = new Paragraph("          Üzemanyag fajta: " + uzemanyag);
-                  Paragraph p10 = new Paragraph("          Üzemanyag norma 1/100km(A): " + norma);
-                  Paragraph p11 = new Paragraph("          Amortizaciós költseg Ft/km(B): " + amortizacio);
-                  Paragraph p12 = new Paragraph("          Üzemanyag egységára Ft-ban(C): " + ar);
-                  Paragraph p13 = new Paragraph("          A teljes útvonal hossza k (D): " + utvonal) ;
+                  Paragraph p6 = new Paragraph("          Rendszam: ");     
+                  Paragraph p7 = new Paragraph("          Tipus: ");  
+                  Paragraph p8 = new Paragraph("          Hengerurtatralom: ");  
+                  Paragraph p9 = new Paragraph("          Üzemanyag fajta: ");
+                  Paragraph p10 = new Paragraph("          Üzemanyag norma 1/100km(A): ");
+                  Paragraph p11 = new Paragraph("          Amortizaciós költseg Ft/km(B): ");
+                  Paragraph p12 = new Paragraph("          Üzemanyag egységára Ft-ban(C): ");
+                  Paragraph p13 = new Paragraph("          Üzemanyag egységára Ft-ban(D): ");
                   
             
             Chunk p14 = new Chunk("Atalany szerinti üzemanyag es amortizació: ");
             p14.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location
             
-            Paragraph p15 = new Paragraph("Üzemanyag költség (D/100xAxC): " + (utvonal/100*norma*ar));
+            Paragraph p15 = new Paragraph("Üzemanyag költség (D/100xAxC): ");
                 p15.setLeading(30);
-            Paragraph p16 = new Paragraph("Amortizációs költseg (BxD):"+ (amortizacio*utvonal));
+            Paragraph p16 = new Paragraph("Amortizációs költseg (BxD):");
                 p16.setLeading(30);
             Paragraph p17 = new Paragraph("__________________________________________________________________________");      
             
@@ -67,11 +73,9 @@ public class PDFGEN {
             Paragraph p19 = new Paragraph("Autópályadij Ft-ban: ");
             Paragraph p20 = new Paragraph("Autopalyadij valutában* és Ft-ban: ");
             Paragraph p21 = new Paragraph("Parkirozási dij valutában* és forintban: ");
-            Paragraph p22 = new Paragraph("Valuta árfolyam**: " + valuta);
+            Paragraph p22 = new Paragraph("Valuta árfolyam**: ");
             
-            Paragraph p23 = new Paragraph("Összes költség Ft-ban: " + 
-                    (utvonal/100*norma*ar) + (amortizacio*utvonal) + parkolas + palya
-                    ,FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Paragraph p23 = new Paragraph("Összes költség Ft-ban: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
                 
             Chunk p24 = new Chunk("Megjegyzesek: ");
             p24.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location   
@@ -130,9 +134,42 @@ public class PDFGEN {
             document.add(new Phrase("\n"));
             document.add(p27);
             document.add(p28);
-         
-          
-         
+            
+            document.close();
+            
+            
+
+            //Convert PDF to byteARRAY
+            //Convert PDF to byteARRAY
+            //Convert PDF to byteARRAY
+            byte[] pdfBytes = byteArrayOutputStream.toByteArray();
+            
+            //Connect to DB and INSERT INTO DB
+            //Connect to DB and INSERT INTO DB
+            //Connect to DB and INSERT INTO DB
+            ConnectionManager cmgr=new ConnectionManager();
+            Connection conn=cmgr.getConnection();
+            PreparedStatement insert = conn.prepareStatement("INSERT INTO GeneraltPDF VALUES (?)");
+            insert.setBytes(1, pdfBytes);
+            insert.executeUpdate();
+            insert.close();
+            
+            //GET DATA FROM DB
+            //GET DATA FROM DB
+            //GET DATA FROM DB
+            Statement select = conn.createStatement();
+            ResultSet rs = select.executeQuery("SELECT adatok FROM GeneraltPDF WHERE id = 1");
+            rs = select.getResultSet();
+            rs.next() ;
+            byte[] receivedPDF = rs.getBytes("adatok");
+                
+           
+            //Convert ByteArray to pdf
+            //Convert ByteArray to pdf
+            //Convert ByteArray to pdf
+            OutputStream out = new FileOutputStream("received_fromDB.pdf");
+            out.write(receivedPDF);
+            out.close();
           
         }
         catch(Exception e){
