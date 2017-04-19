@@ -142,6 +142,5 @@ public class UserBean {
     
     public void Faszom(){
         System.out.println( honnan+hova+rendszam);
-        genPDF();
     }
 }
