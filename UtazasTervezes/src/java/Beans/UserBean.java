@@ -135,12 +135,13 @@ public class UserBean {
     
     public void genPDF()
     {
-        //PDFGEN GPDF = new PDFGEN();    
-       // GPDF.genKalkulacio();
+        PDFGEN GPDF = new PDFGEN();    
+        GPDF.genKalkulacio(hova, rendszam, rendszam, PersonID, honnan, PersonID, PersonID, PersonID, PersonID, hova, neptun, PersonID, PersonID, PersonID);
     }
     
     
     public void Faszom(){
         System.out.println( honnan+hova+rendszam);
+        genPDF();
     }
 }
