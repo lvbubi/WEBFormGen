@@ -12,25 +12,18 @@ package Beans;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import webformgen.Car;
-import webformgen.ConnectionManager;
 import webformgen.DWNLDATA;
 import webformgen.PDFDatas;
 import webformgen.PDFGEN;
@@ -133,11 +126,7 @@ public class UserBean implements Serializable {
         PersonID=SingletonDBMgr.getPersonID(neptun, password);
     }
     public boolean isLoggedIn() throws SQLException{
-        if(PersonID>=1) {
-            pdfDatas=SingletonDBMgr.getPDFDatas(PersonID);
-            return true;
-        }
-        return false;
+        return PersonID>=1;
     }
     public String getPersonDatas(){
         webformgen.Person p = SingletonDBMgr.getPersonDatas(PersonID);
@@ -147,14 +136,9 @@ public class UserBean implements Serializable {
         return SingletonDBMgr.getRendszamok(PersonID);
     }
     public List<String> getUtazasiKeret(){
-        List<String> tmp=new ArrayList<>();
-        tmp.add("TEMPUS");
-        tmp.add("egyéb EU - szintű együttműködés");
-        tmp.add("kormányközi együttműködés");
-        tmp.add("intézményi együttműködés");
-        tmp.add("alapítványi támogatás");
-        tmp.add("meghívás");
-        tmp.add("saját szervezés");
+        List<String> tmp = Arrays.asList(
+                "TEMPUS", "egyéb EU - szintű együttműködés", "kormányközi együttműködés","intézményi együttműködés",
+                "alapítványi támogatás","meghívás","saját szervezés");
         return tmp;
     }
     public double getNorma() throws IOException{
@@ -170,7 +154,9 @@ public class UserBean implements Serializable {
         return "Hogyiskellkinéznieahónapnak? Egy samplet írjmár pls";
         //return ddata.selectUzemanyag("Gázolaj", "December");
     }
-    
+    public void showPDFS() throws SQLException{
+        pdfDatas=SingletonDBMgr.getPDFDatas(PersonID);
+    }
     public void genPDF() throws SQLException//PDF generálása,küldése adatbázisba
     {
         byte[] pdfBytes=pdfgen.genKalkulacio(hova, rendszam, rendszam, PersonID, honnan, PersonID, PersonID, PersonID, PersonID, hova, neptun, PersonID, PersonID, PersonID);
@@ -186,7 +172,6 @@ public class UserBean implements Serializable {
     }
     
     public void onRowSelect(SelectEvent event) throws IOException {
-        //FacesContext.getCurrentInstance().getExternalContext().redirect("http://localhost:8080/UtazasTervezes/faces/OpenPDF");
         FacesMessage msg = new FacesMessage("Car Selected", ((PDFDatas) event.getObject()).getHova());
         FacesContext.getCurrentInstance().addMessage(null, msg);
         

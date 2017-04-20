@@ -8,6 +8,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
+        #{userBean.showPDFS()}
         <h:form id="form">
             <p:growl id="msgs" showDetail="true" />
             <p:dataTable id="eventsDT" var="PDFDatas" value="#{userBean.pdfDatas}" selectionMode="single" selection="#{userBean.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
@@ -51,7 +52,6 @@
             <h:commandButton onclick="#{userBean.Faszom()};" value="Kiválasztás frissítése"/><br/>
             
         </h:form>
-        
                     
         <form id="form2" action="/UtazasTervezes/OpenPDF" method="POST">
             <input type="hidden" id="SelectedPDF" name="SelectedPDF" value="#{userBean.selectedPDFDatas.id}"/>
