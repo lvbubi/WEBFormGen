@@ -31,6 +31,7 @@ import webformgen.ConnectionManager;
 @WebServlet(name = "OpenPDF", urlPatterns = {"/OpenPDF"})
 public class OpenPDF extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+        Statement select;
         byte[] receivedPDF=null;
         @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,23 +44,23 @@ public class OpenPDF extends HttpServlet {
 		performTask(request, response);
 	}
         @Override
-        public void init()throws ServletException{
-            Connection conn=new ConnectionManager().getConnection();     
-            Statement select;
+        public void init()throws ServletException{  
             try {
-                select = conn.createStatement();
-                ResultSet rs = select.executeQuery("SELECT adatok FROM GeneraltPDF WHERE id = 14");
-                rs = select.getResultSet();
-                rs.next() ;
-                receivedPDF = rs.getBytes("adatok");
+                select = new ConnectionManager().getConnection().createStatement();
             } catch (SQLException ex) {
                 Logger.getLogger(OpenPDF.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            } 
         }
-	private void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
-                
+	private void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+                String PDFKey=request.getParameter("SelectedPDF");
+                try {
+                    ResultSet rs = select.executeQuery("SELECT adatok FROM GeneraltPDF WHERE id = "+PDFKey);
+                    rs = select.getResultSet();
+                    rs.next() ;
+                    receivedPDF = rs.getBytes("adatok");
+                } catch (SQLException ex) {
+                    Logger.getLogger(OpenPDF.class.getName()).log(Level.SEVERE, null, ex);
+                }
 		String pdfFileName = "out.pdf";
                 
 		String contextPath = getServletContext().getRealPath(File.separator);     

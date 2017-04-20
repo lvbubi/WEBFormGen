@@ -29,11 +29,17 @@
                 <f:selectItems value="#{userBean.utazasiKeret}" />
             </h:selectOneMenu><br/>
             
-            <h:commandButton onclick="#{userBean.Faszom()};" value="PDF Generálása"/>
+            <h:commandButton onclick="#{userBean.genPDF()};" value="PDF Generálása"/><br/>
         </h:form>
         
         
+        <h:selectOneMenu label="SelectPDF" value="20" onchange="swapKeys(this.value)">
+            Eddig leadott Utazási Tervei (kulcs, egy nagy tábla kéne ahol az egyéb adatok is megjelenhetnek a pdfről): <br/>
+            <f:selectItems value="#{userBean.PDFKEYS}" />
+        </h:selectOneMenu><br/>
+        
         <form action="/UtazasTervezes/OpenPDF" method="POST">
+            <input type="hidden" id="SelectedPDF" name="SelectedPDF" value="23"/>
             Egy random PDF-et tölt még csak le az adatbázisból, nem az aktuálisat szedi még le.
             <input type="submit" value="OpenPDF"/>
         </form> 
@@ -55,6 +61,10 @@
             document.getElementById("hideme").style.display="block";
         else
             document.getElementById("hideme").style.display="none";
+    }
+    
+    function swapKeys(selectedValue) {
+        document.getElementById("SelectedPDF").value=selectedValue;
     }
     //]]>
     </script>

@@ -30,7 +30,11 @@ import java.util.Date;
 
 public class PDFGEN {
      private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-    
+     private float Osszkoltseg=0;
+
+    public float getOsszkoltseg() {
+        return Osszkoltseg;
+    }
 
      public byte[] genKalkulacio(String nev, String beosztas, String rendszam, double henger, String uzemanyag, double norma, int amortizacio, int ar, double utvonal, String terv, String tipus, double valuta, int palya, int parkolas)
     {
@@ -47,7 +51,7 @@ public class PDFGEN {
                  p3.setLeading(30);
             Paragraph p4 = new Paragraph("Tervezett utvonal: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
             Paragraph p5 = new Paragraph("A gépkocsi adatai: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
-                  Paragraph p6 = new Paragraph("          Rendszam: ");     
+                  Paragraph p6 = new Paragraph("          Rendszam: TESZTADAT!!!!404!!!!");     
                   Paragraph p7 = new Paragraph("          Tipus: ");  
                   Paragraph p8 = new Paragraph("          Hengerurtatralom: ");  
                   Paragraph p9 = new Paragraph("          Üzemanyag fajta: ");

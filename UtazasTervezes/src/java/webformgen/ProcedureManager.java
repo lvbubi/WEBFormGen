@@ -87,6 +87,16 @@ public class ProcedureManager {
         return rendszamok;
     }
     
+    public List<String> getPDFKeys(int PersonID) throws SQLException{
+        List<String> pdfKeys=new ArrayList<>();
+        Statement st=conn.createStatement();
+        ResultSet rs=st.executeQuery("SELECT id FROM GeneraltPDF where SzemelyID = "+Integer.toString(PersonID));
+        while(rs.next()){
+            pdfKeys.add(String.valueOf(rs.getInt("id")));
+        }
+        return pdfKeys;
+    }
+    
     public Car getCarDatas(String rdsz){
         CallableStatement cStmt;
         try {
@@ -101,6 +111,22 @@ public class ProcedureManager {
         } catch (SQLException ex) {
             Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex); 
             return null;
+        }
+    }
+
+    public void InsertPDF(int PersonID,String hova,float Osszkoltseg,String DukumentumNev,byte[] pdfBytes){
+        CallableStatement cStmt;
+        try {
+            cStmt=conn.prepareCall("{call AddPDF(?,?,?,?,?)}");
+            cStmt.setInt(1, PersonID);
+            cStmt.setString(2, hova);
+            cStmt.setFloat(3, Osszkoltseg);
+            cStmt.setString(4, DukumentumNev);
+            cStmt.setBytes(5, pdfBytes);
+            cStmt.execute();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex); 
         }
     }
     
