@@ -47,26 +47,26 @@ public class PDFGEN {
                 p1.setAlignment(Element.ALIGN_CENTER);
             Paragraph p2 = new Paragraph("Saját szgk-val történo külföldi utazáshoz");
                  p2.setAlignment(Element.ALIGN_CENTER);             
-            Paragraph p3 = new Paragraph("Az utazo neve,beosztasa: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Paragraph p3 = new Paragraph("Az utazo neve,beosztasa: " +nev + " " + beosztas,FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
                  p3.setLeading(30);
-            Paragraph p4 = new Paragraph("Tervezett utvonal: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Paragraph p4 = new Paragraph("Tervezett utvonal: " + terv,FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
             Paragraph p5 = new Paragraph("A gépkocsi adatai: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
-                  Paragraph p6 = new Paragraph("          Rendszam: TESZTADAT!!!!404!!!!");     
-                  Paragraph p7 = new Paragraph("          Tipus: ");  
-                  Paragraph p8 = new Paragraph("          Hengerurtatralom: ");  
-                  Paragraph p9 = new Paragraph("          Üzemanyag fajta: ");
-                  Paragraph p10 = new Paragraph("          Üzemanyag norma 1/100km(A): ");
-                  Paragraph p11 = new Paragraph("          Amortizaciós költseg Ft/km(B): ");
-                  Paragraph p12 = new Paragraph("          Üzemanyag egységára Ft-ban(C): ");
-                  Paragraph p13 = new Paragraph("          Üzemanyag egységára Ft-ban(D): ");
+                  Paragraph p6 = new Paragraph("          Rendszam: " + rendszam);     
+                  Paragraph p7 = new Paragraph("          Tipus: " + tipus);  
+                  Paragraph p8 = new Paragraph("          Hengerurtatralom: "+henger);  
+                  Paragraph p9 = new Paragraph("          Üzemanyag fajta: "+uzemanyag);
+                  Paragraph p10 = new Paragraph("          Üzemanyag norma 1/100km(A): "+norma);
+                  Paragraph p11 = new Paragraph("          Amortizaciós költseg Ft/km(B): "+amortizacio);
+                  Paragraph p12 = new Paragraph("          Üzemanyag egységára Ft-ban(C): "+ ar);
+                  Paragraph p13 = new Paragraph("          A teljes útvonal hossza km(D): "+ utvonal);
                   
             
             Chunk p14 = new Chunk("Atalany szerinti üzemanyag es amortizació: ");
             p14.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location
             
-            Paragraph p15 = new Paragraph("Üzemanyag költség (D/100xAxC): ");
+            Paragraph p15 = new Paragraph("Üzemanyag költség (D/100xAxC): " + (utvonal/100*norma*ar));
                 p15.setLeading(30);
-            Paragraph p16 = new Paragraph("Amortizációs költseg (BxD):");
+            Paragraph p16 = new Paragraph("Amortizációs költseg (BxD):"+(amortizacio*utvonal));
                 p16.setLeading(30);
             Paragraph p17 = new Paragraph("__________________________________________________________________________");      
             
@@ -77,7 +77,7 @@ public class PDFGEN {
             Paragraph p19 = new Paragraph("Autópályadij Ft-ban: ");
             Paragraph p20 = new Paragraph("Autopalyadij valutában* és Ft-ban: ");
             Paragraph p21 = new Paragraph("Parkirozási dij valutában* és forintban: ");
-            Paragraph p22 = new Paragraph("Valuta árfolyam**: ");
+            Paragraph p22 = new Paragraph("Valuta árfolyam**: "+ valuta);
             
             Paragraph p23 = new Paragraph("Összes költség Ft-ban: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
                 
