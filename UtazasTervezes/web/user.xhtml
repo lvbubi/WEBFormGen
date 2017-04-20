@@ -7,7 +7,7 @@
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    
+
     <h:body>
         <h:form>
         
@@ -29,9 +29,14 @@
                 <f:selectItems value="#{userBean.utazasiKeret}" />
             </h:selectOneMenu><br/>
             
-            <h:commandButton onclick="#{userBean.Faszom()};" value="Urlap kitoltese"/>
+            <h:commandButton onclick="#{userBean.Faszom()};" value="PDF Generálása"/>
         </h:form>
         
+        
+        <form action="/UtazasTervezes/OpenPDF" method="POST">
+            Egy random PDF-et tölt még csak le az adatbázisból, nem az aktuálisat szedi még le.
+            <input type="submit" value="OpenPDF"/>
+        </form> 
         #{userBean.rendszam}
         #{userBean.honnan}
         #{userBean.hova}

@@ -32,7 +32,7 @@ public class PDFGEN {
      private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     
 
-     public void genKalkulacio(String nev, String beosztas, String rendszam, double henger, String uzemanyag, double norma, int amortizacio, int ar, double utvonal, String terv, String tipus, double valuta, int palya, int parkolas)
+     public byte[] genKalkulacio(String nev, String beosztas, String rendszam, double henger, String uzemanyag, double norma, int amortizacio, int ar, double utvonal, String terv, String tipus, double valuta, int palya, int parkolas)
     {
          Document document = new Document();
         try{
@@ -134,50 +134,18 @@ public class PDFGEN {
             document.add(new Phrase("\n"));
             document.add(p27);
             document.add(p28);
-            
+           
             document.close();
-            
-            
-
             //Convert PDF to byteARRAY
             //Convert PDF to byteARRAY
             //Convert PDF to byteARRAY
             byte[] pdfBytes = byteArrayOutputStream.toByteArray();
-            
-            //Connect to DB and INSERT INTO DB
-            //Connect to DB and INSERT INTO DB
-            //Connect to DB and INSERT INTO DB
-            ConnectionManager cmgr=new ConnectionManager();
-            Connection conn=cmgr.getConnection();
-            PreparedStatement insert = conn.prepareStatement("INSERT INTO GeneraltPDF VALUES (?)");
-            insert.setBytes(1, pdfBytes);
-            insert.executeUpdate();
-            insert.close();
-            
-            //GET DATA FROM DB
-            //GET DATA FROM DB
-            //GET DATA FROM DB
-            Statement select = conn.createStatement();
-            ResultSet rs = select.executeQuery("SELECT adatok FROM GeneraltPDF WHERE id = 1");
-            rs = select.getResultSet();
-            rs.next() ;
-            byte[] receivedPDF = rs.getBytes("adatok");
-                
-           
-            //Convert ByteArray to pdf
-            //Convert ByteArray to pdf
-            //Convert ByteArray to pdf
-            OutputStream out = new FileOutputStream("received_fromDB.pdf");
-            out.write(receivedPDF);
-            out.close();
-          
+            return pdfBytes;
         }
         catch(Exception e){
             System.out.println(e);
+            return null;
         }
-        document.close();
-        
-     
     }
 
 }

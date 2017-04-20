@@ -13,7 +13,7 @@ import java.sql.SQLException;
  *
  * @author lvbubi
  */
-class ConnectionManager {
+public class ConnectionManager {
     private static final String url = "jdbc:sqlserver://adatb-mssql.mik.uni-pannon.hu;databaseName=webuser";    
     private static final String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static String username = "webuser";   

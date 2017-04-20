@@ -11,17 +11,29 @@ package Beans;
  */
 
 import java.awt.event.ActionEvent;
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import webformgen.Car;
+import webformgen.ConnectionManager;
 import webformgen.DWNLDATA;
 import webformgen.PDFGEN;
 import webformgen.ProcedureManager;
@@ -39,6 +51,7 @@ public class UserBean {
     String rendszam;
     String Eloadas_postercim,egyebkeret;
     int PersonID=-1;
+    byte[] pdfBytes=null;
     @EJB
     private ProcedureManager SingletonDBMgr;
     
@@ -133,10 +146,14 @@ public class UserBean {
         //return ddata.selectUzemanyag("Gázolaj", "December");
     }
     
-    public void genPDF()
+    public void genPDF() throws SQLException//PDF generálása,küldése adatbázisba
     {
-        PDFGEN GPDF = new PDFGEN();    
-        GPDF.genKalkulacio(hova, rendszam, rendszam, PersonID, honnan, PersonID, PersonID, PersonID, PersonID, hova, neptun, PersonID, PersonID, PersonID);
+        byte[] pdfBytes=new PDFGEN().genKalkulacio(hova, rendszam, rendszam, PersonID, honnan, PersonID, PersonID, PersonID, PersonID, hova, neptun, PersonID, PersonID, PersonID);
+        Connection conn=new ConnectionManager().getConnection();
+        PreparedStatement insert = conn.prepareStatement("INSERT INTO GeneraltPDF VALUES (?)");
+        insert.setBytes(1, pdfBytes);
+        insert.executeUpdate();
+        insert.close();
     }
     
     
