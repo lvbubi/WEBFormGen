@@ -33,6 +33,7 @@ public class OpenPDF extends HttpServlet {
 	private static final long serialVersionUID = 1L;
         Statement select;
         byte[] receivedPDF=null;
+        String PDFKey="2";
         @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		performTask(request, response);
@@ -53,7 +54,7 @@ public class OpenPDF extends HttpServlet {
         }
 	private void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
             System.out.println(request.toString());
-            String PDFKey=request.getParameter("SelectedPDF");
+            PDFKey=request.getParameter("SelectedPDF");
                 try {
                     ResultSet rs = select.executeQuery("SELECT adatok FROM GeneraltPDF WHERE id = "+PDFKey);
                     rs = select.getResultSet();

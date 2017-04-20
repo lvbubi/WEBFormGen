@@ -9,8 +9,12 @@
     </h:head>
 
     <h:body>
-        <h:form id="form">
-            <p:growl id="msgs" showDetail="true" />
+        <h:form>
+            <h:button value="showPDFS" outcome="showPDFS" />
+        </h:form>
+        
+        <h:form>
+            
             Név: #{userBean.personDatas} <br/>
             Kérem válasszon autót: 
             <h:selectOneMenu value="#{userBean.rendszam}" id="kocsiproba">
@@ -29,55 +33,9 @@
                 <f:selectItem itemLabel="Select One" itemValue="" />
                 <f:selectItems value="#{userBean.utazasiKeret}" />
             </p:selectOneMenu><br/>
-            
             <h:commandButton onclick="#{userBean.genPDF()};" value="PDF Generálása"/><br/><br/><br/>
-            
-            <p:dataTable id="eventsDT" var="PDFDatas" value="#{userBean.pdfDatas}" selectionMode="single" selection="#{userBean.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
-                <f:facet name="header">
-                    Leadott utazási tervek
-                </f:facet>
-                <p:ajax event="rowSelect" listener="#{userBean.onRowSelect}" update=":form:msgs" />
-                <p:ajax event="rowUnselect" listener="#{userBean.onRowUnselect}" update=":form:msgs" />
-                                <p:column headerText="Id">
-                    <h:outputText value="#{PDFDatas.id}" />
-                </p:column>
-                <p:column headerText="Személy ID">
-                    <h:outputText value="#{PDFDatas.szemelyID}" />
-                </p:column>
-                <p:column headerText="Dátum">
-                    <h:outputText value="#{PDFDatas.datum}" />
-                </p:column>
-                <p:column headerText="Hova">
-                    <h:outputText value="#{PDFDatas.hova}" />
-                </p:column>
-                <p:column headerText="Összköltség">
-                    <h:outputText value="#{PDFDatas.osszkoltsegFT}" />
-                </p:column>
-                <p:column headerText="DokumentumTípusa">
-                    <h:outputText value="#{PDFDatas.dokumentumTipusa}" />
-                </p:column>
-                <p:column headerText="Ellenőrizve">
-                    <h:outputText value="#{PDFDatas.ellenorizve}" />
-                </p:column>
-            </p:dataTable>
-            
-            
-            <p:dialog header="PDF Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                <p:outputPanel id="carDetail" style="text-align:center;">
-                    <p:panelGrid  columns="2" rendered="#{not empty userBean.selectedPDFDatas}" columnClasses="label,value">
-                        <h:outputText value="Hova:" />
-                        <h:outputText value="#{userBean.selectedPDFDatas.hova}" />
-                    </p:panelGrid>
-                </p:outputPanel>
-            </p:dialog>
-            <h:commandButton onclick="#{userBean.Faszom()};" value="Kiválasztás frissítése"/><br/>
         </h:form>
         
-                    
-        <form action="/UtazasTervezes/OpenPDF" method="POST">
-            <input type="hidden" id="SelectedPDF" name="SelectedPDF" value="#{userBean.selectedPDFDatas.id}"/>
-            <input type="submit" value="OpenPDF"/>
-        </form> 
         #{userBean.selectedPDFDatas.hova}
         #{userBean.rendszam}
         #{userBean.honnan}
@@ -86,15 +44,9 @@
         #{userBean.egyebkeret}
         <br/>Norma: #{userBean.norma}
         <br/>Uzemanyag: #{userBean.uzemanyag}
+        <br/>
+         
     </h:body>
-    
-    
-        <script type="text/javascript">
-        //<![CDATA[
-        
-        
-        //]]>
-        </script>
     
 </html>
 

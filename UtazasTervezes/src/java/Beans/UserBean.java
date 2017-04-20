@@ -185,9 +185,11 @@ public class UserBean implements Serializable {
         System.out.println( honnan+hova+rendszam);
     }
     
-    public void onRowSelect(SelectEvent event) {
+    public void onRowSelect(SelectEvent event) throws IOException {
+        //FacesContext.getCurrentInstance().getExternalContext().redirect("http://localhost:8080/UtazasTervezes/faces/OpenPDF");
         FacesMessage msg = new FacesMessage("Car Selected", ((PDFDatas) event.getObject()).getHova());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        
     }
  
     public void onRowUnselect(UnselectEvent event) {
