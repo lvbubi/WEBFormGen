@@ -79,7 +79,7 @@ public class PDFGEN {
             Paragraph p21 = new Paragraph("Parkirozási dij valutában* és forintban: ");
             Paragraph p22 = new Paragraph("Valuta árfolyam**: "+ valuta);
             
-            Paragraph p23 = new Paragraph("Összes költség Ft-ban: ",FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Paragraph p23 = new Paragraph("Összes költség Ft-ban: " +((utvonal/100*norma*ar)+(amortizacio*utvonal)+parkolas+palya),FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
                 
             Chunk p24 = new Chunk("Megjegyzesek: ");
             p24.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location   
