@@ -11,6 +11,7 @@ package Beans;
  */
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,14 +21,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import webformgen.Car;
 import webformgen.ConnectionManager;
 import webformgen.DWNLDATA;
+import webformgen.PDFDatas;
 import webformgen.PDFGEN;
 import webformgen.ProcedureManager;
 
@@ -38,20 +43,37 @@ import webformgen.ProcedureManager;
 @Named(value = "userBean")
 @SessionScoped
 @ManagedBean
-public class UserBean {
+public class UserBean implements Serializable {
     String neptun,password;
     String honnan,hova;
     String rendszam;
     String Eloadas_postercim,egyebkeret;
     String SelectedPDFKey;
+    PDFDatas SelectedPDFDatas;
+    List<PDFDatas> pdfDatas;
+    
     PDFGEN pdfgen=new PDFGEN();
-
+    
     int PersonID=-1;
     @EJB
     private ProcedureManager SingletonDBMgr;
-    
-    
-    
+
+    public List<PDFDatas> getPdfDatas() {
+        return pdfDatas;
+    }
+
+    public void setPdfDatas(List<PDFDatas> pdfDatas) {
+        this.pdfDatas = pdfDatas;
+    }
+
+    public PDFDatas getSelectedPDFDatas() {
+        return SelectedPDFDatas;
+    }
+
+    public void setSelectedPDFDatas(PDFDatas SelectedPDFDatas) {
+        this.SelectedPDFDatas = SelectedPDFDatas;
+    }
+
     public String getSelectedPDFKey() {
         return SelectedPDFKey;
     }
@@ -110,8 +132,12 @@ public class UserBean {
     public void Login(){
         PersonID=SingletonDBMgr.getPersonID(neptun, password);
     }
-    public boolean isLoggedIn(){
-        return PersonID >= 1;
+    public boolean isLoggedIn() throws SQLException{
+        if(PersonID>=1) {
+            pdfDatas=SingletonDBMgr.getPDFDatas(PersonID);
+            return true;
+        }
+        return false;
     }
     public String getPersonDatas(){
         webformgen.Person p = SingletonDBMgr.getPersonDatas(PersonID);
@@ -129,7 +155,6 @@ public class UserBean {
         tmp.add("alapítványi támogatás");
         tmp.add("meghívás");
         tmp.add("saját szervezés");
-        tmp.add("egyéb:");
         return tmp;
     }
     public double getNorma() throws IOException{
@@ -158,5 +183,15 @@ public class UserBean {
     
     public void Faszom(){
         System.out.println( honnan+hova+rendszam);
+    }
+    
+    public void onRowSelect(SelectEvent event) {
+        FacesMessage msg = new FacesMessage("Car Selected", ((PDFDatas) event.getObject()).getHova());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+ 
+    public void onRowUnselect(UnselectEvent event) {
+        FacesMessage msg = new FacesMessage("Car Unselected", ((PDFDatas) event.getObject()).getHova());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

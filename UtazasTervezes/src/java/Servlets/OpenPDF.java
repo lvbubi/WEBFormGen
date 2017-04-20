@@ -52,7 +52,8 @@ public class OpenPDF extends HttpServlet {
             } 
         }
 	private void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
-                String PDFKey=request.getParameter("SelectedPDF");
+            System.out.println(request.toString());
+            String PDFKey=request.getParameter("SelectedPDF");
                 try {
                     ResultSet rs = select.executeQuery("SELECT adatok FROM GeneraltPDF WHERE id = "+PDFKey);
                     rs = select.getResultSet();
@@ -74,7 +75,6 @@ public class OpenPDF extends HttpServlet {
 		while ((bytes = bis.read()) != -1) {
 			responseOutputStream.write(bytes);
 		}
-
 	}
 
 }

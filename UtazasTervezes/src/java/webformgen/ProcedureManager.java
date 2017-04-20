@@ -7,6 +7,7 @@ package webformgen;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -96,6 +97,30 @@ public class ProcedureManager {
         }
         return pdfKeys;
     }
+    public List<PDFDatas> getPDFDatas(int PersonID) throws SQLException{
+        int id;
+        Date Datum;
+        String Hova;
+        float OsszkoltsegFT;
+        String DokumentumTipusa;
+        boolean Ellenorizve;
+        List<PDFDatas> pdfKeys=new ArrayList<>();
+        Statement st=conn.createStatement();
+        ResultSet rs=st.executeQuery("SELECT id,SzemelyID,Datum,Hova,OsszkoltsegFt,DokumentumTipusa,Ellenorizve FROM GeneraltPDF where SzemelyID = "+Integer.toString(PersonID));
+        while(rs.next()){
+            id=rs.getInt("id");
+            Datum=rs.getDate("Datum");
+            Hova=rs.getString("Hova");
+            OsszkoltsegFT=rs.getFloat("OsszkoltsegFt");
+            DokumentumTipusa=rs.getString("DokumentumTipusa");
+            Ellenorizve=rs.getBoolean("Ellenorizve");
+            
+            pdfKeys.add(new PDFDatas(id,PersonID,Datum,Hova,OsszkoltsegFT,DokumentumTipusa,Ellenorizve));
+        }
+        return pdfKeys;
+    }
+    
+    
     
     public Car getCarDatas(String rdsz){
         CallableStatement cStmt;

@@ -9,8 +9,8 @@
     </h:head>
 
     <h:body>
-        <h:form>
-        
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true" />
             Név: #{userBean.personDatas} <br/>
             Kérem válasszon autót: 
             <h:selectOneMenu value="#{userBean.rendszam}" id="kocsiproba">
@@ -25,24 +25,60 @@
 
             <br/>
             Tanulmányút esetén milyen program keretében kerül sor az utazásra*:<br/>
-            <h:selectOneMenu label="Keret" value="#{userBean.egyebkeret}">
+            <p:selectOneMenu label="Keret" value="#{userBean.egyebkeret}" effect="fold" editable="true">
+                <f:selectItem itemLabel="Select One" itemValue="" />
                 <f:selectItems value="#{userBean.utazasiKeret}" />
-            </h:selectOneMenu><br/>
+            </p:selectOneMenu><br/>
             
-            <h:commandButton onclick="#{userBean.genPDF()};" value="PDF Generálása"/><br/>
+            <h:commandButton onclick="#{userBean.genPDF()};" value="PDF Generálása"/><br/><br/><br/>
+            
+            <p:dataTable id="eventsDT" var="PDFDatas" value="#{userBean.pdfDatas}" selectionMode="single" selection="#{userBean.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
+                <f:facet name="header">
+                    Leadott utazási tervek
+                </f:facet>
+                <p:ajax event="rowSelect" listener="#{userBean.onRowSelect}" update=":form:msgs" />
+                <p:ajax event="rowUnselect" listener="#{userBean.onRowUnselect}" update=":form:msgs" />
+                                <p:column headerText="Id">
+                    <h:outputText value="#{PDFDatas.id}" />
+                </p:column>
+                <p:column headerText="Személy ID">
+                    <h:outputText value="#{PDFDatas.szemelyID}" />
+                </p:column>
+                <p:column headerText="Dátum">
+                    <h:outputText value="#{PDFDatas.datum}" />
+                </p:column>
+                <p:column headerText="Hova">
+                    <h:outputText value="#{PDFDatas.hova}" />
+                </p:column>
+                <p:column headerText="Összköltség">
+                    <h:outputText value="#{PDFDatas.osszkoltsegFT}" />
+                </p:column>
+                <p:column headerText="DokumentumTípusa">
+                    <h:outputText value="#{PDFDatas.dokumentumTipusa}" />
+                </p:column>
+                <p:column headerText="Ellenőrizve">
+                    <h:outputText value="#{PDFDatas.ellenorizve}" />
+                </p:column>
+            </p:dataTable>
+            
+            
+            <p:dialog header="PDF Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="carDetail" style="text-align:center;">
+                    <p:panelGrid  columns="2" rendered="#{not empty userBean.selectedPDFDatas}" columnClasses="label,value">
+                        <h:outputText value="Hova:" />
+                        <h:outputText value="#{userBean.selectedPDFDatas.hova}" />
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+            <h:commandButton onclick="#{userBean.Faszom()};" value="Kiválasztás frissítése"/><br/>
         </h:form>
         
-        
-        <h:selectOneMenu label="SelectPDF" value="20" onchange="swapKeys(this.value)">
-            Eddig leadott Utazási Tervei (kulcs, egy nagy tábla kéne ahol az egyéb adatok is megjelenhetnek a pdfről): <br/>
-            <f:selectItems value="#{userBean.PDFKEYS}" />
-        </h:selectOneMenu><br/>
-        
+                    
         <form action="/UtazasTervezes/OpenPDF" method="POST">
-            <input type="hidden" id="SelectedPDF" name="SelectedPDF" value="23"/>
-            Egy random PDF-et tölt még csak le az adatbázisból, nem az aktuálisat szedi még le.
+            <input type="hidden" id="SelectedPDF" name="SelectedPDF" value="#{userBean.selectedPDFDatas.id}"/>
             <input type="submit" value="OpenPDF"/>
         </form> 
+        #{userBean.selectedPDFDatas.hova}
         #{userBean.rendszam}
         #{userBean.honnan}
         #{userBean.hova}
@@ -52,21 +88,13 @@
         <br/>Uzemanyag: #{userBean.uzemanyag}
     </h:body>
     
-    <script type="text/javascript">
-    //<![CDATA[
-    function showKeretText(){
-        var e = document.getElementById("utazasikeret");
-        var value = e.options[e.selectedIndex].value;
-        if(value==="egyéb:")
-            document.getElementById("hideme").style.display="block";
-        else
-            document.getElementById("hideme").style.display="none";
-    }
     
-    function swapKeys(selectedValue) {
-        document.getElementById("SelectedPDF").value=selectedValue;
-    }
-    //]]>
-    </script>
+        <script type="text/javascript">
+        //<![CDATA[
+        
+        
+        //]]>
+        </script>
+    
 </html>
 
