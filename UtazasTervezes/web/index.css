@@ -1,0 +1,10 @@
+
+#HideLogin{
+    color: red;
+    float: left;
+}
+body{
+    float: center;
+    background: black;
+    margin: auto;
+}
