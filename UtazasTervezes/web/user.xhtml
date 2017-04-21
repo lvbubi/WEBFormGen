@@ -5,17 +5,24 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <link rel="stylesheet" type="text/css" href="user.css"/> 
+        <title>#{userBean.getNev()}</title>
     </h:head>
 
     <h:body>
-        <h:form >
+        <div id="baloldal">
+            <h2>Előző utazások:</h2>
+            <h:form >
             <h:button value="showPDFS" outcome="showPDFS"/>
-        </h:form>
+            </h:form>
+        </div>
+        <div id="fooldal">
+
+            
         
         <h:form>
             
-            Név: #{userBean.getNev()} <br/>
+            <h2>Név: #{userBean.getNev()}</h2> <br/>
             Kérem válasszon autót: 
             <h:selectOneMenu value="#{userBean.rendszam}" onchange="#{userBean.SelectCar()}" id="kocsiproba">
                 <f:selectItem itemLabel="Select One" itemValue="" />
@@ -52,7 +59,7 @@
         <br/>Norma: #{userBean.norma}
         <br/>Uzemanyag: #{userBean.uzemanyag}
         <br/>
-         
+         </div>
     </h:body>
     
 </html>

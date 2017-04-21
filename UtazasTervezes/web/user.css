@@ -1,0 +1,31 @@
+
+body{
+    background: #424242;
+    margin: auto;
+}
+h2{
+    color: #00897b;
+    
+}
+h1{
+    text-align: center;
+}
+img{
+    margin:auto;
+}
+#fooldal{
+    	margin: auto;
+	width: 60%;
+	height: 1000px;
+	display:inline-block; 
+        background: #ECF0F1;
+        text-align: center;
+}
+#baloldal{
+	width: 20%;
+	height: 1000px;
+	float : left;
+	display:inline-block; 
+	overflow: auto;
+        text-align: center;
+}
