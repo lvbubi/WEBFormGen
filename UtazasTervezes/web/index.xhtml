@@ -33,7 +33,7 @@
                   <h:inputSecret label="Jelszó" value="#{userBean.password}" />
                   <label for="Jelszó">Jelszó</label>
                 </div>
-                <h:commandButton onclick="#{userBean.Login()};" value="Bejelentkezes"/>
+                <p:commandButton value="Bejelentkezes" ajax="false" actionListener="#{userBean.Login()}"/>
             </h:form>
         </div>
         
