@@ -1,10 +1,12 @@
 
 #HideLogin{
-    color: red;
-    float: left;
+    color: white;
+    float: right;
 }
 body{
-    float: center;
-    background: black;
+    background: #424242;
     margin: auto;
+}
+h2{
+    color: #00695c;
 }

@@ -4,19 +4,35 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <link type="text/css" rel="stylesheet" href="materialize.min.css"  media="screen,projection"/>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="index.css"/> 
         <title>Utazas</title>
     </h:head>
     
     <h:body>
+        <div id="baloldal">
+            
+        </div>
+        <div id="fooldal">
+            <img src="pannon-egyetem.png" alt="The ENIAC" />
+            <h1>Pannon Egyetem</h1>
+            <h1>Utazási Iroda</h1>
+            <p>Kedves látógatónk!</p>
+            <p>Ez a weboldal arra a célra szolgál, hogy az egyetemünk tanárai kikerülve a lassú és rossz papír alapú adminisztrációt egy utazással kapcsolatban, ahol majd egyetemünket képviselik. Tanáraink neptunkód és jelszó segítségével be tudnak lépni, ahol megtudják nézni, aktuális utazásuk állapotát, új utazási kérelmet tudnak indítani, melyet online elbírálja az arra jogosult személyzet. Várhatóan 2 éven belül elbíráljuk a kérelmet. </p>
+        </div>
         
-
-        <img src="pannon-egyetem.png" alt="The ENIAC" />
         <div id="HideLogin">   
             <h2>Login</h2>
             <h:form>
-                    Neptunkód: <h:inputText label="Neptun" value="#{userBean.neptun}" /> <br/>
-                    Jelszó: <h:inputSecret label="Jelszó" value="#{userBean.password}" /> <br/>
+                <div class="input-field col s6">
+                    <h:inputText id="neptun" label="Neptun" value="#{userBean.neptun}" /> 
+                  <label>Neptunkód</label>
+                </div>
+                <div class="input-field col s6">
+                  <h:inputSecret label="Jelszó" value="#{userBean.password}" />
+                  <label for="Jelszó">Jelszó</label>
+                </div>
                 <h:commandButton onclick="#{userBean.Login()};" value="Bejelentkezes"/>
             </h:form>
         </div>
@@ -47,6 +63,8 @@
           
         //]]>
         </script>
+         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+         <script type="text/javascript" src="materialize.min.js"></script>
     </h:body>
 </html>
 
