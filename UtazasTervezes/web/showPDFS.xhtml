@@ -17,7 +17,7 @@
                 </f:facet>
                 <p:ajax event="rowSelect" listener="#{userBean.onRowSelect}" update=":form:msgs" />
                 <p:ajax event="rowUnselect" listener="#{userBean.onRowUnselect}" update=":form:msgs" />
-                                <p:column headerText="Id">
+                <p:column headerText="Id">
                     <h:outputText value="#{PDFDatas.id}" />
                 </p:column>
                 <p:column headerText="Személy ID">
@@ -49,14 +49,10 @@
                     </p:panelGrid>
                 </p:outputPanel>
             </p:dialog>
-            <h:commandButton onclick="#{userBean.Faszom()};" value="Kiválasztás frissítése"/><br/>
-            
+            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{userBean.prepareDownload()}">
+                <p:fileDownload value="#{userBean.download()}" />
+            </p:commandButton>
         </h:form>
-                    
-        <form id="form2" action="/UtazasTervezes/OpenPDF" method="POST">
-            <input type="hidden" id="SelectedPDF" name="SelectedPDF" value="#{userBean.selectedPDFDatas.id}"/>
-            <input type="submit" value="OpenPDF"/>
-        </form> 
     </h:body>
 </html>
 

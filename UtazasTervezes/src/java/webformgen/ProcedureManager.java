@@ -32,30 +32,6 @@ public class ProcedureManager {
         conn=ConnectionManager.getConnection();
     }
 
-    public String getGyarto(String rendszam){
-        CallableStatement cStmt;
-  
-        try {
-            //  procedure neve,paraméterek száma: 2 (?,?) KIMENETI ÉS BEMENETI PARAMÉTEREK
-            cStmt=conn.prepareCall("{call getGyarto(?,?)}");
-        
-            
-            //setString ha string a bemeneti paraméter, setInt ha int etc
-            //1-es azt jelöli hogy hanyadik BEMENETI paraméter (ha több van)
-            cStmt.setString(1, rendszam);
-
-            //Kimeneti paraméter neve, típusa
-            cStmt.registerOutParameter("parmOUT", java.sql.Types.VARCHAR);
-            cStmt.execute();
-            
-            //A Kimeneti paramétrer lekérdezése
-            return cStmt.getString("parmOUT");
-        } catch (SQLException ex) {
-            Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }  
-    }
-
     public int getPersonID(String neptun,String password){
         CallableStatement cStmt;
         try {
@@ -88,15 +64,18 @@ public class ProcedureManager {
         return rendszamok;
     }
     
-    public List<String> getPDFKeys(int PersonID) throws SQLException{
-        List<String> pdfKeys=new ArrayList<>();
-        Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery("SELECT id FROM GeneraltPDF where SzemelyID = "+Integer.toString(PersonID));
-        while(rs.next()){
-            pdfKeys.add(String.valueOf(rs.getInt("id")));
-        }
-        return pdfKeys;
+    public byte[] downloadPDF(int pdfID) throws SQLException{
+        byte[] receivedPDF=null;
+                System.out.println("Preparing PDF ON ID: "+pdfID);
+        Statement select;
+            select = new ConnectionManager().getConnection().createStatement();
+            ResultSet rs = select.executeQuery("SELECT adatok FROM GeneraltPDF WHERE id = "+pdfID);
+            rs = select.getResultSet();
+            rs.next() ;
+            receivedPDF = rs.getBytes("adatok");
+        return receivedPDF;
     }
+    
     public List<PDFDatas> getPDFDatas(int PersonID) throws SQLException{
         int id;
         Date Datum;

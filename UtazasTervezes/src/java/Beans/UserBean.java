@@ -10,7 +10,9 @@ package Beans;
  * and open the template in the editor.
  */
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -20,6 +22,7 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -41,9 +44,10 @@ public class UserBean implements Serializable {
     String honnan,hova;
     String rendszam;
     String Eloadas_postercim,egyebkeret;
-    String SelectedPDFKey;
     PDFDatas SelectedPDFDatas;
     List<PDFDatas> pdfDatas;
+    byte[] receivedPDF=null;
+    int receivedPDFID;
     
     PDFGEN pdfgen=new PDFGEN();
     
@@ -67,9 +71,6 @@ public class UserBean implements Serializable {
         this.SelectedPDFDatas = SelectedPDFDatas;
     }
 
-    public String getSelectedPDFKey() {
-        return SelectedPDFKey;
-    }
     public String getEgyebkeret() {
         return egyebkeret;
     }
@@ -108,8 +109,6 @@ public class UserBean implements Serializable {
     public void setHova(String hova) {
         this.hova = hova;
     }
-
-    
     public String getNeptun() {
         return neptun;
     }
@@ -162,23 +161,33 @@ public class UserBean implements Serializable {
         byte[] pdfBytes=pdfgen.genKalkulacio(hova, rendszam, rendszam, PersonID, honnan, PersonID, PersonID, PersonID, PersonID, hova, neptun, PersonID, PersonID, PersonID);
         SingletonDBMgr.InsertPDF(PersonID, hova, pdfgen.getOsszkoltseg(), "Utazasi Terv", pdfBytes);
     }
-    
-    public List<String> getPDFKEYS() throws SQLException{
-        return SingletonDBMgr.getPDFKeys(PersonID);
-    }
-    
-    public void Faszom(){
-        System.out.println( honnan+hova+rendszam);
-    }
-    
     public void onRowSelect(SelectEvent event) throws IOException {
-        FacesMessage msg = new FacesMessage("Car Selected", ((PDFDatas) event.getObject()).getHova());
+        receivedPDFID=((PDFDatas) event.getObject()).getId();
+        FacesMessage msg = new FacesMessage("PDF Selected", ((PDFDatas) event.getObject()).getHova());
         FacesContext.getCurrentInstance().addMessage(null, msg);
         
     }
- 
     public void onRowUnselect(UnselectEvent event) {
-        FacesMessage msg = new FacesMessage("Car Unselected", ((PDFDatas) event.getObject()).getHova());
+        FacesMessage msg = new FacesMessage("PDF Unselected", ((PDFDatas) event.getObject()).getHova());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    public void prepareDownload() throws SQLException{
+        receivedPDF=SingletonDBMgr.downloadPDF(receivedPDFID);
+    }
+    public void download() throws IOException{
+        String pdfFileName = "PDF_id"+receivedPDFID+".pdf";
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext ec = fc.getExternalContext();  
+        ec.responseReset(); // Some JSF component library or some Filter might have set some headers in the buffer beforehand. We want to get rid of them, else it may collide.
+        ec.setResponseContentType("application/pdf"); // Check http://www.iana.org/assignments/media-types for all types. Use if necessary ExternalContext#getMimeType() for auto-detection based on filename.
+        ec.setResponseContentLength(receivedPDF.length); // Set it with the file size. This header is optional. It will work if it's omitted, but the download progress will be unknown.
+        ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + pdfFileName + "\""); // The Save As popup magic is done here. You can give it any file name you want, this only won't work in MSIE, it will use current request URL as file name instead.
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(receivedPDF);
+        OutputStream responseOutputStream = ec.getResponseOutputStream();
+        int bytes;
+        while ((bytes = bis.read()) != -1)
+            responseOutputStream.write(bytes);
+        fc.responseComplete();
     }
 }
