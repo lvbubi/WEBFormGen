@@ -118,13 +118,13 @@ public class ProcedureManager {
         }
     }
 
-    public void InsertPDF(int PersonID,String hova,float Osszkoltseg,String DukumentumNev,byte[] pdfBytes){
+    public void InsertPDF(int PersonID,String hova,double Osszkoltseg,String DukumentumNev,byte[] pdfBytes){
         CallableStatement cStmt;
         try {
             cStmt=conn.prepareCall("{call AddPDF(?,?,?,?,?)}");
             cStmt.setInt(1, PersonID);
             cStmt.setString(2, hova);
-            cStmt.setFloat(3, Osszkoltseg);
+            cStmt.setDouble(3, Osszkoltseg);
             cStmt.setString(4, DukumentumNev);
             cStmt.setBytes(5, pdfBytes);
             cStmt.execute();

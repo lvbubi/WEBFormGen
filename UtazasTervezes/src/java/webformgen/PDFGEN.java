@@ -1,11 +1,6 @@
 
 package webformgen;
 
-import java.awt.Font;
-import java.io.FileOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -16,13 +11,6 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Font;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,13 +18,12 @@ import java.util.Date;
 
 public class PDFGEN {
      private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-     private float Osszkoltseg=0;
+     private double Osszkoltseg=0;
 
-    public float getOsszkoltseg() {
+    public double getOsszkoltseg() {
         return Osszkoltseg;
     }
-
-     public byte[] genKalkulacio(String nev, String beosztas, String rendszam, double henger, String uzemanyag, double norma, int amortizacio, int ar, double utvonal, String terv, String tipus, double valuta, int palya, int parkolas)
+     public byte[] genKalkulacio(String nev, String beosztas, String rendszam, double henger, String uzemanyag, double norma, int amortizacio, int ar, double utvonal, String terv, String tipus, double valuta, double palya, double parkolas)
     {
          Document document = new Document();
         try{
@@ -74,12 +61,12 @@ public class PDFGEN {
             p18.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location
             
             
-            Paragraph p19 = new Paragraph("Autópályadij Ft-ban: ");
-            Paragraph p20 = new Paragraph("Autopalyadij valutában* és Ft-ban: ");
-            Paragraph p21 = new Paragraph("Parkirozási dij valutában* és forintban: ");
+            Paragraph p19 = new Paragraph("Autópályadij Ft-ban: NINCS KITÖLTVE");
+            Paragraph p20 = new Paragraph("Autopalyadij valutában* és Ft-ban: NINCS KITÖLTVE");
+            Paragraph p21 = new Paragraph("Parkirozási dij valutában* és forintban: NINCS KITÖLTVE");
             Paragraph p22 = new Paragraph("Valuta árfolyam**: "+ valuta);
-            
-            Paragraph p23 = new Paragraph("Összes költség Ft-ban: " +((utvonal/100*norma*ar)+(amortizacio*utvonal)+parkolas+palya),FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Osszkoltseg=((utvonal/100*norma*ar)+(amortizacio*utvonal)+parkolas+palya);
+            Paragraph p23 = new Paragraph("Összes költség Ft-ban: " +Osszkoltseg,FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
                 
             Chunk p24 = new Chunk("Megjegyzesek: ");
             p24.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location   

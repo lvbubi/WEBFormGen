@@ -30,6 +30,7 @@ import webformgen.Car;
 import webformgen.DWNLDATA;
 import webformgen.PDFDatas;
 import webformgen.PDFGEN;
+import webformgen.Person;
 import webformgen.ProcedureManager;
 
 /**
@@ -40,21 +41,46 @@ import webformgen.ProcedureManager;
 @SessionScoped
 @ManagedBean
 public class UserBean implements Serializable {
-    String neptun,password;
-    String honnan,hova;
-    String rendszam;
-    String Eloadas_postercim,egyebkeret;
+    //Weboldalról bekér
+    String neptun,password,honnan,hova,rendszam,Eloadas_postercim,egyebkeret; 
+    double autopalyFT,autopalyaDevizva,ParkirozasDeviza;
+    
+    //Adatbázisból lekér
+    Person szemely;
+    Car kocsi;
+    int PersonID=-1;
     PDFDatas SelectedPDFDatas;
     List<PDFDatas> pdfDatas;
     byte[] receivedPDF=null;
     int receivedPDFID;
     
-    PDFGEN pdfgen=new PDFGEN();
-    
-    int PersonID=-1;
     @EJB
     private ProcedureManager SingletonDBMgr;
 
+    
+    public double getAutopalyFT() {
+        return autopalyFT;
+    }
+
+    public void setAutopalyFT(double autopalyFT) {
+        this.autopalyFT = autopalyFT;
+    }
+
+    public double getAutopalyaDevizva() {
+        return autopalyaDevizva;
+    }
+
+    public void setAutopalyaDevizva(double autopalyaDevizva) {
+        this.autopalyaDevizva = autopalyaDevizva;
+    }
+
+    public double getParkirozasDeviza() {
+        return ParkirozasDeviza;
+    }
+
+    public void setParkirozasDeviza(double ParkirozasDeviza) {
+        this.ParkirozasDeviza = ParkirozasDeviza;
+    }
     public List<PDFDatas> getPdfDatas() {
         return pdfDatas;
     }
@@ -125,12 +151,21 @@ public class UserBean implements Serializable {
         PersonID=SingletonDBMgr.getPersonID(neptun, password);
     }
     public boolean isLoggedIn() throws SQLException{
-        return PersonID>=1;
+        if(PersonID>=1){
+            szemely=SingletonDBMgr.getPersonDatas(PersonID);
+            return true;
+        }
+        return false;
     }
-    public String getPersonDatas(){
-        webformgen.Person p = SingletonDBMgr.getPersonDatas(PersonID);
-        return p.getVnev()+" "+p.getKnev();
+    
+    public String getNev(){
+        return szemely.getVnev()+szemely.getKnev();
     }
+    
+    public String getBeosztas(){
+        return szemely.getBeosztas();
+    }
+    
     public List<String> getRendszamok(){
         return SingletonDBMgr.getRendszamok(PersonID);
     }
@@ -140,8 +175,11 @@ public class UserBean implements Serializable {
                 "alapítványi támogatás","meghívás","saját szervezés");
         return tmp;
     }
+    public void SelectCar(){
+        kocsi=SingletonDBMgr.getCarDatas(rendszam);
+    }
+    
     public double getNorma() throws IOException{
-        Car kocsi=SingletonDBMgr.getCarDatas(rendszam);
         DWNLDATA ddata=new DWNLDATA();
         if("diesel".equals(kocsi.getUzemanyag()))
             return ddata.selectNorma("gazolaj", kocsi.getHenger());
@@ -156,10 +194,16 @@ public class UserBean implements Serializable {
     public void showPDFS() throws SQLException{
         pdfDatas=SingletonDBMgr.getPDFDatas(PersonID);
     }
-    public void genPDF() throws SQLException//PDF generálása,küldése adatbázisba
+    public void genPDF() throws SQLException, IOException//PDF generálása,küldése adatbázisba
     {
-        byte[] pdfBytes=pdfgen.genKalkulacio(hova, rendszam, rendszam, PersonID, honnan, PersonID, PersonID, PersonID, PersonID, hova, neptun, PersonID, PersonID, PersonID);
-        SingletonDBMgr.InsertPDF(PersonID, hova, pdfgen.getOsszkoltseg(), "Utazasi Terv", pdfBytes);
+        PDFGEN pdfgen=new PDFGEN();
+        byte[] pdfBytes=pdfgen.genKalkulacio(
+                getNev(), szemely.getBeosztas(), rendszam, kocsi.getHenger(), kocsi.getUzemanyag(), 
+                //        amortizacio,uzemanyagar,utvonal hossza
+                getNorma(), PersonID, PersonID, PersonID,
+                //                                 valutaarfolyam
+                honnan+" - "+hova, kocsi.getGyarto()+" "+kocsi.getTipus(), PersonID, autopalyFT, ParkirozasDeviza);
+        SingletonDBMgr.InsertPDF(PersonID, hova, pdfgen.getOsszkoltseg(), "Szemelygepkocsi Kalkulacio", pdfBytes);
     }
     public void onRowSelect(SelectEvent event) throws IOException {
         receivedPDFID=((PDFDatas) event.getObject()).getId();

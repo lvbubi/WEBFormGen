@@ -15,14 +15,21 @@
         
         <h:form>
             
-            Név: #{userBean.personDatas} <br/>
+            Név: #{userBean.getNev()} <br/>
             Kérem válasszon autót: 
-            <h:selectOneMenu value="#{userBean.rendszam}" id="kocsiproba">
+            <h:selectOneMenu value="#{userBean.rendszam}" onchange="#{userBean.SelectCar()}" id="kocsiproba">
+                <f:selectItem itemLabel="Select One" itemValue="" />
                 <f:selectItems value="#{userBean.rendszamok}" />
             </h:selectOneMenu>
             <br/>
             Honnan utazik <h:inputText label="Honnan" value="#{userBean.honnan}" /> <br/>
             Hová <h:inputText label="Hova" value="#{userBean.hova}" /> <br/>
+            Autópályadíj FT-ban:<h:inputText label="Hova" value="#{userBean.autopalyFT}" /> <br/>
+            Autópályadíj valutában:<h:inputText label="Hova" value="#{userBean.autopalyaDevizva}" /> <br/>
+            Parkírozási díj valutában:<h:inputText label="Hova" value="#{userBean.parkirozasDeviza}" /> <br/>
+            
+            
+            
             <h3>Konferencián való részvétel esetén a bejelentett előadás/poszter* címe:</h3><br/>
             <p:inputTextarea value="#{userBean.eloadas_postercim}" rows="5" cols="30" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" />
             <h:outputText id="display" />
