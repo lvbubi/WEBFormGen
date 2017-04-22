@@ -46,7 +46,12 @@
                     //sleep(100000)
                     document.getElementById("HideLogin").style.display="none";
                     window.alert("Sikeres belépés");
-                    window.location.href = "http://localhost:8080/UtazasTervezes/faces/user.xhtml";
+                    var isAdmin=#{userBean.getIsAdmin()};
+                    if(isAdmin===0){
+                        window.location.href = "http://localhost:8080/UtazasTervezes/faces/user.xhtml";
+                    }else if(isAdmin===1){
+                        window.location.href = "http://localhost:8080/UtazasTervezes/faces/admin.xhtml";
+                    }
                 }
             }
             checkLogin();

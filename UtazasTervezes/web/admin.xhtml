@@ -8,7 +8,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        #{userBean.showPDFS()}
+        #{userBean.AdminShowPDFS(0)}
         <h:form id="form">
             <p:growl id="msgs" showDetail="true" />
             <p:dataTable id="eventsDT" var="PDFDatas" value="#{userBean.pdfDatas}" selectionMode="single" selection="#{userBean.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
@@ -49,9 +49,6 @@
                     </p:panelGrid>
                 </p:outputPanel>
             </p:dialog>
-            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{userBean.prepareDownload()}">
-                <p:fileDownload value="#{userBean.download()}" />
-            </p:commandButton>
         </h:form>
     </h:body>
 </html>

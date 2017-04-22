@@ -61,8 +61,8 @@ public class UserBean implements Serializable {
     public int getIsAdmin(){
         return isAdmin;
     }
-    public void setIsAdmin(int value){
-        isAdmin=value;
+    public void setIsAdmin(){
+        isAdmin=SingletonDBMgr.getIsAdmin(neptun, password);
     }
     
     public double getAutopalyFT() {
@@ -156,6 +156,7 @@ public class UserBean implements Serializable {
     }
     public void Login(){
         PersonID=SingletonDBMgr.getPersonID(neptun, password);
+        setIsAdmin();
     }
     public boolean isLoggedIn() throws SQLException{
         if(PersonID>=1){
@@ -166,7 +167,7 @@ public class UserBean implements Serializable {
     }
     
     public String getNev(){
-        return szemely.getVnev()+szemely.getKnev();
+        return szemely.getVnev()+" "+szemely.getKnev();
     }
     
     public String getBeosztas(){
@@ -195,11 +196,14 @@ public class UserBean implements Serializable {
     }
     public String getUzemanyag() throws IOException{
         DWNLDATA ddata=new DWNLDATA();
-        return "Hogyiskellkinéznieahónapnak? Egy samplet írjmár pls";
+        return "Hogyiskellkinéznieahónapnak? Egy samplet írjmár pls ((távolság/100)/fogyasztás)";
         //return ddata.selectUzemanyag("Gázolaj", "December");
     }
     public void showPDFS() throws SQLException{
         pdfDatas=SingletonDBMgr.getPDFDatas(PersonID);
+    }
+    public void AdminShowPDFS(int ellenorz) throws SQLException{
+        pdfDatas = SingletonDBMgr.getPDFDatasAdmin(ellenorz);
     }
     public void genPDF() throws SQLException, IOException//PDF generálása,küldése adatbázisba
     {

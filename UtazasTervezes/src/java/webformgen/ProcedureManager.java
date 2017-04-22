@@ -47,6 +47,21 @@ public class ProcedureManager {
         }
         
     }
+    public int getIsAdmin(String neptun, String password){
+        CallableStatement cStmt;
+        try{
+            cStmt=conn.prepareCall("{call tryBeIsAdmin(?,?,?)}");
+            cStmt.setString(1, neptun);
+            cStmt.setString(2, password);
+            cStmt.registerOutParameter("isAdmin", java.sql.Types.INTEGER);
+            cStmt.execute();
+            return cStmt.getInt("isAdmin");
+        }catch (SQLException ex){
+            Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+    }
+    
     public List<String> getRendszamok(int PersonID){
         List<String> rendszamok=new ArrayList<>();
         
@@ -76,7 +91,7 @@ public class ProcedureManager {
         return receivedPDF;
     }
     
-    public List<PDFDatas> getPDFDatas(int PersonID) throws SQLException{
+   public List<PDFDatas> getPDFDatas(int PersonID) throws SQLException{
         int id;
         Date Datum;
         String Hova;
@@ -97,7 +112,32 @@ public class ProcedureManager {
             pdfKeys.add(new PDFDatas(id,PersonID,Datum,Hova,OsszkoltsegFT,DokumentumTipusa,Ellenorizve));
         }
         return pdfKeys;
-    }
+    } 
+      public List<PDFDatas> getPDFDatasAdmin(int ellenorzott) throws SQLException{
+        int id;
+        int szemelyID;
+        Date Datum;
+        String Hova;
+        float OsszkoltsegFT;
+        String DokumentumTipusa;
+        boolean Ellenorizve;
+        
+        List<PDFDatas> pdfKeys=new ArrayList<>();
+        Statement st=conn.createStatement();
+        ResultSet rs=st.executeQuery("SELECT id,SzemelyID,Datum,Hova,OsszkoltsegFt,DokumentumTipusa,Ellenorizve FROM GeneraltPDF where Ellenorizve = "+ ellenorzott);
+        while(rs.next()){
+            id=rs.getInt("id");
+            szemelyID=rs.getInt("SzemelyID");
+            Datum=rs.getDate("Datum");
+            Hova=rs.getString("Hova");
+            OsszkoltsegFT=rs.getFloat("OsszkoltsegFt");
+            DokumentumTipusa=rs.getString("DokumentumTipusa");
+            Ellenorizve=rs.getBoolean("Ellenorizve");
+            
+            pdfKeys.add(new PDFDatas(id,szemelyID,Datum,Hova,OsszkoltsegFT,DokumentumTipusa,Ellenorizve));
+        }
+        return pdfKeys;
+    } 
     
     
     
