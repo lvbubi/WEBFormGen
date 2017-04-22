@@ -39,6 +39,11 @@
                     <h:outputText value="#{PDFDatas.ellenorizve}" />
                 </p:column>
             </p:dataTable>
+            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{userBean.prepareDownload()}">
+                <p:fileDownload value="#{userBean.download()}" />
+            </p:commandButton>
+            <p:commandButton id="ervenyesit" value="Érvényesít" ajax="false" actionListener="#{userBean.setEllenoriz()}">
+            </p:commandButton>
             
             
             <p:dialog header="PDF Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">

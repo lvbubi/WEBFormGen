@@ -113,6 +113,18 @@ public class ProcedureManager {
         }
         return pdfKeys;
     } 
+    public void setEllenorzott(int id) throws SQLException{
+        CallableStatement cStmt;
+        try {
+            cStmt=conn.prepareCall("{call setElfogad(?)}");
+            cStmt.setInt(1, id);
+            cStmt.execute();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+    }
+   
       public List<PDFDatas> getPDFDatasAdmin(int ellenorzott) throws SQLException{
         int id;
         int szemelyID;

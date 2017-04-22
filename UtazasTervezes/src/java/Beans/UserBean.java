@@ -205,6 +205,10 @@ public class UserBean implements Serializable {
     public void AdminShowPDFS(int ellenorz) throws SQLException{
         pdfDatas = SingletonDBMgr.getPDFDatasAdmin(ellenorz);
     }
+    public void setEllenoriz() throws SQLException{
+        SingletonDBMgr.setEllenorzott(receivedPDFID);
+    }
+    
     public void genPDF() throws SQLException, IOException//PDF generálása,küldése adatbázisba
     {
         PDFGEN pdfgen=new PDFGEN();
