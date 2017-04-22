@@ -53,10 +53,17 @@ public class UserBean implements Serializable {
     List<PDFDatas> pdfDatas;
     byte[] receivedPDF=null;
     int receivedPDFID;
+    int isAdmin=0;
     
     @EJB
     private ProcedureManager SingletonDBMgr;
-
+    
+    public int getIsAdmin(){
+        return isAdmin;
+    }
+    public void setIsAdmin(int value){
+        isAdmin=value;
+    }
     
     public double getAutopalyFT() {
         return autopalyFT;
