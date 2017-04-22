@@ -13,7 +13,7 @@
         <div id="baloldal">
             <h2>Előző utazások:</h2>
             <h:form >
-            <h:button value="showPDFS" outcome="showPDFS"/>
+            <p:button value="ShowPDFS" outcome="showPDFS"/>
             </h:form>
         </div>
         <div id="fooldal">
@@ -47,7 +47,7 @@
                 <f:selectItem itemLabel="Select One" itemValue="" />
                 <f:selectItems value="#{userBean.utazasiKeret}" />
             </p:selectOneMenu><br/>
-            <h:commandButton onclick="#{userBean.genPDF()};" value="PDF Generálása"/><br/><br/><br/>
+             <p:commandButton value="Kérelem elküldése" ajax="false" actionListener="#{userBean.genPDF()}"/>
         </h:form>
         
         #{userBean.selectedPDFDatas.hova}
