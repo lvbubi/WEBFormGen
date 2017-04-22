@@ -49,11 +49,21 @@ public class UserBean implements Serializable {
     Person szemely;
     Car kocsi;
     int PersonID=-1;
+    String distance;
     PDFDatas SelectedPDFDatas;
     List<PDFDatas> pdfDatas;
     byte[] receivedPDF=null;
     int receivedPDFID;
     int isAdmin=0;
+    
+    public void setDistance(String value)
+    {
+        distance=value;
+    }
+    
+    public String getDistance(){
+        return distance;
+    }
     
     @EJB
     private ProcedureManager SingletonDBMgr;
@@ -185,6 +195,7 @@ public class UserBean implements Serializable {
     }
     public void SelectCar(){
         kocsi=SingletonDBMgr.getCarDatas(rendszam);
+        
     }
     
     public double getNorma() throws IOException{
@@ -196,7 +207,7 @@ public class UserBean implements Serializable {
     }
     public String getUzemanyag() throws IOException{
         DWNLDATA ddata=new DWNLDATA();
-        return "Hogyiskellkinéznieahónapnak? Egy samplet írjmár pls ((távolság/100)/fogyasztás)";
+        return "Hogyiskellkinéznieahónapnak? Egy samplet írjmár pls (fogyasztás/ (távolság/100)";
         //return ddata.selectUzemanyag("Gázolaj", "December");
     }
     public void showPDFS() throws SQLException{
