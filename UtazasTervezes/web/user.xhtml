@@ -5,6 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyA4hjb09i3NOLmedn71DkLoBFMjo8krFb4&amp;hl=hu" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="user.css"/> 
         <title>#{userBean.getNev()}</title>
     </h:head>
@@ -24,11 +25,38 @@
             
             <h2>Név: #{userBean.getNev()}</h2> <br/>
             Kérem válasszon autót: 
-            <h:selectOneMenu value="#{userBean.rendszam}" onchange="#{userBean.SelectCar()}" id="kocsiproba">
+            <h:selectOneMenu value="#{userBean.rendszam}" onchange="#{userBean.SelectCar()}" id="kocsiproba" >
                 <f:selectItem itemLabel="Select One" itemValue="" />
                 <f:selectItems value="#{userBean.rendszamok}" />
             </h:selectOneMenu>
             <br/>
+            
+<div id="map" style="width:400px;height:300px;"></div>
+<script type="text/javascript">
+function gmapload() {
+  if (!document.getElementById("map")) return;
+  if (GBrowserIsCompatible()) {
+    var map = new GMap2(document.getElementById("map"));
+    map.addControl(new GSmallMapControl());
+    map.setCenter(new GLatLng(47.000000, 19.000000), 17);
+    // Create our "tiny" marker icon
+    var icon = new GIcon();
+    icon.image = "http://domain.tld/logo.png";
+    icon.shadow = "http://domain.tld/logo_shadow.png";
+    icon.iconSize = new GSize(35, 35);
+    icon.shadowSize = new GSize(50, 35);
+    icon.iconAnchor = new GPoint(17, 17);
+    icon.infoWindowAnchor = new GPoint(5, 1);
+
+      map.addOverlay(new GMarker(new GLatLng(47.000000, 19.000000), icon));
+    //GInfoWindowOptions.maxWidth = 50;
+    map.openInfoWindowHtml(new GLatLng(47.000000, 19.000000),
+                   "IDE MEG SOK SOK HTML KÓD, AMI A BUBOREKBAN JELENIK MEG");
+  }
+}
+window.onload = gmapload;
+</script>
+
             Honnan utazik <h:inputText label="Honnan" value="#{userBean.honnan}" /> <br/>
             Hová <h:inputText label="Hova" value="#{userBean.hova}" /> <br/>
             Autópályadíj FT-ban:<h:inputText label="Hova" value="#{userBean.autopalyFT}" /> <br/>
@@ -44,7 +72,7 @@
             <br/>
             Tanulmányút esetén milyen program keretében kerül sor az utazásra*:<br/>
             <p:selectOneMenu label="Keret" value="#{userBean.egyebkeret}" effect="fold" editable="true">
-                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItem itemDisabled="TRUE" itemLabel="Select One" itemValue=""  />
                 <f:selectItems value="#{userBean.utazasiKeret}" />
             </p:selectOneMenu><br/>
              <p:commandButton value="Kérelem elküldése" ajax="false" actionListener="#{userBean.genPDF()}"/>
