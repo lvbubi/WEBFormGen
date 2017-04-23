@@ -126,7 +126,13 @@
                 <f:selectItems value="#{userBean.utazasiKeret}" />
             </p:selectOneMenu><br/>
              <p:commandButton value="Kérelem elküldése" ajax="false" actionListener="#{userBean.genPDF()}"/>
+        <f:view contentType="text/html">
+            <h1>Google Map</h1>
+            <p:gmap center="41.381542, 2.122893" zoom="15" type="HYBIRD" style="width:600px;height:400px" />
+        </f:view>
+            
         </h:form>
+
         #{userBean.selectedPDFDatas.hova}
         #{userBean.rendszam}
         #{userBean.distance}
