@@ -90,11 +90,12 @@
         <div id="baloldal">
             <h2 id="elozo">Előző utazások:</h2>
         <h:form >
-            <p:button value="ShowPDFS" outcome="showPDFS"/>
+            <p:button value="ShowPDFS" outcome="showPDFS"/><br/>
+            <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Show Map" onclick="PF('dlg').show();" />  
         </h:form>
         </div>
             
-            <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Show Map" onclick="PF('dlg').show();" />  
+            
             <p:dialog id="gmapDialog" widgetVar="dlg" width="1000" height="563" modal="true">
                 <div id="map-canvas"></div>
             </p:dialog>
@@ -114,7 +115,18 @@
                 <f:selectItems value="#{userBean.rendszamok}" />
             </h:selectOneMenu>
             <br/>
-
+            <p:outputLabel for="advanced" value="Valuta:" />
+            <p:selectOneListbox id="advanced" value="#{userBean.currency}" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{userBean.getValutaTypesKeret()}" />
+ 
+            <p:column>
+                <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
+            </p:column>
+ 
+            <p:column>
+                <h:outputText value="#{t.displayName}" />
+            </p:column>
+            </p:selectOneListbox>
             Honnan utazik <h:inputText label="Honnan" value="#{userBean.honnan}" id="start"/> 
             Hová <h:inputText label="Hova" value="#{userBean.hova}" id="end"/> 
             <p:commandButton type="button" value="Calculate Distance" onclick="calcRoute();" /> 

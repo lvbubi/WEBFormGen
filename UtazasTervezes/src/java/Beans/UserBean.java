@@ -1,14 +1,5 @@
-﻿/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Beans;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -55,7 +46,20 @@ public class UserBean implements Serializable {
     byte[] receivedPDF=null;
     int receivedPDFID;
     int isAdmin=0;
+    String currency;
+
+    @EJB
+    private ProcedureManager SingletonDBMgr;
     
+    
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        System.out.println(currency);
+        this.currency = currency;
+    }
     public void setDistance(String value)
     {
         distance=value;
@@ -64,9 +68,6 @@ public class UserBean implements Serializable {
     public String getDistance(){
         return distance;
     }
-    
-    @EJB
-    private ProcedureManager SingletonDBMgr;
     
     public int getIsAdmin(){
         return isAdmin;
@@ -225,12 +226,9 @@ public class UserBean implements Serializable {
     }
     public int getUzemanyag() throws IOException{
         DWNLDATA ddata=new DWNLDATA();
-        if(kocsi==null)
-            return -1;
-/*        if(kocsi.getTipus().equals("benzin"))
+        if(kocsi.getTipus().equals("benzin"))
             return ddata.selectUzemanyag("ESZ-95");
-        return ddata.selectUzemanyag("Gázolaj");*/
-        return -1;
+        return ddata.selectUzemanyag("Gázolaj");
     }
     
     public double getArfolyam(String valuta) throws IOException
@@ -254,7 +252,7 @@ public class UserBean implements Serializable {
         System.out.println(distance);
             PDFGEN pdfgen=new PDFGEN();
             double arfolyam=0;
-            //arfolyam=getArfolyam("EUR");
+            //arfolyam=getArfolyam(currency);
             byte[] pdfBytes=pdfgen.genKalkulacio(
                 getNev(), szemely.getBeosztas(), rendszam, kocsi.getHenger(), kocsi.getUzemanyag(), 
                 //        amortizacio
