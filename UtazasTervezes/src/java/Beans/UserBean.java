@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -194,6 +194,26 @@ public class UserBean implements Serializable {
                 "TEMPUS", "egyéb EU - szintű együttműködés", "kormányközi együttműködés","intézményi együttműködés",
                 "alapítványi támogatás","meghívás","saját szervezés");
         return tmp;
+    }
+
+    public List<String> getValutaTypesKeret()
+    {
+        List<String> tmp = Arrays.asList(
+                "ATS","AUD","AUP","BEF","BGL","BGN","BRL","CAD","CHF",
+                "CNY","CSD","CSK2","CYN","CZK","DDM","DEM","DKK","EEK",
+                "EGP","ESP","EUR","FIM","FRF","GBP","GHP","GRD","HKD",
+                "HRK","IDR","IEP","ILS","INR","ISK","ITL","JPY","KPW",
+                "KRW","KWD","LBP","LTL","LUF","LVL","MNT","MXN","MYR",
+                "NLG","NOK","NZD","OAL","OBL","OFR","ORB","PHP","PKR",
+                "PLN","PTE","ROL","RON","RSD","RUB","SDP","SEK","SGD",
+                "SIT","SKK","SUR","THB","TRY","UAH","USD","VND","XEU",
+                "XTR","YUD","ZAR");
+        return tmp;
+    }
+    
+    public void SelectCar(){
+        kocsi=SingletonDBMgr.getCarDatas(rendszam);
+        
     }
     
     public double getNorma() throws IOException{
