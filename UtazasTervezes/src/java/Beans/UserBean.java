@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import webformgen.Car;
@@ -35,7 +36,7 @@ public class UserBean implements Serializable {
     //Weboldalról bekér
     String neptun,password,honnan,hova,rendszam,Eloadas_postercim,egyebkeret; 
     double autopalyFT,autopalyaDevizva,ParkirozasDeviza;
-    
+    boolean skip;
     //Adatbázisból lekér
     Person szemely;
     Car kocsi;
@@ -292,4 +293,23 @@ public class UserBean implements Serializable {
             responseOutputStream.write(bytes);
         fc.responseComplete();
     }
+    
+    public String onFlowProcess(FlowEvent event) {
+        if(skip) {
+            skip = false;   //reset in case user goes back
+            return "confirm";
+        }
+        else {
+            return event.getNewStep();
+        }
+    }
+    public boolean isSkip() {
+        return skip;
+    }
+ 
+    public void setSkip(boolean skip) {
+        this.skip = skip;
+    }
+    
+    
 }

@@ -78,6 +78,9 @@
                 var stuff=distance.split(",")[0];
                 var stuff=stuff.split(" ")[0];
                 document.getElementById('fooldal:distance2').value=stuff;
+                document.getElementById('fooldal:wizard:confirm:confirmation:distance3').value=stuff;
+                window.alert(document.getElementById('distance3').value);
+                window.alert("LOL");
             }
            
             </script>
@@ -91,7 +94,6 @@
             <h2 id="elozo">Előző utazások:</h2>
         <h:form >
             <p:button value="ShowPDFS" outcome="showPDFS"/><br/>
-            <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Show Map" onclick="PF('dlg').show();" />  
         </h:form>
         </div>
             
@@ -109,31 +111,78 @@
         <h:form id="fooldal">
             <img src="pannon.PNG" alt="The ENIAC" />          
             <h2>#{userBean.getNev()}</h2> <br/>
-            Kérem válasszon autót: 
-            <h:selectOneMenu value="#{userBean.rendszam}" id="kocsiproba" >
-                <f:selectItem itemLabel="Select One" itemValue="" />
-                <f:selectItems value="#{userBean.rendszamok}" />
-            </h:selectOneMenu>
-            <br/>
-            <p:outputLabel for="advanced" value="Valuta:" />
-            <p:selectOneListbox id="advanced" value="#{userBean.currency}" filter="true" filterMatchMode="contains">
-            <f:selectItems value="#{userBean.getValutaTypesKeret()}" />
- 
-            <p:column>
-                <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
-            </p:column>
- 
-            <p:column>
-                <h:outputText value="#{t.displayName}" />
-            </p:column>
-            </p:selectOneListbox>
-            Honnan utazik <h:inputText label="Honnan" value="#{userBean.honnan}" id="start"/> 
-            Hová <h:inputText label="Hova" value="#{userBean.hova}" id="end"/> 
-            <p:commandButton type="button" value="Calculate Distance" onclick="calcRoute();" /> 
 
-            Autópályadíj FT-ban:<h:inputText  value="#{userBean.autopalyFT}" /> <br/>
-            Autópályadíj valutában:<h:inputText  value="#{userBean.autopalyaDevizva}" /> <br/>
-            Parkírozási díj valutában:<h:inputText  value="#{userBean.parkirozasDeviza}" /> <br/>
+            
+            <p:wizard flowListener="#{userBean.onFlowProcess}" id="wizard">
+                <p:tab id="personal" title="Personal" >
+                    <p:panel header="Útvonal">
+                        <p:messages />
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Honnan *" />
+                            <p:inputText value="#{userBean.honnan}" id="start" required="true"/>
+                            
+                            <h:outputText value="Hová *" />
+                            <p:inputText value="#{userBean.hova}" id="end" required="true"/>
+                            
+                            <h:outputText value="Autó: *" />
+                            <h:selectOneMenu value="#{userBean.rendszam}" required="true" id="kocsiproba" >
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{userBean.rendszamok}" />
+                            </h:selectOneMenu>
+                            
+                            <p:commandButton type="button" value="Calculate Distance NINCS ELLENŐRIZVE HOGY MEG LETT NYOMVA" onclick="calcRoute();"/> 
+                            <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Show Map" onclick="PF('dlg').show();" />  
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="address" title="Utazás">
+                    <p:panel header="Egyeb">
+                        <p:messages />
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <p:outputLabel for="advanced" value="Valuta:" />
+                            <p:selectOneListbox id="advanced" value="#{userBean.currency}" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{userBean.getValutaTypesKeret()}" />
+                            </p:selectOneListbox>
+                            
+                            <h:outputText value="Autópálya költség:" />
+                            <h:inputText  value="#{userBean.autopalyFT}" />
+                            
+                            <h:outputText value="Autópálya költség deviza:" />
+                            <h:inputText  value="#{userBean.autopalyaDevizva}" />
+                            
+                            <h:outputText value="Parkírozás Deviza:" />
+                            <h:inputText  value="#{userBean.parkirozasDeviza}" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                
+                
+                <p:tab id="confirm" title="Jóváhagyás">
+                    <p:panel header="Jóváhagyás">
+                        <h:panelGrid id="confirmation" columns="2" columnClasses="grid,grid">
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Honnan: " />
+                                <h:outputText value="#{userBean.honnan}" styleClass="outputLabel"/>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Hova: " />
+                                <h:outputText value="#{userBean.hova}" styleClass="outputLabel"/>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Név: " />
+                                <h:outputText value="#{userBean.getNev()}" styleClass="outputLabel"/>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Autó: " />
+                                <h:outputText value="#{userBean.rendszam}" styleClass="outputLabel"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+            </p:wizard>
             
             <p:inputTextarea id="distance2" value="#{userBean.distance}"> </p:inputTextarea>
             
