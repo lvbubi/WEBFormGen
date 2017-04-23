@@ -31,7 +31,6 @@ img{
         text-align: center;
 }
 #map-canvas{
-    float:left;
-    width:100%;
-    height:40%
+    min-height: 100% !important; 
+    height: 100%;
 }
