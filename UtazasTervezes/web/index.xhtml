@@ -15,9 +15,7 @@
             
         </div>
         <div id="fooldal">
-            <img src="pannon-egyetem.png" alt="The ENIAC" />
-            <h1>Pannon Egyetem</h1>
-            <h1>Utazási Iroda</h1>
+            <img src="pannon.PNG" alt="The ENIAC" />
             <p>Kedves látógatónk!</p>
             <p>Ez a weboldal arra a célra szolgál, hogy az egyetemünk tanárai kikerülve a lassú és rossz papír alapú adminisztrációt egy utazással kapcsolatban, ahol majd egyetemünket képviselik. Tanáraink neptunkód és jelszó segítségével be tudnak lépni, ahol megtudják nézni, aktuális utazásuk állapotát, új utazási kérelmet tudnak indítani, melyet online elbírálja az arra jogosult személyzet. Várhatóan 2 éven belül elbíráljuk a kérelmet. </p>
         </div>
@@ -26,11 +24,11 @@
             <h2>Login</h2>
             <h:form>
                 <div class="input-field col s6">
-                    <h:inputText id="neptun" label="Neptun" value="#{userBean.neptun}" /> 
+                    <h:inputText id="neptun" label="Neptun" value="#{userBean.neptun}" style="color: #99ccff" /> 
                   <label>Neptunkód</label>
                 </div>
                 <div class="input-field col s6">
-                  <h:inputSecret label="Jelszó" value="#{userBean.password}" />
+                    <h:inputSecret label="Jelszó" value="#{userBean.password}" style="color: #99ccff" />
                   <label for="Jelszó">Jelszó</label>
                 </div>
                 <p:commandButton value="Bejelentkezés" ajax="false" actionListener="#{userBean.Login()}"/>

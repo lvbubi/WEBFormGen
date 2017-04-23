@@ -78,14 +78,14 @@
 
     <h:body>
         <div id="baloldal">
-            <h2>Előző utazások:</h2>
+            <h2 id="elozo">Előző utazások:</h2>
         <h:form >
             <p:button value="ShowPDFS" outcome="showPDFS"/>
         </h:form>
         </div>
         <div id="fooldal">
-                        
-            <h2>Név: #{userBean.getNev()}</h2> <br/>
+            <img src="pannon.PNG" alt="The ENIAC" />          
+            <h2>#{userBean.getNev()}</h2> <br/>
             Kérem válasszon autót: 
             <h:selectOneMenu value="#{userBean.rendszam}" onchange="#{userBean.SelectCar()}" id="kocsiproba" >
                 <f:selectItem itemLabel="Select One" itemValue="" />
@@ -107,7 +107,7 @@
             </div>
             
             <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Show Map" onclick="PF('dlg').show();" />  
-            <p:dialog id="gmapDialog" widgetVar="dlg" width="625" height="400" modal="true">
+            <p:dialog id="gmapDialog" widgetVar="dlg" width="1000" height="563" modal="true">
                 <div id="map-canvas"></div>
             </p:dialog>
             

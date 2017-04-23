@@ -3,7 +3,6 @@
     width: 15%;
     display: inline-block;
     text-align: center;
-    color: red;
     float: right;
     margin: 100px 20px 30px;
     border-left: 4px solid #ECF0F1;
@@ -16,26 +15,35 @@ body{
     margin: auto;
 }
 h2{
-    color: #00897b;
+    color: #99ccff;
     
 }
+
 h1{
     text-align: center;
 }
 img{
     margin:auto;
+    width:100%;
 }
 #fooldal{
     	margin: auto;
+        position: absolute;
 	width: 60%;
-	height: 1000px;
+	height: 100%;
+        min-height: 100% !important;
 	display:inline-block; 
-        background: #ECF0F1;
+        background: #F4E7C7;
+        background-color: #F4E7C7;
 }
 #baloldal{
 	width: 20%;
-	height: 1000px;
+	height: 10px;
 	float : left;
 	display:inline-block; 
 	overflow: auto;
+}
+p{
+    font-size: 20px;
+    text-align: justify
 }

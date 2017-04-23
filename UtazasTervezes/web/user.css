@@ -4,7 +4,7 @@ body{
     margin: auto;
 }
 h2{
-    color: #00897b;
+    color: #002338;
     
 }
 h1{
@@ -12,14 +12,16 @@ h1{
 }
 img{
     margin:auto;
+    width:100%;
 }
 #fooldal{
     	margin: auto;
 	width: 60%;
+        position:absolute;
 	height: 100%;
         min-height: 100% !important;
 	display:inline-block; 
-        background: #ECF0F1;
+        background: #F4E7C7;
         text-align: center;
 }
 #baloldal{
@@ -29,6 +31,9 @@ img{
 	display:inline-block; 
 	overflow: auto;
         text-align: center;
+}
+#elozo{
+        color: #99ccff;
 }
 #map-canvas{
     min-height: 100% !important; 
