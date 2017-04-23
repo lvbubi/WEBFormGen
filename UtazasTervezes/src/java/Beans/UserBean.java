@@ -128,6 +128,7 @@ public class UserBean implements Serializable {
 
     public void setRendszam(String rendszam) {
         this.rendszam = rendszam;
+        kocsi=SingletonDBMgr.getCarDatas(rendszam);
     }
     
     public String getEloadas_postercim() {
@@ -150,6 +151,7 @@ public class UserBean implements Serializable {
     }
 
     public void setHova(String hova) {
+        System.out.println(hova);
         this.hova = hova;
     }
     public String getNeptun() {
@@ -193,10 +195,6 @@ public class UserBean implements Serializable {
                 "alapítványi támogatás","meghívás","saját szervezés");
         return tmp;
     }
-    public void SelectCar(){
-        kocsi=SingletonDBMgr.getCarDatas(rendszam);
-        
-    }
     
     public double getNorma() throws IOException{
         DWNLDATA ddata=new DWNLDATA();
@@ -205,10 +203,14 @@ public class UserBean implements Serializable {
         else
             return ddata.selectNorma("benzin", kocsi.getHenger());
     }
-    public int getUzemanyag(String tipus) throws IOException{
+    public int getUzemanyag() throws IOException{
         DWNLDATA ddata=new DWNLDATA();
-        return ddata.selectUzemanyag(tipus);
-        //return ddata.selectUzemanyag("Gázolaj");
+        if(kocsi==null)
+            return -1;
+/*        if(kocsi.getTipus().equals("benzin"))
+            return ddata.selectUzemanyag("ESZ-95");
+        return ddata.selectUzemanyag("Gázolaj");*/
+        return -1;
     }
     
     public double getArfolyam(String valuta) throws IOException
@@ -229,14 +231,19 @@ public class UserBean implements Serializable {
     
     public void genPDF() throws SQLException, IOException//PDF generálása,küldése adatbázisba
     {
-        PDFGEN pdfgen=new PDFGEN();
-        byte[] pdfBytes=pdfgen.genKalkulacio(
+        System.out.println(distance);
+            PDFGEN pdfgen=new PDFGEN();
+            double arfolyam=0;
+            //arfolyam=getArfolyam("EUR");
+            byte[] pdfBytes=pdfgen.genKalkulacio(
                 getNev(), szemely.getBeosztas(), rendszam, kocsi.getHenger(), kocsi.getUzemanyag(), 
-                //        amortizacio,uzemanyagar,utvonal hossza
-                getNorma(), PersonID, PersonID, PersonID,
-                //                                 valutaarfolyam
-                honnan+" - "+hova, kocsi.getGyarto()+" "+kocsi.getTipus(), PersonID, autopalyFT, ParkirozasDeviza);
-        SingletonDBMgr.InsertPDF(PersonID, hova, pdfgen.getOsszkoltseg(), "Szemelygepkocsi Kalkulacio", pdfBytes);
+                //        amortizacio
+                getNorma(), PersonID, getUzemanyag(), Integer.parseInt(distance),
+                honnan+" - "+hova, kocsi.getGyarto()+" "+kocsi.getTipus(), arfolyam, autopalyFT, ParkirozasDeviza
+            );
+            SingletonDBMgr.InsertPDF(PersonID, hova, pdfgen.getOsszkoltseg(), "Szemelygepkocsi Kalkulacio", pdfBytes);
+            System.out.println("Generálva, adatbázisra elküldve");
+        
     }
     public void onRowSelect(SelectEvent event) throws IOException {
         receivedPDFID=((PDFDatas) event.getObject()).getId();

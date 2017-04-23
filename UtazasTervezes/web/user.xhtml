@@ -38,8 +38,8 @@
             }
 
             function calcRoute() {
-                var start = document.getElementById("start").value;
-                var end = document.getElementById("end").value;
+                var start = document.getElementById("fooldal:start").value;
+                var end = document.getElementById("fooldal:end").value;
 
                 var request = {
                     origin:start,
@@ -66,6 +66,7 @@
                         summaryPanel.innerHTML += route.legs[i].duration.text + '<br/>';
                         summaryPanel2.innerHTML += route.legs[i].distance.text;
                         #{userBean.setDistance(distance)};
+                        swap();
                     }
 
                     }
@@ -73,7 +74,16 @@
             }
             google.maps.event.addDomListener(window, 'load', initialize);
            
+            function swap(){
+                var stuff=distance.split(",")[0];
+                var stuff=stuff.split(" ")[0];
+                document.getElementById('fooldal:distance2').value=stuff;
+            }
+           
             </script>
+        
+            
+        
     </h:head>
 
     <h:body>
@@ -83,28 +93,6 @@
             <p:button value="ShowPDFS" outcome="showPDFS"/>
         </h:form>
         </div>
-        <div id="fooldal">
-            <img src="pannon.PNG" alt="The ENIAC" />          
-            <h2>#{userBean.getNev()}</h2> <br/>
-            Kérem válasszon autót: 
-            <h:selectOneMenu value="#{userBean.rendszam}" onchange="#{userBean.SelectCar()}" id="kocsiproba" >
-                <f:selectItem itemLabel="Select One" itemValue="" />
-                <f:selectItems value="#{userBean.rendszamok}" />
-            </h:selectOneMenu>
-            <br/>
-
-            Honnan utazik <h:inputText label="Honnan" value="#{userBean.honnan}" id="start"/> 
-            Hová <h:inputText label="Hova" value="#{userBean.hova}" id="end"/> 
-            <button type="button" onclick="calcRoute();">Click Me!</button> <br/>
-            <div id="googletravel">
-                <strong>Mode of Travel: </strong>
-                <select id="mode" onChange="calcRoute();">
-                <option value="DRIVING">Autóval</option>
-                <option value="WALKING">Séta</option>
-                <option value="BICYCLING">Kerékpárral</option>
-                <option value="TRANSIT">Tömegközlekedéssel</option>
-                </select>
-            </div>
             
             <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Show Map" onclick="PF('dlg').show();" />  
             <p:dialog id="gmapDialog" widgetVar="dlg" width="1000" height="563" modal="true">
@@ -117,12 +105,25 @@
             
             
         
-        <h:form>
-            Autópályadíj FT-ban:<h:inputText label="Hova" value="#{userBean.autopalyFT}" /> <br/>
-            Autópályadíj valutában:<h:inputText label="Hova" value="#{userBean.autopalyaDevizva}" /> <br/>
-            Parkírozási díj valutában:<h:inputText label="Hova" value="#{userBean.parkirozasDeviza}" /> <br/>
+        <h:form id="fooldal">
+            <img src="pannon.PNG" alt="The ENIAC" />          
+            <h2>#{userBean.getNev()}</h2> <br/>
+            Kérem válasszon autót: 
+            <h:selectOneMenu value="#{userBean.rendszam}" id="kocsiproba" >
+                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="#{userBean.rendszamok}" />
+            </h:selectOneMenu>
+            <br/>
+
+            Honnan utazik <h:inputText label="Honnan" value="#{userBean.honnan}" id="start"/> 
+            Hová <h:inputText label="Hova" value="#{userBean.hova}" id="end"/> 
+            <p:commandButton type="button" value="Calculate Distance" onclick="calcRoute();" /> 
+
+            Autópályadíj FT-ban:<h:inputText  value="#{userBean.autopalyFT}" /> <br/>
+            Autópályadíj valutában:<h:inputText  value="#{userBean.autopalyaDevizva}" /> <br/>
+            Parkírozási díj valutában:<h:inputText  value="#{userBean.parkirozasDeviza}" /> <br/>
             
-            
+            <p:inputTextarea id="distance2" value="#{userBean.distance}"> </p:inputTextarea>
             
             <h3>Konferencián való részvétel esetén a bejelentett előadás/poszter* címe:</h3><br/>
             <p:inputTextarea value="#{userBean.eloadas_postercim}" rows="5" cols="30" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" />
@@ -136,17 +137,15 @@
             </p:selectOneMenu><br/>
              <p:commandButton value="Kérelem elküldése" ajax="false" actionListener="#{userBean.genPDF()}"/>          
         </h:form>
-
-        #{userBean.selectedPDFDatas.hova}
-        #{userBean.rendszam}
-        #{userBean.distance}
-        #{userBean.honnan}
-        #{userBean.hova}
-        #{userBean.eloadas_postercim}
-        #{userBean.egyebkeret}
-        <br/>Norma: #{userBean.norma}
-        <br/>Uzemanyag: #{userBean.uzemanyag}
         <br/>
+            <div id="googletravel">
+                <strong>Mode of Travel: </strong>
+                <select id="mode" onChange="calcRoute();">
+                <option value="DRIVING">Autóval</option>
+                <option value="WALKING">Séta</option>
+                <option value="BICYCLING">Kerékpárral</option>
+                <option value="TRANSIT">Tömegközlekedéssel</option>
+                </select>
          </div>
     </h:body>
     

@@ -169,18 +169,6 @@ public class DWNLDATA {
         return arfolyam;
     }
     
-    private Map getBenzinNorma() {
-        return benzinnorma;
-    } 
-
-    private Map getGazolajnorma() {
-        return gazolajnorma;
-    }
-
-    private Map getMotornorma() {
-        return motornorma;
-    }
-    
     private List<String> getUzemanyag() {
         return uzemanyag;
     } 
@@ -200,7 +188,8 @@ public class DWNLDATA {
             else datum=datum+honap;
             datum=datum+".15.";
         
-         double value=getMNB(valuta,datum);              
+         double value=getMNB(valuta,datum);    
+         System.out.println("Valuta:\t"+value);
          return value;
     } //egy bizonyos napon a valuta erteke
       
@@ -230,7 +219,7 @@ public class DWNLDATA {
                 if(henger>=501) return (double) motornorma.get("500");   
                 
         }
-    
+        System.out.println("Norma:\t"+norma);
         return norma;
     } // adott tipusú és meretu henger fogyasztása /100km
     
@@ -287,7 +276,7 @@ public class DWNLDATA {
           case "Keverék": return anyag[2];
           case "LPG": return anyag[3];               
       }
-      
+        System.out.println("Uzemanyag:"+tmp);
         return tmp;
     }
    

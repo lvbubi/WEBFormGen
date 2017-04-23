@@ -134,7 +134,7 @@ public class PDFGEN {
             return pdfBytes;
         }
         catch(Exception e){
-            System.out.println(e);
+            System.out.println("Couldnt Generate PDF");
             return null;
         }
     }
