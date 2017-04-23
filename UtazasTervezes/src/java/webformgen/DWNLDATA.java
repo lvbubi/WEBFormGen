@@ -2,7 +2,11 @@ package webformgen;
 
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,9 +188,19 @@ public class DWNLDATA {
 
     //fontos adatok Lekérése
     
-    public double selectArfolyam(String valuta, String date) throws IOException
+    public double selectArfolyam(String valuta) throws IOException
     {   
-         double value=getMNB(valuta,date);              
+         DateFormat year = new SimpleDateFormat("yyyy");
+         DateFormat month = new SimpleDateFormat("MM");
+         DateFormat day = new SimpleDateFormat("dd");
+            Date time = new Date();
+            String datum = year.format(time)+".";
+            int honap = Integer.valueOf(month.format(time))-1;
+            if(honap<10)    datum=datum+"0"+honap;
+            else datum=datum+honap;
+            datum=datum+".15.";
+        
+         double value=getMNB(valuta,datum);              
          return value;
     } //egy bizonyos napon a valuta erteke
       
@@ -221,10 +235,26 @@ public class DWNLDATA {
     } // adott tipusú és meretu henger fogyasztása /100km
     
    
-    public int selectUzemanyag( String tipus,String honap )
+    public int selectUzemanyag( String tipus )
     {   int tmp = 0;
         int index=0;
-        List<String> seged=getUzemanyag();             
+        List<String> seged=getUzemanyag();    
+        String honap=null;
+        
+         String [] datum = 
+         {
+             "január","február","március","április","május","június","július","Augusztus","szeptember","október",
+             "november","december"
+         };
+       
+        java.util.Date date= new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH);
+        System.out.println(month);
+        
+        honap=datum[month];
+        
 
        for(int i=0;i<seged.size();i++)
       {     

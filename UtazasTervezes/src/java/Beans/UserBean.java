@@ -205,11 +205,18 @@ public class UserBean implements Serializable {
         else
             return ddata.selectNorma("benzin", kocsi.getHenger());
     }
-    public String getUzemanyag() throws IOException{
+    public int getUzemanyag(String tipus) throws IOException{
         DWNLDATA ddata=new DWNLDATA();
-        return "Hogyiskellkinéznieahónapnak? Egy samplet írjmár pls (fogyasztás/ (távolság/100)";
-        //return ddata.selectUzemanyag("Gázolaj", "December");
+        return ddata.selectUzemanyag(tipus);
+        //return ddata.selectUzemanyag("Gázolaj");
     }
+    
+    public double getArfolyam(String valuta) throws IOException
+    {
+        DWNLDATA ddata=new DWNLDATA();
+        return ddata.selectArfolyam(valuta);
+    }
+    
     public void showPDFS() throws SQLException{
         pdfDatas=SingletonDBMgr.getPDFDatas(PersonID);
     }
