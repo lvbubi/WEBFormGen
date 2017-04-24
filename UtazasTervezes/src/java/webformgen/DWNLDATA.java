@@ -187,6 +187,16 @@ public class DWNLDATA {
             if(honap<10)    datum=datum+"0"+honap;
             else datum=datum+honap;
             datum=datum+".15.";
+            System.out.println(datum);
+            
+             if(month.format(time).equals("01"))
+            {   
+                int tmp;
+                tmp = Integer.valueOf(year.format(time))-1;
+                datum= tmp+"."+"12."+"15.";
+            }
+            
+            System.out.println(datum);
         
          double value=getMNB(valuta,datum);    
          System.out.println("Valuta:\t"+value);
