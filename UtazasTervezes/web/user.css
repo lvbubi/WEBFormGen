@@ -26,7 +26,7 @@ img{
 }
 #baloldal{
 	width: 20%;
-	height: 10px;
+	min-height: 100% !important;
 	float : left;
 	display:inline-block; 
 	overflow: auto;

@@ -250,6 +250,7 @@ public class UserBean implements Serializable {
     
     public void genPDF() throws SQLException, IOException//PDF generálása,küldése adatbázisba
     {
+        
         System.out.println(distance);
             PDFGEN pdfgen=new PDFGEN();
             double arfolyam=0;

@@ -173,6 +173,7 @@ public class ProcedureManager {
     public void InsertPDF(int PersonID,String hova,double Osszkoltseg,String DukumentumNev,byte[] pdfBytes){
         System.out.println("Kezdet:\nID: "+PersonID+" hova: "+hova+" Osszktg: "+Osszkoltseg);
         CallableStatement cStmt;
+       
         try {
             cStmt=conn.prepareCall("{call AddPDF(?,?,?,?,?)}");
             cStmt.setInt(1, PersonID);

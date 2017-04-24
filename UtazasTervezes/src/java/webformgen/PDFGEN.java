@@ -64,9 +64,9 @@ public class PDFGEN {
             p18.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location
             
             
-            Paragraph p19 = new Paragraph("Autópályadij Ft-ban: NINCS KITÖLTVE");
-            Paragraph p20 = new Paragraph("Autopalyadij valutában* és Ft-ban: NINCS KITÖLTVE");
-            Paragraph p21 = new Paragraph("Parkirozási dij valutában* és forintban: NINCS KITÖLTVE");
+            Paragraph p19 = new Paragraph("Autópályadij Ft-ban: " + palya);
+            Paragraph p20 = new Paragraph("Autopalyadij valutában* és Ft-ban: " );//bekérve deviza, megjelenízve deviza+ft
+            Paragraph p21 = new Paragraph("Parkirozási dij valutában* és forintban: "+parkolas);
             Paragraph p22 = new Paragraph("Valuta árfolyam**: "+ valuta);
             Osszkoltseg=((utvonal/100*norma*ar)+(amortizacio*utvonal)+parkolas+palya);
             Paragraph p23 = new Paragraph("Összes költség Ft-ban: " +Osszkoltseg,FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
