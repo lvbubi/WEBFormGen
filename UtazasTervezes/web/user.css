@@ -15,18 +15,18 @@ img{
     width:100%;
 }
 #fooldal{
+        text-align: center;
     	margin: auto;
+        position: absolute;
 	width: 60%;
-        position:absolute;
-	height: 100%;
         min-height: 100% !important;
 	display:inline-block; 
         background: #F4E7C7;
-        text-align: center;
+        background-color: #F4E7C7;
 }
 #baloldal{
 	width: 20%;
-	height: 1000px;
+	height: 10px;
 	float : left;
 	display:inline-block; 
 	overflow: auto;
