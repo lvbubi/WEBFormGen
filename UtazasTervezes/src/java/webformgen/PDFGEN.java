@@ -8,9 +8,12 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Font;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -138,5 +141,84 @@ public class PDFGEN {
             return null;
         }
     }
+     
+       public byte[] genUtazásiTerv(String nev, String beosztas, String adoszam)
+       {
+         Document document = new Document();
+       try{
+            PdfWriter.getInstance(document, new FileOutputStream("Utazasi_terv.pdf"));
+            document.open();
+            
+            Paragraph p1 = new Paragraph("Utazasi terv*",FontFactory.getFont(FontFactory.TIMES_BOLD,15,Font.BOLD,BaseColor.BLACK));              
+                p1.setAlignment(Element.ALIGN_CENTER);
+            Paragraph p2 = new Paragraph("Nev(adoszam)beosztas: " + nev + " " + adoszam + " " + beosztas);
+                 p2.setLeading(30);
+            Paragraph p3 = new Paragraph("Munkahely(egység): " + "Munkahely");
+            Paragraph p4 = new Paragraph("Konferencián valo reszvetel eseten a bejelentett eloadas/poszter* cime: " + "cim"); 
+            Paragraph p5 = new Paragraph("Az eloadast/posztert a konferencia szervezoi elfogadtak/még nem fogadtak el: " + "IGEN/NEM");
+            Paragraph p6 = new Paragraph("Tanulmany esetén milyen program keretében kerul sor az utazasra*: " + "PROGRAM");
+                p6.setLeading(30);
+            Paragraph p7 = new Paragraph("A külfoldi tartozkodas hely(orszag,varos,intezmény stb.): " + "Tartozkodas"); 
+            Paragraph p8 = new Paragraph("Idopont,idotartam: " + "idotartam"); 
+            
+            Paragraph p9 = new Paragraph("Költsegterv",FontFactory.getFont(FontFactory.TIMES_BOLD,15,Font.BOLD,BaseColor.BLACK));              
+            p9.setAlignment(Element.ALIGN_CENTER);
+            Paragraph p10 = new Paragraph("a.) Ideiglenes külfoldi utazasnal "); 
+            
+           
+            PdfPTable table = new PdfPTable(9);
+            table.setTotalWidth(500);
+
+                // t.setBorderColor(BaseColor.GRAY);
+                // t.setPadding(4);
+                // t.setSpacing(4);
+                // t.setBorderWidth(1);
+
+                PdfPCell c1 = new PdfPCell(new Phrase(" "));                              
+                table.addCell(c1);                               
+                table.addCell(c1);
+                table.addCell(c1);
+                table.addCell(c1);
+                table.addCell(c1);               
+                c1 = new PdfPCell(new Phrase("Külföldi penznem"));
+                table.addCell(c1);
+                c1 = new PdfPCell(new Phrase(" "));
+                table.addCell(c1);
+                c1 = new PdfPCell(new Phrase("Forint"));
+                table.addCell(c1);
+                c1 = new PdfPCell(new Phrase(" "));
+                table.addCell(c1);
+               // table.setHeaderRows(1);
+
+              
+
+            
+            document.add(p1);
+            document.add(p2);
+            document.add(p3);
+            document.add(p4);
+            document.add(p5);
+            document.add(p6);
+            document.add(p7);
+            document.add(p8);
+            document.add(new Phrase("\n\n")); 
+            document.add(p9);
+            document.add(p10);
+            document.add(table);
+              
+           
+            document.close();
+            //Convert PDF to byteARRAY
+            //Convert PDF to byteARRAY
+            //Convert PDF to byteARRAY
+            byte[] pdfBytes = byteArrayOutputStream.toByteArray();
+            return pdfBytes;
+        }
+        catch(Exception e){
+            System.out.println("Couldnt Generate PDF");
+            return null;
+        }
+    }
 
 }
+
