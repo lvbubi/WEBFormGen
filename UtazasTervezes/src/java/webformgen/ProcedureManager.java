@@ -47,15 +47,16 @@ public class ProcedureManager {
         }
         
     }
-    public int getIsAdmin(String neptun, String password){
+    public int getJogosultsag(String neptun, String password){
         CallableStatement cStmt;
         try{
             cStmt=conn.prepareCall("{call tryBeIsAdmin(?,?,?)}");
             cStmt.setString(1, neptun);
             cStmt.setString(2, password);
-            cStmt.registerOutParameter("isAdmin", java.sql.Types.INTEGER);
+            cStmt.registerOutParameter("jogos", java.sql.Types.INTEGER);
             cStmt.execute();
-            return cStmt.getInt("isAdmin");
+            System.out.println(cStmt.getInt("jogos"));
+            return cStmt.getInt("jogos");
         }catch (SQLException ex){
             Logger.getLogger(ProcedureManager.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -173,7 +174,6 @@ public class ProcedureManager {
     public void InsertPDF(int PersonID,String hova,double Osszkoltseg,String DukumentumNev,byte[] pdfBytes){
         System.out.println("Kezdet:\nID: "+PersonID+" hova: "+hova+" Osszktg: "+Osszkoltseg);
         CallableStatement cStmt;
-       
         try {
             cStmt=conn.prepareCall("{call AddPDF(?,?,?,?,?)}");
             cStmt.setInt(1, PersonID);

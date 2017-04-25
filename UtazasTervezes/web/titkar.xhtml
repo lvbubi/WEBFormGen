@@ -5,10 +5,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Titkar view</title>
     </h:head>
     <h:body>
-        #{sharedBean.showPDFS()}
+        #{sharedBean.AdminShowPDFS(0)}
         <h:form id="form">
             <p:growl id="msgs" showDetail="true" />
             <p:dataTable id="eventsDT" var="PDFDatas" value="#{sharedBean.pdfDatas}" selectionMode="single" selection="#{sharedBean.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
@@ -39,8 +39,9 @@
                     <h:outputText value="#{PDFDatas.ellenorizve}" />
                 </p:column>
             </p:dataTable>
-            
-            
+            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{sharedBean.prepareDownload()}">
+                <p:fileDownload value="#{sharedBean.download()}" />
+            </p:commandButton>            
             <p:dialog header="PDF Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="carDetail" style="text-align:center;">
                     <p:panelGrid  columns="2" rendered="#{not empty sharedBean.selectedPDFDatas}" columnClasses="label,value">
@@ -49,9 +50,6 @@
                     </p:panelGrid>
                 </p:outputPanel>
             </p:dialog>
-            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{sharedBean.prepareDownload()}">
-                <p:fileDownload value="#{sharedBean.download()}" />
-            </p:commandButton>
         </h:form>
     </h:body>
 </html>

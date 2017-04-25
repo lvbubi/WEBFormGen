@@ -24,45 +24,20 @@
             <h2>Login</h2>
             <h:form>
                 <div class="input-field col s6">
-                    <h:inputText id="neptun" label="Neptun" value="#{userBean.neptun}" style="color: #99ccff" /> 
+                    <h:inputText id="neptun" label="Neptun" value="#{sharedBean.neptun}" style="color: #99ccff" /> 
                   <label>Neptunkód</label>
                 </div>
                 <div class="input-field col s6">
-                    <h:inputSecret label="Jelszó" value="#{userBean.password}" style="color: #99ccff" />
+                    <h:inputSecret label="Jelszó" value="#{sharedBean.password}" style="color: #99ccff" />
                   <label for="Jelszó">Jelszó</label>
                 </div>
-                <p:commandButton value="Bejelentkezés" ajax="false" actionListener="#{userBean.Login()}"/>
+                <p:commandButton value="Bejelentkezés" ajax="false" action="#{sharedBean.Login()}"/>
             </h:form>
         </div>
         
         <script type="text/javascript">
         //<![CDATA[
-            function checkLogin(){
 
-                var check=#{userBean.isLoggedIn()};
-                if(check===true){
-                    //sleep(100000)
-                    document.getElementById("HideLogin").style.display="none";
-                    window.alert("Sikeres belépés");
-                    var isAdmin=#{userBean.getIsAdmin()};
-                    if(isAdmin===0){
-                        window.location.href = "http://localhost:8080/UtazasTervezes/faces/user.xhtml";
-                    }else if(isAdmin===1){
-                        window.location.href = "http://localhost:8080/UtazasTervezes/faces/admin.xhtml";
-                    }
-                }
-            }
-            checkLogin();
-            
-            function sleep(milliseconds) {
-            var start = new Date().getTime();
-            for (var i = 0; i < 1e7; i++) {
-              if ((new Date().getTime() - start) > milliseconds){
-                break;
-              }
-            }
-          }
-          
           
         //]]>
         </script>
