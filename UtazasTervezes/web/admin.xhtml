@@ -8,15 +8,15 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        #{userBean.AdminShowPDFS(0)}
+        #{sharedBean.AdminShowPDFS(0)}
         <h:form id="form">
             <p:growl id="msgs" showDetail="true" />
-            <p:dataTable id="eventsDT" var="PDFDatas" value="#{userBean.pdfDatas}" selectionMode="single" selection="#{userBean.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
+            <p:dataTable id="eventsDT" var="PDFDatas" value="#{sharedBean.pdfDatas}" selectionMode="single" selection="#{sharedBean.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
                 <f:facet name="header">
                     Leadott utazási tervek
                 </f:facet>
-                <p:ajax event="rowSelect" listener="#{userBean.onRowSelect}" update=":form:msgs" />
-                <p:ajax event="rowUnselect" listener="#{userBean.onRowUnselect}" update=":form:msgs" />
+                <p:ajax event="rowSelect" listener="#{sharedBean.onRowSelect}" update=":form:msgs" />
+                <p:ajax event="rowUnselect" listener="#{sharedBean.onRowUnselect}" update=":form:msgs" />
                 <p:column headerText="Id">
                     <h:outputText value="#{PDFDatas.id}" />
                 </p:column>
@@ -39,18 +39,20 @@
                     <h:outputText value="#{PDFDatas.ellenorizve}" />
                 </p:column>
             </p:dataTable>
-            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{userBean.prepareDownload()}">
+            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{sharedBean.prepareDownload()}">
                 <p:fileDownload value="#{userBean.download()}" />
             </p:commandButton>
-            <p:commandButton id="ervenyesit" value="Érvényesít" ajax="false" actionListener="#{userBean.setEllenoriz()}">
+            <p:commandButton id="ervenyesit" value="Érvényesít" ajax="false" actionListener="#{sharedBean.setEllenoriz()}">
+            </p:commandButton>
+            <p:commandButton id="torol" value="Torol" ajax="false" actionListener="#{sharedBean.Torol()}">
             </p:commandButton>
             
             
             <p:dialog header="PDF Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="carDetail" style="text-align:center;">
-                    <p:panelGrid  columns="2" rendered="#{not empty userBean.selectedPDFDatas}" columnClasses="label,value">
+                    <p:panelGrid  columns="2" rendered="#{not empty sharedBean.selectedPDFDatas}" columnClasses="label,value">
                         <h:outputText value="Hova:" />
-                        <h:outputText value="#{userBean.selectedPDFDatas.hova}" />
+                        <h:outputText value="#{sharedBean.selectedPDFDatas.hova}" />
                     </p:panelGrid>
                 </p:outputPanel>
             </p:dialog>

@@ -5,6 +5,9 @@
  */
 package Beans;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -38,7 +41,11 @@ public class ControllerBean {
         System.out.println("ELINDUUUULT");
         System.out.println(sharedbean.PersonID);
         userBean.setPersonID(sharedbean.PersonID);
-        userBean.szemely=SingletonDBMgr.getPersonDatas(userBean.PersonID);
+        try {
+            userBean.szemely=SingletonDBMgr.getPersonDatas(userBean.PersonID);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void Start(){
         System.out.println("START");

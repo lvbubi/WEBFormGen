@@ -1,32 +1,21 @@
 package Beans;
 
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import org.primefaces.event.FlowEvent;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
 import webformgen.Car;
 import webformgen.DWNLDATA;
-import webformgen.PDFDatas;
 import webformgen.PDFGEN;
 import webformgen.Person;
 import webformgen.ProcedureManager;
@@ -71,7 +60,11 @@ public class UserBean implements Serializable {
     void initIt(){
         PersonID=sharedBean.PersonID;
         System.out.println(PersonID);
-        szemely=SingletonDBMgr.getPersonDatas(PersonID);
+        try {
+            szemely=SingletonDBMgr.getPersonDatas(PersonID);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
     }
     
@@ -128,7 +121,7 @@ public class UserBean implements Serializable {
         return rendszam;
     }
 
-    public void setRendszam(String rendszam) {
+    public void setRendszam(String rendszam) throws SQLException {
         this.rendszam = rendszam;
         kocsi=SingletonDBMgr.getCarDatas(rendszam);
     }
@@ -154,6 +147,7 @@ public class UserBean implements Serializable {
 
     public void setHova(String hova) {
         System.out.println(hova);
+        System.out.println(sharedBean.neptun);
         this.hova = hova;
     }
 
@@ -167,7 +161,7 @@ public class UserBean implements Serializable {
         return szemely.getBeosztas();
     }
     
-    public List<String> getRendszamok(){
+    public List<String> getRendszamok() throws SQLException{
         return SingletonDBMgr.getRendszamok(PersonID);
     }
     public List<String> getUtazasiKeret(){
@@ -192,7 +186,7 @@ public class UserBean implements Serializable {
         return tmp;
     }
     
-    public void SelectCar(){
+    public void SelectCar() throws SQLException{
         kocsi=SingletonDBMgr.getCarDatas(rendszam);
         
     }

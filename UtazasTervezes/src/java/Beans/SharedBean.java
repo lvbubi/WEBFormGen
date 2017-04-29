@@ -11,7 +11,6 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Stateful;
@@ -54,7 +53,7 @@ public class SharedBean implements Serializable{
         return PersonID>=1;
     }
     
-    public String Login(){
+    public String Login() throws SQLException{
         PersonID=SingletonDBMgr.getPersonID(neptun, password);
         System.out.println(PersonID);
         setIsAdmin();
@@ -71,7 +70,7 @@ public class SharedBean implements Serializable{
         return isAdmin;
     }
     //talan msot mar jo
-    public void setIsAdmin(){
+    public void setIsAdmin() throws SQLException{
         isAdmin=SingletonDBMgr.getJogosultsag(neptun, password);
     }
     
@@ -106,8 +105,7 @@ public class SharedBean implements Serializable{
     }
     
     public void showPDFS() throws SQLException{
-        System.out.println("ezmia"+PersonID);
-        pdfDatas=SingletonDBMgr.getPDFDatas(1);
+        pdfDatas=SingletonDBMgr.getPDFDatas(PersonID);
     }
     
     public void AdminShowPDFS(int ellenorz) throws SQLException{
@@ -116,7 +114,9 @@ public class SharedBean implements Serializable{
     public void setEllenoriz() throws SQLException{
         SingletonDBMgr.setEllenorzott(receivedPDFID);
     }
-    
+    public void Torol() throws SQLException{
+        SingletonDBMgr.DeletePDF(SelectedPDFDatas.getId());
+    }
     
     public void prepareDownload() throws SQLException{
         receivedPDF=SingletonDBMgr.downloadPDF(receivedPDFID);
