@@ -16,7 +16,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import org.primefaces.event.FlowEvent;
 import webformgen.Car;
 import webformgen.DWNLDATA;
 import webformgen.PDFGEN;
@@ -30,9 +29,8 @@ import webformgen.ProcedureManager;
 @Named(value = "szgkBean")
 @Stateless
 public class SzgkBean {
-    
     @EJB
-    private SharedBean sharedBean;
+    private ProcedureManager SingletonDBMgr;
     //Weboldalról bekér
     String honnan,hova,rendszam; 
     double autopalyFT,autopalyaDevizva,ParkirozasDeviza;
@@ -53,14 +51,10 @@ public class SzgkBean {
     String distance;
     
     String currency;
-
-    @EJB
-    private ProcedureManager SingletonDBMgr;
  
     @PostConstruct
     void initIt(){
-        System.out.println(sharedBean.neptun);
-        PersonID=sharedBean.PersonID;
+        PersonID=SharedBean.PersonID;
         System.out.println(PersonID);
         try {
             szemely=SingletonDBMgr.getPersonDatas(PersonID);
@@ -134,7 +128,6 @@ public class SzgkBean {
 
     public void setHova(String hova) {
         System.out.println(hova);
-        System.out.println(sharedBean.neptun);
         this.hova = hova;
     }
 
