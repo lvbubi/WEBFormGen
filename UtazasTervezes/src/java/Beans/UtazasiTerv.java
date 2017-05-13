@@ -5,11 +5,16 @@
  */
 package Beans;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Named;
+import webformgen.ProcedureManager;
 
 /**
  *
@@ -18,11 +23,22 @@ import javax.inject.Named;
 @Named(value = "utazasiTerv")
 @Stateless
 public class UtazasiTerv {
+    @EJB
+    private ProcedureManager SingletonDBMgr;
+    
+    int PersonID=-1;
     Date mettol,meddig;
     String Eloadas_postercim,egyebkeret,utazas_celja;
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
+    void initIt(){
+        PersonID=SharedBean.PersonID;
+        System.out.println(PersonID);
+    }
+    public void genPDF(){
+        System.out.println("PDF Generálása");
+    }
+    
     public String getUtazas_celja() {
         return utazas_celja;
     }

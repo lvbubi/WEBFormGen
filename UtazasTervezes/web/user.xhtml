@@ -21,10 +21,10 @@
         <div id="baloldal">
             <h2 id="elozo">Előző utazások:</h2>
         <h:form >
-            <p:button value="ShowPDFS" outcome="showPDFS"/><br/>
+            <p:commandButton value="ShowUncheckedPDFS" ajax="false" action="#{sharedBean.redirectPDFS}" style="margin:20px;"/>          
         </h:form>
         </div>
-
+        #{sharedBean.showPDFS()}
         <h:form id="fooldal">
             <img src="pannon.PNG" alt="The ENIAC" />          
             <h2>#{sharedBean.neptun}</h2><br/>

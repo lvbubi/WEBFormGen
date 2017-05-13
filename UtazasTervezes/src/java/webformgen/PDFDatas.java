@@ -18,7 +18,7 @@ public class PDFDatas implements  org.primefaces.model.SelectableDataModel  {
         String Hova;
         float OsszkoltsegFT;
         String DokumentumTipusa;
-        boolean Ellenorizve;
+        int Ellenorizve;
         public int getId() {
             return id;
         }
@@ -43,11 +43,11 @@ public class PDFDatas implements  org.primefaces.model.SelectableDataModel  {
             return DokumentumTipusa;
         }
 
-        public boolean isEllenorizve() {
+        public int getEllenorizve() {
             return Ellenorizve;
         }
 
-        public PDFDatas(int id, int SzemelyID, Date Datum, String Hova, float OsszkoltsegFT, String DokumentumTipusa, boolean ellenorizve) {
+        public PDFDatas(int id, int SzemelyID, Date Datum, String Hova, float OsszkoltsegFT, String DokumentumTipusa, int ellenorizve) {
             this.id = id;
             this.SzemelyID = SzemelyID;
             this.Datum = Datum;

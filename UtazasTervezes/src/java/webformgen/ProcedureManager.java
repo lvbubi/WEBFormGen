@@ -81,23 +81,26 @@ public class ProcedureManager {
         return receivedPDF;
     }
     
-   public List<PDFDatas> getPDFDatas(int PersonID) throws SQLException{
+   public List<PDFDatas> getPDFDatas(int PersonID,int pdfState) throws SQLException{
         int id;
         Date Datum;
         String Hova;
         float OsszkoltsegFT;
         String DokumentumTipusa;
-        boolean Ellenorizve;
+        int Ellenorizve;
         List<PDFDatas> pdfKeys=new ArrayList<>();
         Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery("SELECT id,SzemelyID,Datum,Hova,OsszkoltsegFt,DokumentumTipusa,Ellenorizve FROM GeneraltPDF where SzemelyID = "+Integer.toString(PersonID));
+        ResultSet rs=st.executeQuery("SELECT id,SzemelyID,Datum,Hova,OsszkoltsegFt,DokumentumTipusa,"
+                + "Ellenorizve FROM GeneraltPDF where SzemelyID = "+Integer.toString(PersonID)
+                +" and Ellenorizve = "+Integer.toString(pdfState)
+        );
         while(rs.next()){
             id=rs.getInt("id");
             Datum=rs.getDate("Datum");
             Hova=rs.getString("Hova");
             OsszkoltsegFT=rs.getFloat("OsszkoltsegFt");
             DokumentumTipusa=rs.getString("DokumentumTipusa");
-            Ellenorizve=rs.getBoolean("Ellenorizve");
+            Ellenorizve=rs.getInt("Ellenorizve");
             
             pdfKeys.add(new PDFDatas(id,PersonID,Datum,Hova,OsszkoltsegFT,DokumentumTipusa,Ellenorizve));
         }
@@ -117,7 +120,7 @@ public class ProcedureManager {
         String Hova;
         float OsszkoltsegFT;
         String DokumentumTipusa;
-        boolean Ellenorizve;
+        int Ellenorizve;
         
         List<PDFDatas> pdfKeys=new ArrayList<>();
         Statement st=conn.createStatement();
@@ -129,7 +132,7 @@ public class ProcedureManager {
             Hova=rs.getString("Hova");
             OsszkoltsegFT=rs.getFloat("OsszkoltsegFt");
             DokumentumTipusa=rs.getString("DokumentumTipusa");
-            Ellenorizve=rs.getBoolean("Ellenorizve");
+            Ellenorizve=rs.getInt("Ellenorizve");
             
             pdfKeys.add(new PDFDatas(id,szemelyID,Datum,Hova,OsszkoltsegFT,DokumentumTipusa,Ellenorizve));
         }

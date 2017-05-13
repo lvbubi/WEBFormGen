@@ -40,6 +40,8 @@
                             <h:outputText value="Meddig: *" />
                             <p:calendar id="meddig" value="#{utazasiTerv.meddig}" showOn="button" required="true" />
                         </h:panelGrid>
+                        <p:commandButton value="Kérelem elküldése" ajax="false" actionListener="#{utazasiTerv.genPDF()}" style="margin:20px;"/>          
+    
                     </p:panel>
                 </p:tab>
             </p:wizard>
