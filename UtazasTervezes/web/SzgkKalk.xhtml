@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Utazasi Terv</title>
-        <link rel="stylesheet" type="text/css" href="szgkkalc.css"/> 
+        <link rel="stylesheet" type="text/css" href="css/szgkkalc.css"/> 
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=false&amp;key=AIzaSyA4hjb09i3NOLmedn71DkLoBFMjo8krFb4"></script>
         
         <script>
@@ -75,10 +75,12 @@
             </script>
     </h:head>
     <h:body>
-            <p:dialog id="gmapDialog" widgetVar="dlg" width="1000" height="563" modal="true">
-                <div id="map-canvas"></div>
-            </p:dialog>
+        <div id="baloldal"><p> </p></div>
+        <p:dialog id="gmapDialog" widgetVar="dlg" width="1000" height="563" modal="true">
+            <div id="map-canvas"></div>
+        </p:dialog>
         <h:form id="form">
+            <img src="images/pannon.PNG" alt="The ENIAC" />   
             <p:wizard flowListener="#{userBean.onFlowProcess}" id="wizard" styleClass="wizza">
                 <p:tab id="personal" title="Personal" >
                     <p:panel header="Útvonal">
@@ -151,22 +153,9 @@
                     </p:panel>
                 </p:tab>
             </p:wizard>
-                    <div id="directions_panel" style="margin:20px;"></div>
-            <p id="distance" value="#{szgkBean.distance}" style="margin:20px;"></p>
-            
-            <p:inputTextarea id="distance2" value="#{szgkBean.distance}"> </p:inputTextarea>
-
-            <br/>
+            <div id="directions_panel" style="display: none;"></div>
+            <p id="distance" value="#{szgkBean.distance}" style="text-align: center;"></p>
+            <p:inputTextarea id="distance2" value="#{szgkBean.distance}" rendered="false"> </p:inputTextarea>
         </h:form>
-        <br/>
-            <div id="googletravel">
-                <strong>Mode of Travel: </strong>
-                <select id="mode" onChange="calcRoute();">
-                <option value="DRIVING">Autóval</option>
-                <option value="WALKING">Séta</option>
-                <option value="BICYCLING">Kerékpárral</option>
-                <option value="TRANSIT">Tömegközlekedéssel</option>
-                </select>
-         </div>
     </h:body>
 </html>

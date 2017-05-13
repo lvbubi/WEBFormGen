@@ -13,8 +13,8 @@
               padding: 0;
             }
         </style>
-
-        <link rel="stylesheet" type="text/css" href="user.css"/> 
+        <title>#{szgkBean.nev}</title>
+        <link rel="stylesheet" type="text/css" href="css/user.css"/> 
     </h:head>
 
     <h:body>
@@ -26,9 +26,10 @@
         </div>
 
         <h:form id="fooldal">
-            <img src="pannon.PNG" alt="The ENIAC" />          
-            <h2>#{sharedBean.neptun}</h2><br/>
-            <p id="details">Az utazásiterv elfogadása két fázisból áll. Első lépésben el kell készíteni az útiköltség tervet, amit a dékánnak (vagy más erre hivatott szervezetnek) el kell bírálni. Ha a tervet elfogadták, akkor folytatni lehet egy utazásiterv kitöltésével, amit ha elfogadnak, akkor az utazás finanszírozva lesz.</p>
+            <img src="images/pannon.PNG" alt="The ENIAC" />       
+            <br></br>
+            <h2 id="nev">#{szgkBean.nev}</h2>
+            <p id="details">Az utazásiterv elfogadása két fázisból áll. <b>Első lépésben</b> el kell készíteni az <b>személygépkocsi kalkulációt</b>, amit a dékánnak (vagy más erre hivatott szervezetnek) el kell bírálni. <b>Ha a tervet elfogadták</b>, akkor folytatni lehet egy <b>utazási terv</b> kitöltésével, amit ha elfogadnak, akkor az utazás finanszírozva lesz.</p>
     
             <p:commandButton value="Utazási Terv (folytatás)" ajax="false" action="#{userBean.utazasiTerv}" style="margin:20px;"/>          
             <p:commandButton value="Személygépkocsi Kalkuláció" ajax="false" action="#{userBean.szgkKalk}" style="margin:20px;"/>          

@@ -1,0 +1,50 @@
+#map-canvas{
+    min-height: 100% !important; 
+    height: 100%;
+}
+html { 
+  background: url(../images/darkwall3.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+body{
+    margin: auto;
+}
+h2{
+    color: #008fd5;
+    
+}
+h1{
+    text-align: center;
+}
+img{
+    margin:auto;
+    width:100%;
+}
+#form{
+        text-align: center;
+    	margin: auto;
+        position: absolute;
+	width: 60%;
+        min-height: 100% !important;
+	display:inline-block; 
+        background: #F4E7C7;
+        background-color: #F4E7C7;
+}
+#baloldal{
+	width: 20%;
+        min-width: 20% !important;
+	min-height: 100% !important;
+	float : left;
+	display:inline-block; 
+	overflow: auto;
+        text-align: center;
+}
+p{
+    text-align: left;
+    margin: 20px;
+    font-size: 20px;
+    text-align: justify;
+}
