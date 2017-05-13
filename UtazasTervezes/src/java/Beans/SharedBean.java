@@ -12,12 +12,10 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -31,11 +29,28 @@ import webformgen.ProcedureManager;
  * @author lvbubi
  */
 @Named(value = "sharedBean")
-@ManagedBean
 @Stateless
 public class SharedBean implements Serializable{
     PDFDatas SelectedPDFDatas;
-    List<PDFDatas> pdfDatas;
+    static List<PDFDatas> pdfDatas;
+    static List<PDFDatas> deletedpdfDatas;
+    static List<PDFDatas> acceptedpdfDatas;
+    public List<PDFDatas> getDeletedpdfDatas() {
+        return deletedpdfDatas;
+    }
+
+    public void setDeletedpdfDatas(List<PDFDatas> deletedpdfDatas) {
+        this.deletedpdfDatas = deletedpdfDatas;
+    }
+
+    public List<PDFDatas> getAcceptedpdfDatas() {
+        return acceptedpdfDatas;
+    }
+
+    public void setAcceptedpdfDatas(List<PDFDatas> acceptedpdfDatas) {
+        this.acceptedpdfDatas = acceptedpdfDatas;
+    }
+    
     byte[] receivedPDF=null;
     int receivedPDFID;
     static int PersonID;
@@ -58,14 +73,14 @@ public class SharedBean implements Serializable{
         System.out.println(PersonID);
         setIsAdmin();
         if(isAdmin==0){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");return;
         }else if(isAdmin==1){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");return;
         }else if(isAdmin==2){
             FacesContext.getCurrentInstance().getExternalContext().redirect("titkar.xhtml");
             return;
         }
-        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        //FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
     } 
     public int getIsAdmin(){
         return isAdmin;
@@ -106,11 +121,16 @@ public class SharedBean implements Serializable{
     }
     
     public void showPDFS() throws SQLException{
-        pdfDatas=SingletonDBMgr.getPDFDatas(PersonID);
+        pdfDatas=SingletonDBMgr.getPDFDatas(PersonID,0);
+        acceptedpdfDatas=SingletonDBMgr.getPDFDatas(PersonID,1);
     }
     
     public void AdminShowPDFS(int ellenorz) throws SQLException{
-        pdfDatas = SingletonDBMgr.getPDFDatasAdmin(ellenorz);
+        pdfDatas = SingletonDBMgr.getPDFDatasAdmin(0);
+        if(ellenorz==1){//ha az ellenorz 1 akkor admin használja ezt a függvényt
+            acceptedpdfDatas=SingletonDBMgr.getPDFDatasAdmin(1);
+            deletedpdfDatas=SingletonDBMgr.getPDFDatasAdmin(3);
+        }
     }
     public void setEllenoriz() throws SQLException{
         SingletonDBMgr.setEllenorzott(receivedPDFID);
@@ -149,5 +169,14 @@ public class SharedBean implements Serializable{
     public void onRowUnselect(UnselectEvent event) {
         FacesMessage msg = new FacesMessage("PDF Unselected", ((PDFDatas) event.getObject()).getHova());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    public void redirectAccepted() throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("showAcceptedPDFS.xhtml");
+    }
+    public void redirectDeleted() throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("showDeletedPDFS.xhtml");
+    }
+    public void redirectPDFS() throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("showPDFS.xhtml");
     }
 }
