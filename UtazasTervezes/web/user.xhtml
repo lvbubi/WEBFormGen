@@ -89,11 +89,13 @@
                 document.getElementById('fooldal:wizard').style.display='block';
                 document.getElementById('fooldal:uj').style.display='none';
                 document.getElementById('fooldal:folytat').style.display='none';
+                document.getElementById('details').style.display='none';
             }
             function utazasiterv(){
                 document.getElementById('fooldal:utazasterv').style.display='block';
                 document.getElementById('fooldal:uj').style.display='none';
                 document.getElementById('fooldal:folytat').style.display='none';
+                document.getElementById('details').style.display='none';
             }
         </script>
             
@@ -117,7 +119,7 @@
             <img src="pannon.PNG" alt="The ENIAC" />          
             <h2>#{userBean.getNev()}</h2>
             <h2>#{sharedBean.neptun}</h2><br/>
-            <p>Az utazásiterv elfogadása két fázisból áll. Első lépésben el kell készíteni az útiköltség tervet, amit a dékánnak (vagy más erre hivatott szervezetnek) el kell bírálniuk. Ha a tervet elfogadták, akkor folytatni lehet egy utazásiterv kitöltésével, amit ha elfogadnak, akkor az utazás finanszírozva lesz.</p>
+            <p id="details">Az utazásiterv elfogadása két fázisból áll. Első lépésben el kell készíteni az útiköltség tervet, amit a dékánnak (vagy más erre hivatott szervezetnek) el kell bírálni. Ha a tervet elfogadták, akkor folytatni lehet egy utazásiterv kitöltésével, amit ha elfogadnak, akkor az utazás finanszírozva lesz.</p>
             <p:commandButton type="button" value="Új útiköltségterv készítése" onclick="utikoltseg();" id="uj" styleClass="styleuj" ></p:commandButton> 
             <p:commandButton id="folytat" type="button" value="Folytatás utazásiterv kitöltésével" onclick="utazasiterv();" styleClass="stylefolytat"/>  
             <p:wizard flowListener="#{userBean.onFlowProcess}" id="wizard" styleClass="wizza">
@@ -194,19 +196,32 @@
                 <p:tab id="utaz" title="Personal" >
                     <p:panel header="Út célja">
                         <p:messages />
-                        <h:panelGrid columns="2" columnClasses="label, value">
+                        <h:panelGrid columns="1" columnClasses="label, value">
                             <h:outputText value="Konferencián való részvétel esetén a bejelentett előadás/poszter* címe: *" />
                             <p:inputTextarea value="#{userBean.eloadas_postercim}" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
                             <h:outputText id="display" />
                             
                             <h:outputText value="Az utazás célja: " />
-                            <p:inputTextarea value="#{userBean.utazas_celja}" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
+                            <p:inputTextarea value="#{userBean.utazas_celja}" counter="display2" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
+                            <h:outputText id="display2" />
                             
                             <h:outputText value="Tanulmányút esetén milyen program keretében kerül sor az utazásra*:" />
                             <p:selectOneMenu label="Keret" value="#{userBean.egyebkeret}" effect="fold" editable="true" required="true">
                                 <f:selectItem itemDisabled="TRUE" itemLabel="Select One" itemValue=""  />
                                 <f:selectItems value="#{userBean.utazasiKeret}" />
                             </p:selectOneMenu>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="date" title="Date" >
+                    <p:panel header="Dátum">
+                        <p:messages />
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Mettől: *" />
+                            <p:calendar id="mettol" value="#{userBean.mettol}" showOn="button" required="true" />
+                            
+                            <h:outputText value="Meddig: *" />
+                            <p:calendar id="meddig" value="#{userBean.meddig}" showOn="button" required="true" />
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
