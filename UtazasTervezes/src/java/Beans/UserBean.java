@@ -3,7 +3,6 @@ package Beans;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +35,6 @@ public class UserBean implements Serializable {
     String honnan,hova,rendszam,Eloadas_postercim,egyebkeret,Utazas_celja; 
     double autopalyFT,autopalyaDevizva,ParkirozasDeviza;
     boolean skip;
-    Date mettol,meddig;
     //Adatbázisból lekér
     Person szemely;
     Car kocsi;
@@ -158,21 +156,6 @@ public class UserBean implements Serializable {
         this.hova = hova;
     }
 
-    public Date getMettol(){
-        return mettol;
-    }
-        public Date getMeddig(){
-        return meddig;
-    }
-        
-    public void setMettol(Date mettol){
-        this.mettol=mettol;
-    }
-    
-    public void setMeddig(Date meddig){
-        this.meddig=meddig;
-    }
-    
     
     
     public String getNev(){

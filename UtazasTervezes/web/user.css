@@ -47,24 +47,16 @@ img{
 }
 .utazas{
     display: none;
-    text-align: center;
 }
 #utazasterv{
     display: none;
 }
 #uj,folytat{
-    display: inline-block;
-}
-.stylefolytat{
-    display: inline-block;
-}
-.styleuj{
-    display: inline-block;
-}
-#details{
     display: block;
 }
-#utaz{
-    text-align: center;
-    margin: auto;
+.stylefolytat{
+    display: block;
+}
+.styleuj{
+    display: block;
 }
