@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Utazasi Terv</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:wizard id="utazasterv" styleClass="utazas">
+                <p:tab id="utaz" title="Personal" >
+                    <p:panel header="Út célja">
+                        <p:messages />
+                        <h:panelGrid columns="1" columnClasses="label, value">
+                            <h:outputText value="Konferencián való részvétel esetén a bejelentett előadás/poszter* címe: *" />
+                            <p:inputTextarea value="#{utazasiTerv.eloadas_postercim}" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
+                            <h:outputText id="display" />
+                            
+                            <h:outputText value="Az utazás célja: " />
+                            <p:inputTextarea value="#{utazasiTerv.utazas_celja}" counter="display2" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
+                            <h:outputText id="display2" />
+                            
+                            <h:outputText value="Tanulmányút esetén milyen program keretében kerül sor az utazásra*:" />
+                            <p:selectOneMenu label="Keret" value="#{utazasiTerv.egyebkeret}" effect="fold" editable="true" required="true">
+                                <f:selectItem itemDisabled="TRUE" itemLabel="Select One" itemValue=""  />
+                                <f:selectItems value="#{utazasiTerv.utazasiKeret}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="date" title="Date" >
+                    <p:panel header="Dátum">
+                        <p:messages />
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Mettől: *" />
+                            <p:calendar id="mettol" value="#{utazasiTerv.mettol}" showOn="button" required="true" />
+                            
+                            <h:outputText value="Meddig: *" />
+                            <p:calendar id="meddig" value="#{utazasiTerv.meddig}" showOn="button" required="true" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+            </p:wizard>
+        </h:form>
+    </h:body>
+</html>

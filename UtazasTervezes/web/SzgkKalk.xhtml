@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Utazasi Terv</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:wizard flowListener="#{userBean.onFlowProcess}" id="wizard" styleClass="wizza">
+                <p:tab id="personal" title="Personal" >
+                    <p:panel header="Útvonal">
+                        <p:messages />
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Honnan *" />
+                            <p:inputText value="#{userBean.honnan}" id="start" required="true"/>
+                            
+                            <h:outputText value="Hová *" />
+                            <p:inputText value="#{userBean.hova}" id="end" required="true"/>
+                            
+                            <h:outputText value="Autó: *" />
+                            <h:selectOneMenu value="#{userBean.rendszam}" required="true" id="kocsiproba" >
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{userBean.rendszamok}" />
+                            </h:selectOneMenu>
+                            
+                            <p:commandButton type="button" value="Calculate Distance NINCS ELLENŐRIZVE HOGY MEG LETT NYOMVA" onclick="calcRoute();"/> 
+                            <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Show Map" onclick="PF('dlg').show();" />  
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="address" title="Utazás">
+                    <p:panel header="Egyeb">
+                        <p:messages />
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <p:outputLabel for="advanced" value="Valuta:" />
+                            <p:selectOneListbox id="advanced" value="#{userBean.currency}" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{userBean.getValutaTypesKeret()}" />
+                            </p:selectOneListbox>
+                            
+                            <h:outputText value="Autópálya költség:" />
+                            <h:inputText  value="#{userBean.autopalyFT}" />
+                            
+                            <h:outputText value="Autópálya költség deviza:" />
+                            <h:inputText  value="#{userBean.autopalyaDevizva}" />
+                            
+                            <h:outputText value="Parkírozás Deviza:" />
+                            <h:inputText  value="#{userBean.parkirozasDeviza}" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                
+                
+                <p:tab id="confirm" title="Jóváhagyás">
+                    <p:panel header="Jóváhagyás">
+                        <h:panelGrid id="confirmation" columns="2" columnClasses="grid,grid">
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Honnan: " />
+                                <h:outputText value="#{userBean.honnan}" styleClass="outputLabel"/>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Hova: " />
+                                <h:outputText value="#{userBean.hova}" styleClass="outputLabel"/>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Név: " />
+                                <h:outputText value="#{userBean.getNev()}" styleClass="outputLabel"/>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Autó: " />
+                                <h:outputText value="#{userBean.rendszam}" styleClass="outputLabel"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+            </p:wizard>
+        </h:form>
+    </h:body>
+</html>

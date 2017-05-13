@@ -32,7 +32,7 @@ public class UserBean implements Serializable {
     @EJB
     private SharedBean sharedBean;
     //Weboldalról bekér
-    String honnan,hova,rendszam,Eloadas_postercim,egyebkeret; 
+    String honnan,hova,rendszam; 
     double autopalyFT,autopalyaDevizva,ParkirozasDeviza;
     boolean skip;
     //Adatbázisból lekér
@@ -109,14 +109,6 @@ public class UserBean implements Serializable {
         this.ParkirozasDeviza = ParkirozasDeviza;
     }
 
-    public String getEgyebkeret() {
-        return egyebkeret;
-    }
-
-    public void setEgyebkeret(String egyebkeret) {
-        this.egyebkeret = egyebkeret;
-    }
-
     public String getRendszam() {
         return rendszam;
     }
@@ -126,13 +118,6 @@ public class UserBean implements Serializable {
         kocsi=SingletonDBMgr.getCarDatas(rendszam);
     }
     
-    public String getEloadas_postercim() {
-        return Eloadas_postercim;
-    }
-
-    public void setEloadas_postercim(String Eloadas_postercim) {
-        this.Eloadas_postercim = Eloadas_postercim;
-    }
     public String getHonnan() {
         return honnan;
     }
@@ -151,8 +136,13 @@ public class UserBean implements Serializable {
         this.hova = hova;
     }
 
+    public String utazasiTerv(){
+        return "UtazasiTerv";
+    }
     
-    
+    public String szgkKalk(){
+        return "SzgkKalk";
+    }
     public String getNev(){
         return szemely.getVnev()+" "+szemely.getKnev();
     }
@@ -164,12 +154,7 @@ public class UserBean implements Serializable {
     public List<String> getRendszamok() throws SQLException{
         return SingletonDBMgr.getRendszamok(PersonID);
     }
-    public List<String> getUtazasiKeret(){
-        List<String> tmp = Arrays.asList(
-                "TEMPUS", "egyéb EU - szintű együttműködés", "kormányközi együttműködés","intézményi együttműködés",
-                "alapítványi támogatás","meghívás","saját szervezés");
-        return tmp;
-    }
+
 
     public List<String> getValutaTypesKeret()
     {

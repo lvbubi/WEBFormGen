@@ -104,95 +104,20 @@
                   
         <h:form id="fooldal">
             <img src="pannon.PNG" alt="The ENIAC" />          
-            <h2>#{userBean.getNev()}</h2> <br/>
-
-            #{sharedBean.neptun}
-            <p:wizard flowListener="#{userBean.onFlowProcess}" id="wizard">
-                <p:tab id="personal" title="Personal" >
-                    <p:panel header="Útvonal">
-                        <p:messages />
-                        <h:panelGrid columns="2" columnClasses="label, value">
-                            <h:outputText value="Honnan *" />
-                            <p:inputText value="#{userBean.honnan}" id="start" required="true"/>
-                            
-                            <h:outputText value="Hová *" />
-                            <p:inputText value="#{userBean.hova}" id="end" required="true"/>
-                            
-                            <h:outputText value="Autó: *" />
-                            <h:selectOneMenu value="#{userBean.rendszam}" required="true" id="kocsiproba" >
-                                <f:selectItem itemLabel="Select One" itemValue="" />
-                                <f:selectItems value="#{userBean.rendszamok}" />
-                            </h:selectOneMenu>
-                            
-                            <p:commandButton type="button" value="Calculate Distance NINCS ELLENŐRIZVE HOGY MEG LETT NYOMVA" onclick="calcRoute();"/> 
-                            <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Show Map" onclick="PF('dlg').show();" />  
-                        </h:panelGrid>
-                    </p:panel>
-                </p:tab>
-                <p:tab id="address" title="Utazás">
-                    <p:panel header="Egyeb">
-                        <p:messages />
-                        <h:panelGrid columns="2" columnClasses="label, value">
-                            <p:outputLabel for="advanced" value="Valuta:" />
-                            <p:selectOneListbox id="advanced" value="#{userBean.currency}" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{userBean.getValutaTypesKeret()}" />
-                            </p:selectOneListbox>
-                            
-                            <h:outputText value="Autópálya költség:" />
-                            <h:inputText  value="#{userBean.autopalyFT}" />
-                            
-                            <h:outputText value="Autópálya költség deviza:" />
-                            <h:inputText  value="#{userBean.autopalyaDevizva}" />
-                            
-                            <h:outputText value="Parkírozás Deviza:" />
-                            <h:inputText  value="#{userBean.parkirozasDeviza}" />
-                        </h:panelGrid>
-                    </p:panel>
-                </p:tab>
-                
-                
-                <p:tab id="confirm" title="Jóváhagyás">
-                    <p:panel header="Jóváhagyás">
-                        <h:panelGrid id="confirmation" columns="2" columnClasses="grid,grid">
-                            <h:panelGrid columns="2" columnClasses="label, value">
-                                <h:outputText value="Honnan: " />
-                                <h:outputText value="#{userBean.honnan}" styleClass="outputLabel"/>
-                            </h:panelGrid>
-
-                            <h:panelGrid columns="2" columnClasses="label, value">
-                                <h:outputText value="Hova: " />
-                                <h:outputText value="#{userBean.hova}" styleClass="outputLabel"/>
-                            </h:panelGrid>
-                            
-                            <h:panelGrid columns="2" columnClasses="label, value">
-                                <h:outputText value="Név: " />
-                                <h:outputText value="#{userBean.getNev()}" styleClass="outputLabel"/>
-                            </h:panelGrid>
-                            
-                            <h:panelGrid columns="2" columnClasses="label, value">
-                                <h:outputText value="Autó: " />
-                                <h:outputText value="#{userBean.rendszam}" styleClass="outputLabel"/>
-                            </h:panelGrid>
-                        </h:panelGrid>
-                    </p:panel>
-                </p:tab>
-            </p:wizard>
+            <h2>#{userBean.getNev()}</h2>
+            <h2>#{sharedBean.neptun}</h2><br/>
+            <p id="details">Az utazásiterv elfogadása két fázisból áll. Első lépésben el kell készíteni az útiköltség tervet, amit a dékánnak (vagy más erre hivatott szervezetnek) el kell bírálni. Ha a tervet elfogadták, akkor folytatni lehet egy utazásiterv kitöltésével, amit ha elfogadnak, akkor az utazás finanszírozva lesz.</p>
+    
+            <p:commandButton value="Utazási Terv (folytatás)" ajax="false" action="#{userBean.utazasiTerv}" style="margin:20px;"/>          
+            <p:commandButton value="Személygépkocsi Kalkuláció" ajax="false" action="#{userBean.szgkKalk}" style="margin:20px;"/>          
+       
+            
             <div id="directions_panel" style="margin:20px;"></div>
             <p id="distance" value="#{userBean.distance}" style="margin:20px;"></p>
             
             <p:inputTextarea id="distance2" value="#{userBean.distance}"> </p:inputTextarea>
-            
-            <h3>Konferencián való részvétel esetén a bejelentett előadás/poszter* címe:</h3><br/>
-            <p:inputTextarea value="#{userBean.eloadas_postercim}" rows="5" cols="30" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" />
-            <h:outputText id="display" />
 
             <br/>
-            Tanulmányút esetén milyen program keretében kerül sor az utazásra*:<br/>
-            <p:selectOneMenu label="Keret" value="#{userBean.egyebkeret}" effect="fold" editable="true">
-                <f:selectItem itemDisabled="TRUE" itemLabel="Select One" itemValue=""  />
-                <f:selectItems value="#{userBean.utazasiKeret}" />
-            </p:selectOneMenu><br/>
-            <p:commandButton value="Kérelem elküldése" ajax="false" actionListener="#{userBean.genPDF()}" style="margin:20px;"/>          
         </h:form>
         <br/>
             <div id="googletravel">
