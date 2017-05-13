@@ -84,7 +84,18 @@
             }
            
             </script>
-        
+        <script>
+            function utikoltseg(){
+                document.getElementById('fooldal:wizard').style.display='block';
+                document.getElementById('fooldal:uj').style.display='none';
+                document.getElementById('fooldal:folytat').style.display='none';
+            }
+            function utazasiterv(){
+                document.getElementById('fooldal:utazasterv').style.display='block';
+                document.getElementById('fooldal:uj').style.display='none';
+                document.getElementById('fooldal:folytat').style.display='none';
+            }
+        </script>
             
         
     </h:head>
@@ -104,10 +115,12 @@
                   
         <h:form id="fooldal">
             <img src="pannon.PNG" alt="The ENIAC" />          
-            <h2>#{userBean.getNev()}</h2> <br/>
-
-            #{sharedBean.neptun}
-            <p:wizard flowListener="#{userBean.onFlowProcess}" id="wizard">
+            <h2>#{userBean.getNev()}</h2>
+            <h2>#{sharedBean.neptun}</h2><br/>
+            <p>Az utazásiterv elfogadása két fázisból áll. Első lépésben el kell készíteni az útiköltség tervet, amit a dékánnak (vagy más erre hivatott szervezetnek) el kell bírálniuk. Ha a tervet elfogadták, akkor folytatni lehet egy utazásiterv kitöltésével, amit ha elfogadnak, akkor az utazás finanszírozva lesz.</p>
+            <p:commandButton type="button" value="Új útiköltségterv készítése" onclick="utikoltseg();" id="uj" styleClass="styleuj" ></p:commandButton> 
+            <p:commandButton id="folytat" type="button" value="Folytatás utazásiterv kitöltésével" onclick="utazasiterv();" styleClass="stylefolytat"/>  
+            <p:wizard flowListener="#{userBean.onFlowProcess}" id="wizard" styleClass="wizza">
                 <p:tab id="personal" title="Personal" >
                     <p:panel header="Útvonal">
                         <p:messages />
@@ -177,21 +190,34 @@
                     </p:panel>
                 </p:tab>
             </p:wizard>
+            <p:wizard id="utazasterv" styleClass="utazas">
+                <p:tab id="utaz" title="Personal" >
+                    <p:panel header="Út célja">
+                        <p:messages />
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Konferencián való részvétel esetén a bejelentett előadás/poszter* címe: *" />
+                            <p:inputTextarea value="#{userBean.eloadas_postercim}" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
+                            <h:outputText id="display" />
+                            
+                            <h:outputText value="Az utazás célja: " />
+                            <p:inputTextarea value="#{userBean.utazas_celja}" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
+                            
+                            <h:outputText value="Tanulmányút esetén milyen program keretében kerül sor az utazásra*:" />
+                            <p:selectOneMenu label="Keret" value="#{userBean.egyebkeret}" effect="fold" editable="true" required="true">
+                                <f:selectItem itemDisabled="TRUE" itemLabel="Select One" itemValue=""  />
+                                <f:selectItems value="#{userBean.utazasiKeret}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+            </p:wizard>
             <div id="directions_panel" style="margin:20px;"></div>
             <p id="distance" value="#{userBean.distance}" style="margin:20px;"></p>
             
             <p:inputTextarea id="distance2" value="#{userBean.distance}"> </p:inputTextarea>
-            
-            <h3>Konferencián való részvétel esetén a bejelentett előadás/poszter* címe:</h3><br/>
-            <p:inputTextarea value="#{userBean.eloadas_postercim}" rows="5" cols="30" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" />
-            <h:outputText id="display" />
 
             <br/>
-            Tanulmányút esetén milyen program keretében kerül sor az utazásra*:<br/>
-            <p:selectOneMenu label="Keret" value="#{userBean.egyebkeret}" effect="fold" editable="true">
-                <f:selectItem itemDisabled="TRUE" itemLabel="Select One" itemValue=""  />
-                <f:selectItems value="#{userBean.utazasiKeret}" />
-            </p:selectOneMenu><br/>
+
             <p:commandButton value="Kérelem elküldése" ajax="false" actionListener="#{userBean.genPDF()}" style="margin:20px;"/>          
         </h:form>
         <br/>
