@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.event.FlowEvent;
 import webformgen.Car;
 import webformgen.DWNLDATA;
@@ -140,8 +141,8 @@ public class UserBean implements Serializable {
         return "UtazasiTerv";
     }
     
-    public String szgkKalk(){
-        return "SzgkKalk";
+    public void szgkKalk() throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("SzgkKalk.xhtml");
     }
     public String getNev(){
         return szemely.getVnev()+" "+szemely.getKnev();

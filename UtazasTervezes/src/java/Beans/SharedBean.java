@@ -53,18 +53,18 @@ public class SharedBean implements Serializable{
         return PersonID>=1;
     }
     
-    public String Login() throws SQLException{
+    public void Login() throws SQLException, IOException{
         PersonID=SingletonDBMgr.getPersonID(neptun, password);
         System.out.println(PersonID);
         setIsAdmin();
         if(isAdmin==0){
-            return "user";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
         }else if(isAdmin==1){
-            return "admin";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
         }else if(isAdmin==2){
-            return "titkar";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("titkar.xhtml");
         }
-        return "index";
+        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
     } 
     public int getIsAdmin(){
         return isAdmin;
