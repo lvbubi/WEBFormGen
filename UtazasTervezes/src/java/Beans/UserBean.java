@@ -32,7 +32,7 @@ public class UserBean implements Serializable {
     @EJB
     private SharedBean sharedBean;
     //Weboldalról bekér
-    String honnan,hova,rendszam,Eloadas_postercim,egyebkeret,Utazas_celja; 
+    String honnan,hova,rendszam,Eloadas_postercim,egyebkeret; 
     double autopalyFT,autopalyaDevizva,ParkirozasDeviza;
     boolean skip;
     //Adatbázisból lekér
@@ -129,12 +129,7 @@ public class UserBean implements Serializable {
     public String getEloadas_postercim() {
         return Eloadas_postercim;
     }
-    public String getUtazas_celja(){
-        return Utazas_celja;
-    }
-    public void setUtazas_celja(String Utazas_celja){
-        this.Utazas_celja=Utazas_celja;
-    }
+
     public void setEloadas_postercim(String Eloadas_postercim) {
         this.Eloadas_postercim = Eloadas_postercim;
     }

@@ -39,24 +39,3 @@ img{
     min-height: 100% !important; 
     height: 100%;
 }
-.wizza{
-    display: none;
-}
-#wizard{
-    display: none;
-}
-.utazas{
-    display: none;
-}
-#utazasterv{
-    display: none;
-}
-#uj,folytat{
-    display: block;
-}
-.stylefolytat{
-    display: block;
-}
-.styleuj{
-    display: block;
-}

@@ -55,16 +55,14 @@ public class SharedBean implements Serializable{
     
     public String Login() throws SQLException{
         PersonID=SingletonDBMgr.getPersonID(neptun, password);
-        if (PersonID!=0){
-            System.out.println(PersonID);
-            setIsAdmin();
-            if(isAdmin==0){
-                return "user";
-            }else if(isAdmin==1){
-                return "admin";
-            }else if(isAdmin==2){
-                return "titkar";
-            }
+        System.out.println(PersonID);
+        setIsAdmin();
+        if(isAdmin==0){
+            return "user";
+        }else if(isAdmin==1){
+            return "admin";
+        }else if(isAdmin==2){
+            return "titkar";
         }
         return "index";
     } 
