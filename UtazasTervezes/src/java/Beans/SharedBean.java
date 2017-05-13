@@ -19,6 +19,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import webformgen.PDFDatas;
@@ -38,7 +39,14 @@ public class SharedBean implements Serializable{
     public List<PDFDatas> getDeletedpdfDatas() {
         return deletedpdfDatas;
     }
-
+    private int SzgkCalc_count(){
+        int count=0;
+        for (PDFDatas p:acceptedpdfDatas)
+            if("Szemelygepkocsi Kalkulacio".equals(p.getDokumentumTipusa()))
+                count++;
+        System.out.println("Darabszam: "+count);
+        return count;
+    }
     public void setDeletedpdfDatas(List<PDFDatas> deletedpdfDatas) {
         this.deletedpdfDatas = deletedpdfDatas;
     }
@@ -50,7 +58,7 @@ public class SharedBean implements Serializable{
     public void setAcceptedpdfDatas(List<PDFDatas> acceptedpdfDatas) {
         this.acceptedpdfDatas = acceptedpdfDatas;
     }
-    
+    boolean skip;
     byte[] receivedPDF=null;
     int receivedPDFID;
     static int PersonID;
@@ -73,12 +81,11 @@ public class SharedBean implements Serializable{
         System.out.println(PersonID);
         setIsAdmin();
         if(isAdmin==0){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");return;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
         }else if(isAdmin==1){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");return;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
         }else if(isAdmin==2){
             FacesContext.getCurrentInstance().getExternalContext().redirect("titkar.xhtml");
-            return;
         }
         //FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
     } 
@@ -178,5 +185,18 @@ public class SharedBean implements Serializable{
     }
     public void redirectPDFS() throws IOException{
         FacesContext.getCurrentInstance().getExternalContext().redirect("showPDFS.xhtml");
+    }
+    
+    
+    public String onFlowProcess(FlowEvent event) {
+        if (event.getOldStep().equals("utaz")) {
+            return "date";
+        }
+        if(SzgkCalc_count() == 0) {
+            return "wattack";
+        }
+        else {
+            return event.getNewStep();
+        }
     }
 }

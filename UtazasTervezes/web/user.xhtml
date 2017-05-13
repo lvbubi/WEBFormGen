@@ -21,7 +21,8 @@
         <div id="baloldal">
             <h2 id="elozo">Előző utazások:</h2>
         <h:form >
-            <p:commandButton value="ShowUncheckedPDFS" ajax="false" action="#{sharedBean.redirectPDFS}" style="margin:20px;"/>          
+            <p:commandButton value="ShowUncheckedPDFS" ajax="false" action="#{sharedBean.redirectPDFS}" style="margin:20px;"/>
+            <p:commandButton value="CheckedPDFS" ajax="false" action="#{sharedBean.redirectAccepted}" style="margin:20px;"/>
         </h:form>
         </div>
         #{sharedBean.showPDFS()}

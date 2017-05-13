@@ -9,7 +9,15 @@
     </h:head>
     <h:body>
         <h:form id="form">
-            <p:wizard id="utazasterv" styleClass="utazas">
+            <p:wizard flowListener="#{sharedBean.onFlowProcess}" id="utazasterv" styleClass="utazas">
+                        <p:tab id="Titteee" title="Personal" >
+                    <p:panel header="Welcome">
+                        <p:messages />
+                        <h:panelGrid columns="1" columnClasses="label, value">
+                            <h:outputText value="Utazasi Terv legeneralasa" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
                 <p:tab id="utaz" title="Personal" >
                     <p:panel header="Út célja">
                         <p:messages />
@@ -30,6 +38,14 @@
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
+                <p:tab id="wattack" title="NoPDF" >
+                    <p:panel header="wtf">
+                        <p:messages />
+                        <h:panelGrid columns="1" columnClasses="label, value">
+                            <h:outputText value="Sajnos nincsenek elfogadott Szgk kalkulációi" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
                 <p:tab id="date" title="Date" >
                     <p:panel header="Dátum">
                         <p:messages />
@@ -44,6 +60,7 @@
     
                     </p:panel>
                 </p:tab>
+
             </p:wizard>
         </h:form>
     </h:body>
