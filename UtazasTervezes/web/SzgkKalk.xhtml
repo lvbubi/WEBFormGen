@@ -85,15 +85,15 @@
                         <p:messages />
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="Honnan *" />
-                            <p:inputText value="#{userBean.honnan}" id="start" required="true"/>
+                            <p:inputText value="#{szgkBean.honnan}" id="start" required="true"/>
                             
                             <h:outputText value="Hová *" />
-                            <p:inputText value="#{userBean.hova}" id="end" required="true"/>
+                            <p:inputText value="#{szgkBean.hova}" id="end" required="true"/>
                             
                             <h:outputText value="Autó: *" />
-                            <h:selectOneMenu value="#{userBean.rendszam}" required="true" id="kocsiproba" >
+                            <h:selectOneMenu value="#{szgkBean.rendszam}" required="true" id="kocsiproba" >
                                 <f:selectItem itemLabel="Select One" itemValue="" />
-                                <f:selectItems value="#{userBean.rendszamok}" />
+                                <f:selectItems value="#{szgkBean.rendszamok}" />
                             </h:selectOneMenu>
                             
                             <p:commandButton type="button" value="Calculate Distance NINCS ELLENŐRIZVE HOGY MEG LETT NYOMVA" onclick="calcRoute();"/> 
@@ -106,18 +106,18 @@
                         <p:messages />
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <p:outputLabel for="advanced" value="Valuta:" />
-                            <p:selectOneListbox id="advanced" value="#{userBean.currency}" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{userBean.getValutaTypesKeret()}" />
+                            <p:selectOneListbox id="advanced" value="#{szgkBean.currency}" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{szgkBean.getValutaTypesKeret()}" />
                             </p:selectOneListbox>
                             
                             <h:outputText value="Autópálya költség:" />
-                            <h:inputText  value="#{userBean.autopalyFT}" />
+                            <h:inputText  value="#{szgkBean.autopalyFT}" />
                             
                             <h:outputText value="Autópálya költség deviza:" />
-                            <h:inputText  value="#{userBean.autopalyaDevizva}" />
+                            <h:inputText  value="#{szgkBean.autopalyaDevizva}" />
                             
                             <h:outputText value="Parkírozás Deviza:" />
-                            <h:inputText  value="#{userBean.parkirozasDeviza}" />
+                            <h:inputText  value="#{szgkBean.parkirozasDeviza}" />
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -128,35 +128,35 @@
                         <h:panelGrid id="confirmation" columns="2" columnClasses="grid,grid">
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Honnan: " />
-                                <h:outputText value="#{userBean.honnan}" styleClass="outputLabel"/>
+                                <h:outputText value="#{szgkBean.honnan}" styleClass="outputLabel"/>
                             </h:panelGrid>
 
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Hova: " />
-                                <h:outputText value="#{userBean.hova}" styleClass="outputLabel"/>
+                                <h:outputText value="#{szgkBean.hova}" styleClass="outputLabel"/>
                             </h:panelGrid>
                             
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Név: " />
-                                <h:outputText value="#{userBean.getNev()}" styleClass="outputLabel"/>
+                                <h:outputText value="#{szgkBean.getNev()}" styleClass="outputLabel"/>
                             </h:panelGrid>
                             
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Autó: " />
-                                <h:outputText value="#{userBean.rendszam}" styleClass="outputLabel"/>
+                                <h:outputText value="#{szgkBean.rendszam}" styleClass="outputLabel"/>
                             </h:panelGrid>
+                            <p:commandButton value="Kérelem elküldése" ajax="false" actionListener="#{szgkBean.genPDF()}" style="margin:20px;"/>          
+    
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
             </p:wizard>
                     <div id="directions_panel" style="margin:20px;"></div>
-            <p id="distance" value="#{userBean.distance}" style="margin:20px;"></p>
+            <p id="distance" value="#{szgkBean.distance}" style="margin:20px;"></p>
             
-            <p:inputTextarea id="distance2" value="#{userBean.distance}"> </p:inputTextarea>
+            <p:inputTextarea id="distance2" value="#{szgkBean.distance}"> </p:inputTextarea>
 
             <br/>
-
-            <p:commandButton value="Kérelem elküldése" ajax="false" actionListener="#{userBean.genPDF()}" style="margin:20px;"/>          
         </h:form>
         <br/>
             <div id="googletravel">

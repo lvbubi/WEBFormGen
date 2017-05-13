@@ -63,6 +63,7 @@ public class SharedBean implements Serializable{
             FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
         }else if(isAdmin==2){
             FacesContext.getCurrentInstance().getExternalContext().redirect("titkar.xhtml");
+            return;
         }
         FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
     } 
