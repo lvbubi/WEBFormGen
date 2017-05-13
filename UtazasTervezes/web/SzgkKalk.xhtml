@@ -6,8 +6,78 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Utazasi Terv</title>
+        <link rel="stylesheet" type="text/css" href="szgkkalc.css"/> 
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=false&amp;key=AIzaSyA4hjb09i3NOLmedn71DkLoBFMjo8krFb4"></script>
+        
+        <script>
+            var directionsDisplay;
+            var directionsService = new google.maps.DirectionsService();
+            var map;
+            var distance;
+            
+            function initialize() {
+                directionsDisplay = new google.maps.DirectionsRenderer();
+                var veszprem = new google.maps.LatLng(47.1257777,17.8372087);
+                var mapOptions = {
+                zoom:7,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: veszprem
+            }
+            map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+            directionsDisplay.setMap(map);
+
+            }
+
+            function calcRoute() {
+                var start = document.getElementById("form:start").value;
+                var end = document.getElementById("form:end").value;
+
+                var request = {
+                    origin:start,
+                    destination:end,
+                    travelMode: google.maps.TravelMode.DRIVING
+                };
+                directionsService.route(request, function(response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                    var route = response.routes[0]
+
+                    //  alert(route.legs[1].duration.text);
+                    var summaryPanel = document.getElementById('directions_panel');
+                    summaryPanel.innerHTML = '';
+                    var summaryPanel2 = document.getElementById('distance');
+                    summaryPanel2.innerHTML ='';
+                    // For each route, display summary information.
+                    for (var i = 0; i &lt; route.legs.length; i++) {
+                        var routeSegment = i + 1;
+                        distance=route.legs[i].distance.text;
+                        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br/>';
+                        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+                        summaryPanel.innerHTML += route.legs[i].end_address + '<br/>';
+                        summaryPanel.innerHTML += route.legs[i].duration.text + '<br/>';
+                        summaryPanel2.innerHTML += route.legs[i].distance.text;
+                        #{userBean.setDistance(distance)};
+                        swap();
+                    }
+
+                    }
+                });
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+           
+            function swap(){
+                var stuff=distance.split(",")[0];
+                var stuff=stuff.split(" ")[0];
+                document.getElementById('form:distance2').value=stuff;
+                window.alert((document.getElementById('form:distance2').value)*2 + " km");
+            }
+           
+            </script>
     </h:head>
     <h:body>
+            <p:dialog id="gmapDialog" widgetVar="dlg" width="1000" height="563" modal="true">
+                <div id="map-canvas"></div>
+            </p:dialog>
         <h:form id="form">
             <p:wizard flowListener="#{userBean.onFlowProcess}" id="wizard" styleClass="wizza">
                 <p:tab id="personal" title="Personal" >
@@ -79,6 +149,24 @@
                     </p:panel>
                 </p:tab>
             </p:wizard>
+                    <div id="directions_panel" style="margin:20px;"></div>
+            <p id="distance" value="#{userBean.distance}" style="margin:20px;"></p>
+            
+            <p:inputTextarea id="distance2" value="#{userBean.distance}"> </p:inputTextarea>
+
+            <br/>
+
+            <p:commandButton value="Kérelem elküldése" ajax="false" actionListener="#{userBean.genPDF()}" style="margin:20px;"/>          
         </h:form>
+        <br/>
+            <div id="googletravel">
+                <strong>Mode of Travel: </strong>
+                <select id="mode" onChange="calcRoute();">
+                <option value="DRIVING">Autóval</option>
+                <option value="WALKING">Séta</option>
+                <option value="BICYCLING">Kerékpárral</option>
+                <option value="TRANSIT">Tömegközlekedéssel</option>
+                </select>
+         </div>
     </h:body>
 </html>
