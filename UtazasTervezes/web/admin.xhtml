@@ -5,6 +5,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="admin.css"/> 
         <title>Facelet Title</title>
     </h:head>
     <h:body>
@@ -39,20 +41,20 @@
                     <h:outputText value="#{PDFDatas.ellenorizve}" />
                 </p:column>
             </p:dataTable>
-            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{sharedBean.prepareDownload()}">
-                <p:fileDownload value="#{userBean.download()}" />
+            <p:commandButton id="downloadLink" ajax="false" actionListener="#{sharedBean.prepareDownload()}" value=" " title="Letöltés" styleClass="downl">
+                <p:fileDownload value="#{sharedBean.download()}" />
             </p:commandButton>
-            <p:commandButton id="ervenyesit" value="Érvényesít" ajax="false" actionListener="#{sharedBean.setEllenoriz()}">
+            <p:commandButton id="ervenyesit" ajax="false" actionListener="#{sharedBean.setEllenoriz()}"  styleClass="ervenyes" title="Érvényesítés" value=" ">
             </p:commandButton>
-            <p:commandButton id="torol" value="Torol" ajax="false" actionListener="#{sharedBean.Torol()}">
-            </p:commandButton>
+            <p:commandButton id="torol" ajax="false" actionListener="#{sharedBean.Torol()}" styleClass="torol" title="Törlés" value=" ">
+            </p:commandButton><!--icon="ui-icon-trash"--> 
             
             
             <p:dialog header="PDF Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="carDetail" style="text-align:center;">
                     <p:panelGrid  columns="2" rendered="#{not empty sharedBean.selectedPDFDatas}" columnClasses="label,value">
                         <h:outputText value="Hova:" />
-                        <h:outputText value="#{sharedBean.selectedPDFDatas.hova}" />
+                        <h:outputText value="#{sharedBean.selectedPDFDatas.hova}"  />
                     </p:panelGrid>
                 </p:outputPanel>
             </p:dialog>
