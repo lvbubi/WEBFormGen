@@ -50,13 +50,11 @@ public class SharedBean implements Serializable{
     public List<PDFDatas> getDeletedpdfDatas() {
         return deletedpdfDatas;
     }
-    private int SzgkCalc_count(){
-        int count=0;
+    public boolean SzgkCalc_count(){
         for (PDFDatas p:acceptedpdfDatas)
             if("Szemelygepkocsi Kalkulacio".equals(p.getDokumentumTipusa()))
-                count++;
-        System.out.println("Darabszam: "+count);
-        return count;
+                return true;
+        return false;
     }
     public void setDeletedpdfDatas(List<PDFDatas> deletedpdfDatas) {
         this.deletedpdfDatas = deletedpdfDatas;
@@ -214,14 +212,8 @@ public class SharedBean implements Serializable{
     
     
     public String onFlowProcess(FlowEvent event) {
-        if (event.getOldStep().equals("utaz")) {
-            return "date";
-        }
-        if(SzgkCalc_count() == 0) {
-            return "wattack";
-        }
-        else {
+
             return event.getNewStep();
-        }
+        
     }
 }

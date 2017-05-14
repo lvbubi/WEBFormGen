@@ -13,7 +13,7 @@
         <h:form id="form">
             <img src="images/pannon.PNG" alt="The ENIAC" />   
             <p:wizard flowListener="#{sharedBean.onFlowProcess}" id="utazasterv" styleClass="utazas">
-                        <p:tab id="Titteee" title="Personal" >
+                    <p:tab id="Titteee" title="Personal" rendered="#{not empty utazasiTerv.acceptedSZGK}" >
                     <p:panel header="Welcome">
                         <p:messages />
                         <h:panelGrid columns="1" columnClasses="label, value">
@@ -57,44 +57,94 @@
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
-                <p:tab id="valuta" title="Valami" >
-                    <p:panel header="Valuta">
-                        <p:messages />
-                            <p:outputLabel for="advanced" value="Valuta:" />
-                            <p:selectOneListbox id="advanced" value="#{utazasiTerv.currency}" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{uazasiTerv.getValutaTypesKeret()}" />
-                            </p:selectOneListbox>
-                    </p:panel>
-                </p:tab>
-                <p:tab id="utaz" title="Personal" >
+                
+                 <p:tab id="utaz" title="Personal" rendered="#{not empty utazasiTerv.acceptedSZGK}">
                     <p:panel header="Út célja">
                         <p:messages />
                         <h:panelGrid columns="1" columnClasses="label, value">
                             <h:outputText value="Konferencián való részvétel esetén a bejelentett előadás/poszter* címe: *" />
-                            <p:inputTextarea value="#{utazasiTerv.eloadas_postercim}" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
-                            <h:outputText id="display" />
+                            <p:inputTextarea value="#{utazasiTerv.eloadas_cime}"  maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
                             
-                            <h:outputText value="Az utazás célja: " />
-                            <p:inputTextarea value="#{utazasiTerv.utazas_celja}" counter="display2" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
-                            <h:outputText id="display2" />
+                            <h:outputText value="Az előadást/posztert a konferencia szervezői elfogadták/nem fogadták el?: " />
+                            <p:inputText value="#{utazasiTerv.elfogadva}"  maxlength="100"/>
                             
-                            <h:outputText value="Tanulmányút esetén milyen program keretében kerül sor az utazásra*:" />
-                            <p:selectOneMenu label="Keret" value="#{utazasiTerv.egyebkeret}" effect="fold" editable="true" required="true">
-                                <f:selectItem itemDisabled="TRUE" itemLabel="Select One" itemValue=""  />
-                                <f:selectItems value="#{utazasiTerv.utazasiKeret}" />
-                            </p:selectOneMenu>
+                            <h:outputText value="Tanulmany esetén milyen program keretében kerül sor az utazásra*: " />
+                            <p:inputTextarea value="#{utazasiTerv.program_tipus}" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
+                            <h:outputText value="Külföldi tartózkodási hely(ország,város,intézmény stb.):" />
+                            <p:inputTextarea value="#{utazasiTerv.program_helye}"  maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" required="true"  />
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
-                <p:tab id="wattack" >
-                    <p:panel header="wtf">
+                
+                
+                
+                <p:tab id="KtgTerv" title="Költségterv" rendered="#{not empty utazasiTerv.acceptedSZGK}">
+                    <p:panel header="Ideiglenes külföldi utazas">
                         <p:messages />
                         <h:panelGrid columns="1" columnClasses="label, value">
-                            <h:outputText value="Sajnos nincsenek elfogadott Szgk kalkulációi" />
+                            <p:outputLabel for="advanced" value="Valuta:" />
+                            <p:selectOneListbox id="advanced" value="#{utazasiTerv.currency}" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{utazasiTerv.getValutaTypesKeret()}" />
+                            </p:selectOneListbox>
+                            
+                        </h:panelGrid>
+                        
+                        <h:panelGrid columns="4" columnClasses="label, value">
+                            <p:outputLabel for="advanced" value="Nap:" />
+                            <p:inputText value="#{utazasiTerv.nap}"  maxlength="100"/>
+                            <p:outputLabel for="advanced" value="Osszeg FT:" />
+                            <p:inputText value="#{utazasiTerv.osszeg_nap}"  maxlength="100"/>
+                            
+                            
+                            <p:outputLabel for="advanced" value="Ejjszaka:" />
+                            <p:inputText value="#{utazasiTerv.ejjszaka}"  maxlength="100"/>
+                            <p:outputLabel for="advanced" value="Osszeg FT:" />
+                            <p:inputText value="#{utazasiTerv.osszeg_ejjszaka}"  maxlength="100"/>
+                            
+                            <p:outputLabel for="advanced" value="" />
+                            <p:outputLabel for="advanced" value="" />
+                            <p:outputLabel for="advanced" value="Részvételi dij" />
+                            <p:inputText value="#{utazasiTerv.reszveteli_dij}"  maxlength="100"/>
+                            
+                            
+                            <p:outputLabel for="advanced" value="Egyéb/és pedig:" />
+                            <p:inputText value="#{utazasiTerv.egyeb_espedig}"  maxlength="100"/>
+                            <p:outputLabel for="advanced" value="Osszeg FT:" />
+                            <p:inputText value="#{utazasiTerv.egyeb_osszeg}"  maxlength="100"/>
+                            
+                            <p:outputLabel for="advanced" value="" />
+                            <p:outputLabel for="advanced" value="" />
+                            <p:outputLabel for="advanced" value="Felvenni Kivant eloleg" />
+                            <p:inputText value="#{utazasiTerv.felvEloleg}"  maxlength="100"/>
+                            
+                            
+                            <p:outputLabel for="advanced" value="atutalni kivant devizaszamla:" />
+                            <p:inputText value="#{utazasiTerv.devizabankszamla}"  maxlength="100"/>
+                            <p:outputLabel for="advanced" value="Osszeg FT:" />
+                            <p:inputText value="#{utazasiTerv.deviszaosszeg}"  maxlength="100"/>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:panel header="Tartos külföldi utazas">
+                        <h:panelGrid columns="4" columnClasses="label, value">
+                            <p:outputLabel for="advanced" value="Honapra:" />
+                            <p:inputText value="#{utazasiTerv.honapra}"  maxlength="100"/>
+                            <p:outputLabel for="advanced" value="Osztondij FT:" />
+                            <p:inputText value="#{utazasiTerv.osztondij}"  maxlength="100"/>
+                            
+                            
+                            <p:outputLabel for="advanced" value="Egyéb és pedig" />
+                            <p:inputText value="#{utazasiTerv.egyeb2}"  maxlength="100"/>
+                            <p:outputLabel for="advanced" value="Osszeg FT:" />
+                            <p:inputText value="#{utazasiTerv.egyeb2_osszeg}"  maxlength="100"/>
+                            
+                            <p:outputLabel for="advanced" value="Utazasi Mod:" />
+                            <p:inputText value="#{utazasiTerv.uzatasimod}"  maxlength="100"/>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
-                <p:tab id="date" title="Date" >
+                
+                <p:tab id="date" title="Date" rendered="#{not empty utazasiTerv.acceptedSZGK}" >
                     <p:panel header="Dátum">
                         <p:messages />
                         <h:panelGrid columns="2" columnClasses="label, value">
