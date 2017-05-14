@@ -158,10 +158,10 @@ public class PDFGEN {
                 p1.setAlignment(Element.ALIGN_CENTER);
             Paragraph p2 = new Paragraph("Nev(adoszam)beosztas: " + szemely.getVnev() + " " + szemely.getVnev() + " " + szemely.getAdoszam() +" "+ szemely.getBeosztas());
                  p2.setLeading(30);
-            Paragraph p3 = new Paragraph("Munkahely(egység): " + munkahely);
-            Paragraph p4 = new Paragraph("Konferencián valo reszvetel eseten a bejelentett eloadas/poszter* cime: " + e_cim); 
-            Paragraph p5 = new Paragraph("Az eloadast/posztert a konferencia szervezoi elfogadtak/még nem fogadtak el: " + elfogadva );
-            Paragraph p6 = new Paragraph("Tanulmany esetén milyen program keretében kerul sor az utazasra*: " + program_tipus);
+            Paragraph p3 = new Paragraph("Munkahely(egyseg): " + munkahely);
+            Paragraph p4 = new Paragraph("Konferencian valo reszvetel eseten a bejelentett eloadas/poszter* cime: " + e_cim); 
+            Paragraph p5 = new Paragraph("Az eloadast/posztert a konferencia szervezoi elfogadtak/meg nem fogadtak el: " + elfogadva );
+            Paragraph p6 = new Paragraph("Tanulmany eseten milyen program keretében kerul sor az utazasra*: " + program_tipus);
                 p6.setLeading(30);
             Paragraph p7 = new Paragraph("A külfoldi tartozkodas hely(orszag,varos,intezmény stb.): " + hely); 
             Paragraph p8 = new Paragraph("Idopont,idotartam: " + idotartam); 
@@ -250,7 +250,7 @@ public class PDFGEN {
             
              c1 = new PdfPCell(new Phrase("4.)"));       
             table.addCell(c1);
-            c1 = new PdfPCell(new Phrase("utikoltseg (szg-knál kalkulációs lap)"));
+            c1 = new PdfPCell(new Phrase("utikoltseg (szg-knal kalkulacios lap)"));
             c1.setColspan(4);
             table.addCell(c1);
             osszeg = round(Osszkoltseg/arfolyam,2);
@@ -261,7 +261,7 @@ public class PDFGEN {
            
              c1 = new PdfPCell(new Phrase("5.)"));       
             table.addCell(c1);
-            c1 = new PdfPCell(new Phrase("egyéb/es pedig............"));
+            c1 = new PdfPCell(new Phrase("egyeb/es pedig............"));
             c1.setColspan(4);
             table.addCell(c1);
             osszeg=(round(egyeb/arfolyam,2));
@@ -316,7 +316,7 @@ public class PDFGEN {
             
             c1 = new PdfPCell(new Phrase("2.)"));       
             table2.addCell(c1);
-            c1 = new PdfPCell(new Phrase("utikoltseg (szg-knál kalkulációs lap)"));
+            c1 = new PdfPCell(new Phrase("utikoltseg (szg-knal kalkulációs lap)"));
             c1.setColspan(4);
             table2.addCell(c1);
             osszeg = round(Osszkoltseg/arfolyam,2);
@@ -328,7 +328,7 @@ public class PDFGEN {
             
              c1 = new PdfPCell(new Phrase("3.)"));       
             table2.addCell(c1);
-            c1 = new PdfPCell(new Phrase("egyéb/es pedig............"));
+            c1 = new PdfPCell(new Phrase("egyeb/es pedig............"));
             c1.setColspan(4);
             table2.addCell(c1);
             osszeg=(round(egyeb/arfolyam,2));
@@ -341,26 +341,26 @@ public class PDFGEN {
             
             int year = Calendar.getInstance().get(Calendar.YEAR);
             
-            Paragraph p13 = new Paragraph("A " + year + "." + "évre rendelkezésre álló 20 nap rendkívüli kiküldetésből eddig "+ felhasznalt_napok + " napot vettem igénybe");
-            Paragraph p14 = new Paragraph("Kérem      nap kiküldetés /..... nap rendes/.....  nap fizetés nélküli szabadság és az átutalás  \nengedélyezését.**    ");
-            Paragraph p15 = new Paragraph("Mellékletek:      - konferencia kiadvány\n"
-                    + "                         - deviza átutalás esetén az utaláshoz szükséges adatokkal kitöltött űrlap*\n" +
-"	                         - gépkocsi kalkuláció*\n" +
-"	                         - előadás visszaigazolás\n" +
-"	                         - meghívó levél; fogadókészség igazolása\n" +
-"	                         - ösztöndíjas tanulmányút esetén nyilatkozat arról, hogy ösztöndíjat kap\n" +
-"	                         - pályázati támogatásokról másolat  ");
-            Paragraph p16 = new Paragraph("Megjegyzések:\n* az űrlap a honlapról letölthető\n" +
-"**a nem kívánt rész törlendő  ");
+            Paragraph p13 = new Paragraph("A " + year + "." + "evre rendelkezesre allo 20 nap rendkívüli kiküldetesből eddig "+ felhasznalt_napok + " napot vettem igenybe");
+            Paragraph p14 = new Paragraph("Kerem      nap kiküldetes /..... nap rendes/.....  nap fizetes nelküli szabadsag és az atutalás  \nengedelyezeset.**    ");
+            Paragraph p15 = new Paragraph("Mellekletek:      - konferencia kiadvany\n"
+                    + "                         - deviza atutalás eseten az utalashoz szükseges adatokkal kitöltött urlap*\n" +
+"	                         - gepkocsi kalkulacio*\n" +
+"	                         - eloadas visszaigazolas\n" +
+"	                         - meghívo level; fogadokeszseg igazolasa\n" +
+"	                         - ösztöndijas tanulmanyut eseten nyilatkozat arrol, hogy ösztöndíjat kap\n" +
+"	                         - palyazati tamogatasokról masolat  ");
+            Paragraph p16 = new Paragraph("Megjegyzések:\n* az urlap a honlaprol letöltheto\n" +
+"**a nem kivant resz törlendo  ");
             
-             Paragraph p17 = new Paragraph("Tudomásul veszem, hogy a hazaérkezésemet követő 15 munkanapon belül a rendelkezésemre bocsátott előlegről, (kp+átutalás) a  KÜLFÖLDI KIKÜLDETÉSI UTASÍTÁS ÉS KÖLTSÉGELSZÁMOLÁS nyomtatvány kitöltésével, a hozzákapcsolódó számlák és az úti jelentés egyidejű leadásával az engedélyező hivatalban el kell számolnom. Az elszámolás szerint fel nem használható összege, az elszámolás elfogadását követően a pénztárba  vissza kell fizetnem.  ");
+             Paragraph p17 = new Paragraph("Tudomasul veszem, hogy a hazaérkezesemet követo 15 munkanapon belül a rendelkezesemre bocsátott elolegrol, (kp+atutalas) a  KÜLFÖLDI KIKÜLDETESI UTASÍTAS ÉS KÖLTSEGELSZAMOLAS nyomtatvány kitöltesevel, a hozzakapcsolodo szamlak és az uti jelentes egyideju leadasaval az engedelyezo hivatalban el kell szamolnom. Az elszamolas szerint fel nem hasznalhato összege, az elszamolas elfogadasat követoen a penztarba  vissza kell fizetnem.  ");
              DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
            
             
             Paragraph p18 = new Paragraph("Datum: "+dateFormat.format(date));
             Paragraph p19 = new Paragraph("                                                                             Utazo alairasa:_________________ "); 
-            Paragraph p20 = new Paragraph("Tanszékvezetői/egységvezetői vélemény (kérjük a helyettesítés szükségességét megadni):\n"); 
+            Paragraph p20 = new Paragraph("Tanszekvezetoi/egysegvezetoi velemeny (kerjük a helyettesítes szüksegesseget megadni):\n"); 
             Paragraph p21 = new Paragraph(velemeny);
             Paragraph p22 = new Paragraph("                                                                             Utazo alairasa:_________________ ");
             
