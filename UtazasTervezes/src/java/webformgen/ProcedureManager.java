@@ -86,47 +86,28 @@ public class ProcedureManager {
         return receivedPDF;
     }
     
-    public List<PDFDatas> getUtvonalDatas(int PersonID,int pdfState) throws SQLException{
-        String query="select GeneraltUtiterv.id,SzemelyID,Datum,Hova,OsszkoltsegFt,GeneraltUtiterv.DokumentumTipusa,GeneraltUtiterv.Ellenorizve,GeneraltUtiterv.adatok from GeneraltUtiterv"+
+    
+    
+    
+   public List<PDFDatas> getPDFDatas(int PersonID,int pdfState,String doctype) throws SQLException{
+        int id;
+        Date Datum;
+        String Hova;
+        float OsszkoltsegFT;
+        String DokumentumTipusa;
+        int Ellenorizve;
+        List<PDFDatas> pdfKeys=new ArrayList<>();
+        Statement st=conn.createStatement();
+        ResultSet rs;
+        if("Szemelygepkocsi Kalkulacio".equals(doctype))
+            rs=st.executeQuery("SELECT id,SzemelyID,Datum,Hova,OsszkoltsegFt,DokumentumTipusa,"
+                    + "Ellenorizve FROM GeneraltPDF where SzemelyID = "+Integer.toString(PersonID)
+                    +" and Ellenorizve = "+Integer.toString(pdfState)
+            );
+        else
+            rs=st.executeQuery("select GeneraltUtiterv.id,SzemelyID,Datum,Hova,OsszkoltsegFt,GeneraltUtiterv.DokumentumTipusa,GeneraltUtiterv.Ellenorizve,GeneraltUtiterv.adatok from GeneraltUtiterv"+
             " JOIN GeneraltPDF ON GeneraltPDF.id=szgkPDF_id"+
-                " where SzemelyID = "+Integer.toString(PersonID)+" and GeneraltUtiterv.Ellenorizve = "+Integer.toString(pdfState);
-        int id;
-        Date Datum;
-        String Hova;
-        float OsszkoltsegFT;
-        String DokumentumTipusa;
-        int Ellenorizve;
-        List<PDFDatas> pdfKeys=new ArrayList<>();
-        Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery(query);
-        while(rs.next()){
-            id=rs.getInt("id");
-            Datum=rs.getDate("Datum");
-            Hova=rs.getString("Hova");
-            OsszkoltsegFT=rs.getFloat("OsszkoltsegFt");
-            DokumentumTipusa=rs.getString("DokumentumTipusa");
-            Ellenorizve=rs.getInt("Ellenorizve");
-            
-            pdfKeys.add(new PDFDatas(id,PersonID,Datum,Hova,OsszkoltsegFT,DokumentumTipusa,Ellenorizve));
-        }
-        return pdfKeys;
-    }
-    
-    
-    
-   public List<PDFDatas> getPDFDatas(int PersonID,int pdfState) throws SQLException{
-        int id;
-        Date Datum;
-        String Hova;
-        float OsszkoltsegFT;
-        String DokumentumTipusa;
-        int Ellenorizve;
-        List<PDFDatas> pdfKeys=new ArrayList<>();
-        Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery("SELECT id,SzemelyID,Datum,Hova,OsszkoltsegFt,DokumentumTipusa,"
-                + "Ellenorizve FROM GeneraltPDF where SzemelyID = "+Integer.toString(PersonID)
-                +" and Ellenorizve = "+Integer.toString(pdfState)
-        );
+                " where SzemelyID = "+Integer.toString(PersonID)+" and GeneraltUtiterv.Ellenorizve = "+Integer.toString(pdfState));
         while(rs.next()){
             id=rs.getInt("id");
             Datum=rs.getDate("Datum");
@@ -146,7 +127,7 @@ public class ProcedureManager {
             cStmt.execute();
     }
    
-      public List<PDFDatas> getPDFDatasAdmin(int ellenorzott) throws SQLException{
+      public List<PDFDatas> getPDFDatasAdmin(int ellenorzott,String doctype) throws SQLException{
         int id;
         int szemelyID;
         Date Datum;
@@ -157,7 +138,13 @@ public class ProcedureManager {
         
         List<PDFDatas> pdfKeys=new ArrayList<>();
         Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery("SELECT id,SzemelyID,Datum,Hova,OsszkoltsegFt,DokumentumTipusa,Ellenorizve FROM GeneraltPDF where Ellenorizve = "+ ellenorzott);
+        ResultSet rs;
+        if("Szemelygepkocsi Kalkulacio".equals(doctype))
+            rs=st.executeQuery("SELECT id,SzemelyID,Datum,Hova,OsszkoltsegFt,DokumentumTipusa,Ellenorizve FROM GeneraltPDF where Ellenorizve = "+ ellenorzott);
+        
+        else rs=st.executeQuery("select GeneraltUtiterv.id,SzemelyID,Datum,Hova,OsszkoltsegFt,GeneraltUtiterv.DokumentumTipusa,GeneraltUtiterv.Ellenorizve,GeneraltUtiterv.adatok from GeneraltUtiterv"+
+            " JOIN GeneraltPDF ON GeneraltPDF.id=szgkPDF_id"+
+                " where GeneraltUtiterv.Ellenorizve = "+ellenorzott);
         while(rs.next()){
             id=rs.getInt("id");
             szemelyID=rs.getInt("SzemelyID");
@@ -171,9 +158,6 @@ public class ProcedureManager {
         }
         return pdfKeys;
     } 
-    
-    
-    
     public Car getCarDatas(String rdsz) throws SQLException{
         CallableStatement cStmt;
             cStmt=conn.prepareCall("{call getCarDatas(?,?,?,?,?)}");

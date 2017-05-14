@@ -141,16 +141,20 @@ public class SharedBean implements Serializable{
     }
     
     public void showPDFS() throws SQLException{
-        pdfDatas=SingletonDBMgr.getPDFDatas(PersonID,0);
-        acceptedpdfDatas=SingletonDBMgr.getPDFDatas(PersonID,1);
+        pdfDatas=SingletonDBMgr.getPDFDatas(PersonID,0,"Szemelygepkocsi Kalkulacio");
+        pdfDatas.addAll(SingletonDBMgr.getPDFDatas(PersonID,0,"Utvonal Terv"));
+        acceptedpdfDatas=SingletonDBMgr.getPDFDatas(PersonID,1,"Szemelygepkocsi Kalkulacio");
+        acceptedpdfDatas.addAll(SingletonDBMgr.getPDFDatas(PersonID,1,"Utvonal Terv"));
     }
     
     public void AdminShowPDFS(int ellenorz) throws SQLException{
-        pdfDatas = SingletonDBMgr.getPDFDatasAdmin(0);
-        pdfDatas.addAll(SingletonDBMgr.getUtvonalDatas(1,0));
+        pdfDatas = SingletonDBMgr.getPDFDatasAdmin(0,"Szemelygepkocsi Kalkulacio");
+        pdfDatas.addAll(SingletonDBMgr.getPDFDatasAdmin(0,"Utvonal Terv"));
         if(ellenorz==1){//ha az ellenorz 1 akkor admin használja ezt a függvényt
-            acceptedpdfDatas=SingletonDBMgr.getPDFDatasAdmin(1);
-            deletedpdfDatas=SingletonDBMgr.getPDFDatasAdmin(3);
+            acceptedpdfDatas = SingletonDBMgr.getPDFDatasAdmin(1,"Szemelygepkocsi Kalkulacio");
+            acceptedpdfDatas.addAll(SingletonDBMgr.getPDFDatasAdmin(1,"Utvonal Terv"));
+            deletedpdfDatas = SingletonDBMgr.getPDFDatasAdmin(3,"Szemelygepkocsi Kalkulacio");
+            deletedpdfDatas.addAll(SingletonDBMgr.getPDFDatasAdmin(3,"Utvonal Terv"));
         }
     }
     public void setEllenoriz() throws SQLException{
