@@ -156,6 +156,10 @@ public class SharedBean implements Serializable{
             deletedpdfDatas = SingletonDBMgr.getPDFDatasAdmin(3,"Szemelygepkocsi Kalkulacio");
             deletedpdfDatas.addAll(SingletonDBMgr.getPDFDatasAdmin(3,"Utvonal Terv"));
         }
+        
+        for(PDFDatas p: pdfDatas){
+            System.out.println(p.getDokumentumTipusa());
+        }
     }
     public void setEllenoriz() throws SQLException{
         SingletonDBMgr.setEllenorzott(receivedPDFID);
@@ -165,6 +169,8 @@ public class SharedBean implements Serializable{
     }
     
     public void prepareDownload() throws SQLException{
+        System.out.println("ReceivedPDFID :"+receivedPDFID);
+        System.out.println("Doktipus :"+SelectedPDFDatas.getDokumentumTipusa()+" SelectedPDFID :"+SelectedPDFDatas.getId());
         receivedPDF=SingletonDBMgr.downloadPDF(receivedPDFID,SelectedPDFDatas.getDokumentumTipusa());
     }
     public void download() throws IOException{
@@ -187,7 +193,8 @@ public class SharedBean implements Serializable{
     
     public void onRowSelect(SelectEvent event) throws IOException {
         receivedPDFID=((PDFDatas) event.getObject()).getId();
-        FacesMessage msg = new FacesMessage("PDF Selected", ((PDFDatas) event.getObject()).getHova());
+        SelectedPDFDatas=((PDFDatas)event.getObject());
+        FacesMessage msg = new FacesMessage("PDF Selected", SelectedPDFDatas.getDokumentumTipusa());
         FacesContext.getCurrentInstance().addMessage(null, msg);
         
     }
