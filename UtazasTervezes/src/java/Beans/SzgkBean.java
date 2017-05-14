@@ -191,7 +191,7 @@ public class SzgkBean {
         System.out.println(distance);
             PDFGEN pdfgen=new PDFGEN();
             double arfolyam=0;
-            //arfolyam=getArfolyam(currency);
+            arfolyam=getArfolyam(currency);
             byte[] pdfBytes=pdfgen.genKalkulacio(
                 getNev(), szemely.getBeosztas(), rendszam, kocsi.getHenger(), kocsi.getUzemanyag(), 
                 //        amortizacio
@@ -201,5 +201,15 @@ public class SzgkBean {
             SingletonDBMgr.InsertPDF(PersonID, hova, pdfgen.getOsszkoltseg(), "Szemelygepkocsi Kalkulacio", pdfBytes);
             System.out.println("Generálva, adatbázisra elküldve");
             FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
+            
+            
+            /* PÉLDA
+            
+            genUtazasiTerv("NEV","adoszam","beosztas","munkahely","eloadas_cime","elfogadva?","program_tipus",
+                "program_helye","idotartam","valuta",10,11,310,13,"fedezet",14,"bankszamla",15,15,66,10,
+                "uzazasi mod",10,"velemeny asdasd asd asd asd asd asd asd as");
+            
+            */
+            
     }
 }
