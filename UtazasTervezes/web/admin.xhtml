@@ -6,62 +6,20 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
-        <link rel="stylesheet" type="text/css" href="../admin.css"/> 
+        <link rel="stylesheet" type="text/css" href="css/admin.css"/> 
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        #{sharedBean.AdminShowPDFS(1)}
+        <div id="baloldal">   
+            <p> </p>
+        </div>
         <h:form id="form">
+            <img src="images/pannon.PNG" alt="The ENIAC" />
+            <p:pieChart title="PDF-ek" value="#{sharedBean.adminDia}" legendPosition="w" id="adminDia" style="width:70%;height:40%; margin: auto;" />
             <p:commandButton value="ShowAcceptedPDFS" ajax="false" action="#{sharedBean.redirectAccepted}" style="margin:20px;"/>          
             <p:commandButton value="ShowDeletedPDFS" ajax="false" action="#{sharedBean.redirectDeleted}" style="margin:20px;"/>          
             <p:commandButton value="ShowUncheckedPDFS" ajax="false" action="#{sharedBean.redirectPDFS}" style="margin:20px;"/>          
 
-            <p:growl id="msgs" showDetail="true" />
-            <p:dataTable id="eventsDT" var="PDFDatas" value="#{sharedBean.pdfDatas}" selectionMode="single" selection="#{sharedBean.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
-                <f:facet name="header">
-                    Leadott utazási tervek
-                </f:facet>
-                <p:ajax event="rowSelect" listener="#{sharedBean.onRowSelect}" update=":form:msgs" />
-                <p:ajax event="rowUnselect" listener="#{sharedBean.onRowUnselect}" update=":form:msgs" />
-                <p:column headerText="Id">
-                    <h:outputText value="#{PDFDatas.id}" />
-                </p:column>
-                <p:column headerText="Személy ID">
-                    <h:outputText value="#{PDFDatas.szemelyID}" />
-                </p:column>
-                <p:column headerText="Dátum">
-                    <h:outputText value="#{PDFDatas.datum}" />
-                </p:column>
-                <p:column headerText="Hova">
-                    <h:outputText value="#{PDFDatas.hova}" />
-                </p:column>
-                <p:column headerText="Összköltség">
-                    <h:outputText value="#{PDFDatas.osszkoltsegFT}" />
-                </p:column>
-                <p:column headerText="DokumentumTípusa">
-                    <h:outputText value="#{PDFDatas.dokumentumTipusa}" />
-                </p:column>
-                <p:column headerText="Ellenőrizve">
-                    <h:outputText value="#{PDFDatas.ellenorizve}" />
-                </p:column>
-            </p:dataTable>
-            <p:commandButton id="downloadLink" ajax="false" actionListener="#{sharedBean.prepareDownload()}" value=" " title="Letöltés" styleClass="downl">
-                <p:fileDownload value="#{sharedBean.download()}" />
-            </p:commandButton>
-            <p:commandButton id="ervenyesit" ajax="false" actionListener="#{sharedBean.setEllenoriz()}"  styleClass="ervenyes" title="Érvényesítés" value=" ">
-            </p:commandButton>
-            <p:commandButton id="torol" ajax="false" actionListener="#{sharedBean.Torol()}" styleClass="torol" title="Törlés" value=" ">
-            </p:commandButton>
-            
-            
-            <p:dialog header="PDF Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                <p:outputPanel id="carDetail" style="text-align:center;">
-                    <p:panelGrid  columns="2" rendered="#{not empty sharedBean.selectedPDFDatas}" columnClasses="label,value">
-                        <h:outputText value="Hova:" />
-                        <h:outputText value="#{sharedBean.selectedPDFDatas.hova}"  />
-                    </p:panelGrid>
-                </p:outputPanel>
-            </p:dialog>
         </h:form>
     </h:body>
 </html>

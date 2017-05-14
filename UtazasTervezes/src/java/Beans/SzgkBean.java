@@ -74,7 +74,8 @@ public class SzgkBean {
     }
     public void setDistance(String value)
     {
-        distance=value;
+        
+        distance=value.replaceAll("[^0-9.]", "");
     }
     
     public String getDistance(){

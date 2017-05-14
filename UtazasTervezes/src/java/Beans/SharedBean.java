@@ -22,6 +22,7 @@ import javax.inject.Named;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.chart.PieChartModel;
 import webformgen.PDFDatas;
 import webformgen.ProcedureManager;
 
@@ -54,7 +55,13 @@ public class SharedBean implements Serializable{
     public List<PDFDatas> getAcceptedpdfDatas() {
         return acceptedpdfDatas;
     }
-
+    public PieChartModel getAdminDia() {
+        PieChartModel pieModel = new PieChartModel();
+        pieModel.set("Elfogadott PDF-ek", 10);
+        pieModel.set("Törölt PDF-ek", 12.5);
+        pieModel.set("Ellenőrizetlen PDF-ek", 30);
+        return pieModel;
+    } 
     public void setAcceptedpdfDatas(List<PDFDatas> acceptedpdfDatas) {
         this.acceptedpdfDatas = acceptedpdfDatas;
     }
