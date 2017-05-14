@@ -6,9 +6,12 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Utazasi Terv</title>
+        <link rel="stylesheet" type="text/css" href="css/szgkkalc.css"/> 
     </h:head>
     <h:body>
+        <div id="baloldal"><p> </p></div>
         <h:form id="form">
+            <img src="images/pannon.PNG" alt="The ENIAC" />   
             <p:wizard flowListener="#{sharedBean.onFlowProcess}" id="utazasterv" styleClass="utazas">
                         <p:tab id="Titteee" title="Personal" >
                     <p:panel header="Welcome">
