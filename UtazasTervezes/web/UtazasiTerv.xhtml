@@ -14,10 +14,47 @@
                     <p:panel header="Welcome">
                         <p:messages />
                         <h:panelGrid columns="1" columnClasses="label, value">
-                            <h:outputText value="Utazasi Terv legeneralasa" />
+                            <p:growl id="msgs" showDetail="true" />
+                            <p:dataTable id="eventsDT" var="PDFDatas" value="#{utazasiTerv.acceptedSZGK}" selectionMode="single" selection="#{utazasiTerv.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
+                                <f:facet name="header">
+                                    Leadott utazási tervek
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{sharedBean.onRowSelect}" update=":form:msgs" />
+                                <p:ajax event="rowUnselect" listener="#{sharedBean.onRowUnselect}" update=":form:msgs" />
+                                <p:column headerText="Id">
+                                    <h:outputText value="#{PDFDatas.id}" />
+                                </p:column>
+                                <p:column headerText="Személy ID">
+                                    <h:outputText value="#{PDFDatas.szemelyID}" />
+                                </p:column>
+                                <p:column headerText="Dátum">
+                                    <h:outputText value="#{PDFDatas.datum}" />
+                                </p:column>
+                                <p:column headerText="Hova">
+                                    <h:outputText value="#{PDFDatas.hova}" />
+                                </p:column>
+                                <p:column headerText="Összköltség">
+                                    <h:outputText value="#{PDFDatas.osszkoltsegFT}" />
+                                </p:column>
+                                <p:column headerText="DokumentumTípusa">
+                                    <h:outputText value="#{PDFDatas.dokumentumTipusa}" />
+                                </p:column>
+                                <p:column headerText="Ellenőrizve">
+                                    <h:outputText value="#{PDFDatas.ellenorizve}" />
+                                </p:column>
+                            </p:dataTable>
+                            <p:dialog header="PDF Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:outputPanel id="carDetail" style="text-align:center;">
+                                    <p:panelGrid  columns="2" rendered="#{not empty utazasiTerv.selectedPDFDatas}" columnClasses="label,value">
+                                        <h:outputText value="Hova:" />
+                                        <h:outputText value="#{utazasiTerv.selectedPDFDatas.hova}" />
+                                    </p:panelGrid>
+                                </p:outputPanel>
+                            </p:dialog>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
+                
                 <p:tab id="utaz" title="Personal" >
                     <p:panel header="Út célja">
                         <p:messages />
@@ -38,7 +75,7 @@
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
-                <p:tab id="wattack" title="NoPDF" >
+                <p:tab id="wattack" >
                     <p:panel header="wtf">
                         <p:messages />
                         <h:panelGrid columns="1" columnClasses="label, value">

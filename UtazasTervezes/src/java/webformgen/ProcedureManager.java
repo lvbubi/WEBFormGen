@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -165,6 +166,16 @@ public class ProcedureManager {
             cStmt.execute();
         System.out.println("Elment");
     }
+    
+    public void InsertUtvonal(int szgkPDF_id,byte pdfBytes[]) throws SQLException{
+        System.out.println("kivalaszottID: "+szgkPDF_id);
+        CallableStatement cStmt;
+        cStmt=conn.prepareCall("{call AddUtiterv(?,?)}");
+        cStmt.setInt(1, szgkPDF_id);
+        cStmt.setBytes(2, pdfBytes);
+        cStmt.execute();
+    }
+    
     
     public Person getPersonDatas(int PersonID) throws SQLException{
         CallableStatement cStmt;

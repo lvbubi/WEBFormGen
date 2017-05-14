@@ -12,10 +12,8 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -37,6 +35,18 @@ public class SharedBean implements Serializable{
     static List<PDFDatas> pdfDatas;
     static List<PDFDatas> deletedpdfDatas;
     static List<PDFDatas> acceptedpdfDatas;
+    byte[] receivedPDF=null;
+    int receivedPDFID;
+    static int PersonID;
+    String neptun,password;
+    public int getPersonID() {
+        return PersonID;
+    }
+    int isAdmin=0;
+    
+    
+    
+    
     public List<PDFDatas> getDeletedpdfDatas() {
         return deletedpdfDatas;
     }
@@ -63,25 +73,10 @@ public class SharedBean implements Serializable{
         pieModel.set("Ellenőrizetlen PDF-ek", pdfDatas.size());
         return pieModel;
     } 
-        public PieChartModel getUserDia() {
-        PieChartModel pieModel = new PieChartModel();
-        pieModel.set("Elfogadott PDF-ek", acceptedpdfDatas.size());
-        pieModel.set("Ellenőrizetlen PDF-ek", pdfDatas.size());
-        return pieModel;
-    } 
+
     public void setAcceptedpdfDatas(List<PDFDatas> acceptedpdfDatas) {
         this.acceptedpdfDatas = acceptedpdfDatas;
     }
-    boolean skip;
-    byte[] receivedPDF=null;
-    int receivedPDFID;
-    static int PersonID;
-    String neptun,password;
-    public int getPersonID() {
-        return PersonID;
-    }
-    int isAdmin=0;
-    
     public boolean isAdminrender() {
         if(isAdmin==1)
             return true;
