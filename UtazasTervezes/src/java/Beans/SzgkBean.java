@@ -191,7 +191,15 @@ public class SzgkBean {
         System.out.println(distance);
             PDFGEN pdfgen=new PDFGEN();
             double arfolyam=0;
-            arfolyam=getArfolyam(currency);
+            try
+            {
+                  arfolyam=getArfolyam(currency);
+            }
+            catch(NumberFormatException ex)
+            {
+                System.out.println("Hibás formátum");
+            }
+          
             byte[] pdfBytes=pdfgen.genKalkulacio(
                 getNev(), szemely.getBeosztas(), rendszam, kocsi.getHenger(), kocsi.getUzemanyag(), 
                 //        amortizacio
