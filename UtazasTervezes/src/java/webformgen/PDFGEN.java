@@ -22,7 +22,8 @@ import java.util.Date;
 public class PDFGEN {
      private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
      private double Osszkoltseg=0;
-
+     
+     
     public double getOsszkoltseg() {
         return Osszkoltseg;
     }
@@ -32,7 +33,7 @@ public class PDFGEN {
         try{
             PdfWriter.getInstance(document, byteArrayOutputStream);
             document.open();
-            
+            amortizacio = 9;
             Paragraph p1 = new Paragraph("Kalkuláció*",FontFactory.getFont(FontFactory.TIMES_BOLD,20,Font.BOLD,BaseColor.BLACK));              
                 p1.setAlignment(Element.ALIGN_CENTER);
             Paragraph p2 = new Paragraph("Saját szgk-val történo külföldi utazáshoz");
