@@ -63,6 +63,12 @@ public class SharedBean implements Serializable{
         pieModel.set("Ellenőrizetlen PDF-ek", pdfDatas.size());
         return pieModel;
     } 
+        public PieChartModel getUserDia() {
+        PieChartModel pieModel = new PieChartModel();
+        pieModel.set("Elfogadott PDF-ek", acceptedpdfDatas.size());
+        pieModel.set("Ellenőrizetlen PDF-ek", pdfDatas.size());
+        return pieModel;
+    } 
     public void setAcceptedpdfDatas(List<PDFDatas> acceptedpdfDatas) {
         this.acceptedpdfDatas = acceptedpdfDatas;
     }
