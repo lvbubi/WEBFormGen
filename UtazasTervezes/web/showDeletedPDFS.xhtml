@@ -11,7 +11,7 @@
     <h:body>
         <h:form id="form">
             <p:growl id="msgs" showDetail="true" />
-            <p:dataTable id="eventsDT" var="PDFDatas" value="#{sharedBean.deletedpdfDatas}" selectionMode="single" selection="#{sharedBean.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
+            <p:dataTable id="eventsDT" var="PDFDatas" value="#{sharedBean.deletedpdfDatas}" selectionMode="single" selection="#{sharedBean.selectedPDFDatas}" rowKey="#{PDFDatas}" >
                 <f:facet name="header">
                     Törölt utazási tervek
                 </f:facet>
