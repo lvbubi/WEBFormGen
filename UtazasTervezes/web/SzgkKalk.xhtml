@@ -56,7 +56,7 @@
                         summaryPanel.innerHTML += route.legs[i].end_address + '<br/>';
                         summaryPanel.innerHTML += route.legs[i].duration.text + '<br/>';
                         summaryPanel2.innerHTML += route.legs[i].distance.text;
-                        #{SzgkBean.setDistance(distance)};
+                        #{szgkBean.setDistance(distance)};
                         swap();
                     }
 
@@ -69,7 +69,7 @@
                 var stuff=distance.split(",")[0];
                 var stuff=stuff.split(" ")[0];
                 document.getElementById('form:distance2').value=stuff;
-                window.alert((document.getElementById('form:distance2').value)*2 + " km");
+                window.alert(document.getElementById('form:distance2').value + " km");
             }
            
             </script>
