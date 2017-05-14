@@ -29,19 +29,6 @@ import webformgen.ProcedureManager;
 @SessionScoped
 @ManagedBean
 public class UserBean implements Serializable {
-    boolean skip;
-    String distance;
-
-    public String getDistance() {
-        return distance;
-    }
-
-    public void setDistance(String distance) {
-        this.distance = distance;
-    }
-
-
-
     public void utazasiTerv() throws IOException{
         FacesContext.getCurrentInstance().getExternalContext().redirect("UtazasiTerv.xhtml");
     }
@@ -49,22 +36,4 @@ public class UserBean implements Serializable {
     public void szgkKalk() throws IOException{
         FacesContext.getCurrentInstance().getExternalContext().redirect("SzgkKalk.xhtml");
     }
-    public String onFlowProcess(FlowEvent event) {
-        if(skip) {
-            skip = false;   //reset in case user goes back
-            return "confirm";
-        }
-        else {
-            return event.getNewStep();
-        }
-    }
-    public boolean isSkip() {
-        return skip;
-    }
- 
-    public void setSkip(boolean skip) {
-        this.skip = skip;
-    }
-    
-    
 }

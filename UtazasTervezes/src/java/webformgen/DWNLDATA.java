@@ -1,17 +1,15 @@
 package webformgen;
 
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.lang.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -24,18 +22,12 @@ public class DWNLDATA {
     Map gazolajnorma= new HashMap();
     Map motornorma= new HashMap();
     
-    public DWNLDATA()
+    public DWNLDATA() throws IOException
     {
-        try {
-            uzemanyag=getFuel("http://www.nav.gov.hu/nav/szolgaltatasok/uzemanyag/uzemanyagarak/");
-        
-            benzinnorma=getBenzinFogyasztas();
-        
-            gazolajnorma=getGazolajFogyasztas(); 
-            motornorma=getMotorFogyasztas();
-         } catch (IOException ex) {
-            Logger.getLogger(DWNLDATA.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         uzemanyag=getFuel("http://www.nav.gov.hu/nav/szolgaltatasok/uzemanyag/uzemanyagarak/");
+         benzinnorma=getBenzinFogyasztas();
+         gazolajnorma=getGazolajFogyasztas(); 
+         motornorma=getMotorFogyasztas();
          
     }
     
@@ -90,8 +82,8 @@ public class DWNLDATA {
     
     private Document Connect(String cim) throws IOException
     {
-       //System.setProperty("http.proxyHost", "proxy.vekoll.uni-pannon.hu");
-       //System.setProperty("http.proxyPort", "3128"); 
+       System.setProperty("http.proxyHost", "proxy.vekoll.uni-pannon.hu");
+       System.setProperty("http.proxyPort", "3128"); 
        final Document document;
        document = Jsoup.connect(cim).get();
        return document;
@@ -130,18 +122,19 @@ public class DWNLDATA {
          return norma;
     }
     
-    private double getMNB(String valuta, String date) throws IOException
+    private double getMNB(String valuta, String date1, String date2) throws IOException
     {    
         double arfolyam=-1;
          final Document document;
          String seged = 
-      "http://www.mnb.hu/arfolyam-tablazat?deviza=rbCurrencySelect&devizaSelected="+valuta+"&datefrom="+date+"&datetill="+date+"&order=1";
+      "http://www.mnb.hu/arfolyam-tablazat?deviza=rbCurrencySelect&devizaSelected="+valuta+"&datefrom="+date1+"&datetill="+date2+"&order=1";
          
         document = Connect(seged);
       // System.out.println(document.outerHtml());
         Elements paragraphs = document.select("span");
         List<String> tmp=new ArrayList();
         List<String> tmp2=new ArrayList();
+        List<String> last=new ArrayList();
         for (Element p : paragraphs)
             tmp.add(p.toString());
              
@@ -151,22 +144,94 @@ public class DWNLDATA {
             tmp2.add(tmp.get(i));
         }
         
-        /*
-        for(int i=0; i<tmp2.size();i++)  
-            System.out.println(tmp2.get(i));
-        */
-            
-      
+        String [] datum = 
+         {
+             "január","február","március","április","május","június","július","Augusztus","szeptember","október",
+             "november","december"
+         };
         
-        String value=tmp2.get(1);
-       
-        //System.out.println(value);
-         value=value.replace("<span>", "");
-         value=value.replace("</span>", "");
-         value=value.replace(",", ".");
-         arfolyam=Double.valueOf(value);
+        
+        java.util.Date date= new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH);
+        //System.out.println(month);
+        
+        String honap = datum[month-1];
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        String minta = "<span>"+year+". "+honap+" ";
+        
+        String nap = null;
+        String value=null;
+        
+        for(int i=0; i<tmp2.size();i++)
+        {  
+             if(i%2==0)
+             {
+                 nap=tmp2.get(i).replaceAll(minta, "");
+                 nap=nap.replaceAll(".</span>", "");
+                 last.add(nap);
+                 //System.out.println(nap);
+             }
+              if(i%2==1)
+             {
+                 value=tmp2.get(i).replaceAll("<span>", "");
+                 value=value.replaceAll("</span>", "");
+                 value=value.replace(",", ".");
+                 //System.out.println(value);
+                 last.add(value);
+             }
+             
+             
+             
+        } 
+        
+        
+        String optimal ="15";        
+        int distance=0;
+        int max=30;
+        int index=0;
+        
+        
+        for(int i=0; i< last.size(); i++)
+        {   
+            if(i%2==0)
+            {   
+                distance = abs(Integer.valueOf(optimal),Integer.valueOf(last.get(i)));             
+                if(distance<=max)
+                {
+                    max=distance;
+                    index=i;
+                }
+                
+            }
+            
+            
+            
+          
+        }
+        
+       // System.out.println();
+       // System.out.println(distance);
+       // System.out.println(index);
+       // System.out.println(last);
+       // System.out.println();
+         
+        arfolyam=Double.valueOf(last.get(index+1));
   
         return arfolyam;
+    }
+    
+    private Map getBenzinNorma() {
+        return benzinnorma;
+    } 
+
+    private Map getGazolajnorma() {
+        return gazolajnorma;
+    }
+
+    private Map getMotornorma() {
+        return motornorma;
     }
     
     private List<String> getUzemanyag() {
@@ -177,29 +242,45 @@ public class DWNLDATA {
     //fontos adatok Lekérése
     
     public double selectArfolyam(String valuta) throws IOException
-    {   
-         DateFormat year = new SimpleDateFormat("yyyy");
-         DateFormat month = new SimpleDateFormat("MM");
-         DateFormat day = new SimpleDateFormat("dd");
+    {    
+            DateFormat year = new SimpleDateFormat("yyyy");
+            DateFormat month = new SimpleDateFormat("MM");
+            DateFormat day = new SimpleDateFormat("dd");
             Date time = new Date();
             String datum = year.format(time)+".";
             int honap = Integer.valueOf(month.format(time))-1;
             if(honap<10)    datum=datum+"0"+honap;
             else datum=datum+honap;
-            datum=datum+".15.";
-            System.out.println(datum);
+            datum=datum+".10.";
             
-             if(month.format(time).equals("01"))
+            if(month.format(time).equals("01"))
             {   
                 int tmp;
                 tmp = Integer.valueOf(year.format(time))-1;
-                datum= tmp+"."+"12."+"15.";
+                datum= tmp+"."+"12."+"10.";
             }
             
-            System.out.println(datum);
+            String datum2 = year.format(time)+".";
+            honap = Integer.valueOf(month.format(time))-1;
+            if(honap<10)    datum2=datum2+"0"+honap;
+            else datum2=datum2+honap;
+            datum2=datum2+".20.";
+            
+            if(month.format(time).equals("01"))
+            {   
+                int tmp;
+                tmp = Integer.valueOf(year.format(time))-1;
+                datum2= tmp+"."+"12."+"20.";
+            }
+            
+           
+            
+          //  System.out.println(datum);
+          //  System.out.println(datum2);
+            
+           
         
-         double value=getMNB(valuta,datum);    
-         System.out.println("Valuta:\t"+value);
+         double value=getMNB(valuta,datum,datum2);              
          return value;
     } //egy bizonyos napon a valuta erteke
       
@@ -229,7 +310,7 @@ public class DWNLDATA {
                 if(henger>=501) return (double) motornorma.get("500");   
                 
         }
-        System.out.println("Norma:\t"+norma);
+    
         return norma;
     } // adott tipusú és meretu henger fogyasztása /100km
     
@@ -237,10 +318,9 @@ public class DWNLDATA {
     public int selectUzemanyag( String tipus )
     {   int tmp = 0;
         int index=0;
-        List<String> seged=getUzemanyag();    
+        List<String> seged=getUzemanyag();             
         String honap=null;
-        
-         String [] datum = 
+        String [] datum = 
          {
              "január","február","március","április","május","június","július","Augusztus","szeptember","október",
              "november","december"
@@ -250,11 +330,10 @@ public class DWNLDATA {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int month = cal.get(Calendar.MONTH);
-        System.out.println(month);
+        //System.out.println(month);
         
         honap=datum[month];
         
-
        for(int i=0;i<seged.size();i++)
       {     
           if(seged.get(i).equals(honap))
@@ -286,14 +365,22 @@ public class DWNLDATA {
           case "Keverék": return anyag[2];
           case "LPG": return anyag[3];               
       }
-        System.out.println("Uzemanyag:"+tmp);
+      
+      
+       
         return tmp;
     }
    
     
+    private int abs(int a, int b)
+    {
+        if(a-b>0) return a-b;
+        else return (a-b)*-1;
+    }
+    
     // Példa a fügvények használatára
     
     //System.out.println(tmp.selectNorma("benzin", 1223)); 
-    //System.out.println(tmp.selectArfolyam("EUR","2017.03.07."));
+    //System.out.println(tmp.selectArfolyam("2017. március 9.", "EUR","2017.03.07.","2017.04.07."));
     //System.out.println(tmp.selectUzemanyag("ESZ-95","január"));
 }
