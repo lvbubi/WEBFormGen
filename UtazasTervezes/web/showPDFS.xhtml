@@ -48,9 +48,12 @@
                     </p:panelGrid>
                 </p:outputPanel>
             </p:dialog>
+            
             <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{sharedBean.prepareDownload()}">
                 <p:fileDownload value="#{sharedBean.download()}" />
             </p:commandButton>
+            <p:commandButton id="Accept" value="Engedélyez" ajax="false" rendered="#{sharedBean.adminrender}" />
+            <p:commandButton id="Delete" value="Torol" ajax="false" rendered="#{sharedBean.adminrender}" />
         </h:form>
     </h:body>
 </html>

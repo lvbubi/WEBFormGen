@@ -76,7 +76,11 @@ public class SharedBean implements Serializable{
     }
     int isAdmin=0;
     
-
+    public boolean isAdminrender() {
+        if(isAdmin==1)
+            return true;
+        return false;
+    }
     @EJB
     public ProcedureManager SingletonDBMgr;
     
@@ -88,7 +92,7 @@ public class SharedBean implements Serializable{
         PersonID=SingletonDBMgr.getPersonID(neptun, password);
         System.out.println(PersonID);
         setIsAdmin();
-        if(isAdmin==0){
+        if(isAdmin==0 && PersonID > 0){
             FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
         }else if(isAdmin==1){
             FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
@@ -96,7 +100,7 @@ public class SharedBean implements Serializable{
         }else if(isAdmin==2){
             FacesContext.getCurrentInstance().getExternalContext().redirect("titkar.xhtml");
         }
-        //FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        else FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
     } 
     public int getIsAdmin(){
         return isAdmin;
@@ -118,7 +122,6 @@ public class SharedBean implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-    
     
     public List<PDFDatas> getPdfDatas() {
         return pdfDatas;
