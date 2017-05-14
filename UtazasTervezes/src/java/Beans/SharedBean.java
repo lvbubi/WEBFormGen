@@ -147,6 +147,7 @@ public class SharedBean implements Serializable{
     
     public void AdminShowPDFS(int ellenorz) throws SQLException{
         pdfDatas = SingletonDBMgr.getPDFDatasAdmin(0);
+        pdfDatas.addAll(SingletonDBMgr.getUtvonalDatas(1,0));
         if(ellenorz==1){//ha az ellenorz 1 akkor admin használja ezt a függvényt
             acceptedpdfDatas=SingletonDBMgr.getPDFDatasAdmin(1);
             deletedpdfDatas=SingletonDBMgr.getPDFDatasAdmin(3);
@@ -160,7 +161,7 @@ public class SharedBean implements Serializable{
     }
     
     public void prepareDownload() throws SQLException{
-        receivedPDF=SingletonDBMgr.downloadPDF(receivedPDFID);
+        receivedPDF=SingletonDBMgr.downloadPDF(receivedPDFID,SelectedPDFDatas.getDokumentumTipusa());
     }
     public void download() throws IOException{
         String pdfFileName = "PDF_id"+receivedPDFID+".pdf";

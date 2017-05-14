@@ -70,17 +70,49 @@ public class ProcedureManager {
         return rendszamok;
     }
     
-    public byte[] downloadPDF(int pdfID) throws SQLException{
+    public byte[] downloadPDF(int pdfID,String doctype) throws SQLException{
         byte[] receivedPDF=null;
                 System.out.println("Preparing PDF ON ID: "+pdfID);
         Statement select;
             select = new ConnectionManager().getConnection().createStatement();
-            ResultSet rs = select.executeQuery("SELECT adatok FROM GeneraltPDF WHERE id = "+pdfID);
+            ResultSet rs;
+            if("Szemelygepkocsi Kalkulacio".equals(doctype))
+                rs = select.executeQuery("SELECT adatok FROM GeneraltPDF WHERE id = "+pdfID+" and DokumentumTipusa='"+doctype+"'");
+            
+            else rs = select.executeQuery("SELECT adatok FROM GeneraltUtiterv WHERE id = "+pdfID+" and DokumentumTipusa='"+doctype+"'");
             rs = select.getResultSet();
             rs.next() ;
             receivedPDF = rs.getBytes("adatok");
         return receivedPDF;
     }
+    
+    public List<PDFDatas> getUtvonalDatas(int PersonID,int pdfState) throws SQLException{
+        String query="select GeneraltUtiterv.id,SzemelyID,Datum,Hova,OsszkoltsegFt,GeneraltUtiterv.DokumentumTipusa,GeneraltUtiterv.Ellenorizve,GeneraltUtiterv.adatok from GeneraltUtiterv"+
+            " JOIN GeneraltPDF ON GeneraltPDF.id=szgkPDF_id"+
+                " where SzemelyID = "+Integer.toString(PersonID)+" and GeneraltUtiterv.Ellenorizve = "+Integer.toString(pdfState);
+        int id;
+        Date Datum;
+        String Hova;
+        float OsszkoltsegFT;
+        String DokumentumTipusa;
+        int Ellenorizve;
+        List<PDFDatas> pdfKeys=new ArrayList<>();
+        Statement st=conn.createStatement();
+        ResultSet rs=st.executeQuery(query);
+        while(rs.next()){
+            id=rs.getInt("id");
+            Datum=rs.getDate("Datum");
+            Hova=rs.getString("Hova");
+            OsszkoltsegFT=rs.getFloat("OsszkoltsegFt");
+            DokumentumTipusa=rs.getString("DokumentumTipusa");
+            Ellenorizve=rs.getInt("Ellenorizve");
+            
+            pdfKeys.add(new PDFDatas(id,PersonID,Datum,Hova,OsszkoltsegFT,DokumentumTipusa,Ellenorizve));
+        }
+        return pdfKeys;
+    }
+    
+    
     
    public List<PDFDatas> getPDFDatas(int PersonID,int pdfState) throws SQLException{
         int id;
