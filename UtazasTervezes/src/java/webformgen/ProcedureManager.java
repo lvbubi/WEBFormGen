@@ -86,9 +86,22 @@ public class ProcedureManager {
         return receivedPDF;
     }
     
-    
-    
-    
+    public void setElfogad(int pdfID,String doctype) throws SQLException{
+        Statement select;
+        select = new ConnectionManager().getConnection().createStatement();
+        ResultSet rs;
+        if("Szemelygepkocsi Kalkulacio".equals(doctype))
+            rs = select.executeQuery("UPDATE GeneraltPDF SET Ellenorizve = 1 WHERE id = "+pdfID+" and DokumentumTipusa='"+doctype+"'");
+        else rs = select.executeQuery("UPDATE GeneraltUtiterv SET Ellenorizve=1  id = "+pdfID+" and DokumentumTipusa='"+doctype+"'");
+    }
+    public void setTorol(int pdfID,String doctype) throws SQLException{
+        Statement select;
+        select = new ConnectionManager().getConnection().createStatement();
+        ResultSet rs;
+        if("Szemelygepkocsi Kalkulacio".equals(doctype))
+            rs = select.executeQuery("UPDATE GeneraltPDF SET Ellenorizve = 3 WHERE id = "+pdfID+" and DokumentumTipusa='"+doctype+"'");
+        else rs = select.executeQuery("UPDATE GeneraltUtiterv SET Ellenorizve=3  id = "+pdfID+" and DokumentumTipusa='"+doctype+"'");
+    }
     
    public List<PDFDatas> getPDFDatas(int PersonID,int pdfState,String doctype) throws SQLException{
         int id;
