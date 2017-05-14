@@ -143,7 +143,12 @@ public class PDFGEN {
         }
     }
      
-    public byte[] genUtazasiTerv(String nev , String adoszam, String beosztas, String  munkahely, String e_cim, String elfogadva, String program_tipus, String hely, String idotartam, String valuta, int napidij , int szallasdij, double arfolyam, int nap_db, String fedezet, int egyeb, String bankszamla, int eloleg,int deviza,int osztondij,int honap_db, String utazasi_mod, int felhasznalt_napok,String velemeny)
+    public byte[] genUtazasiTerv(String nev , String adoszam, String beosztas,
+            String  munkahely, String e_cim, String elfogadva, String program_tipus,
+            String hely, String idotartam, String valuta, int napidij , int szallasdij,
+            double arfolyam, int nap_db, String fedezet, int egyeb, String bankszamla,
+            int eloleg,int deviza,int osztondij,int honap_db, String utazasi_mod,
+            int felhasznalt_napok,String velemeny)
     {
          Document document = new Document();
         try{

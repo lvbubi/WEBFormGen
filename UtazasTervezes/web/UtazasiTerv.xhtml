@@ -57,7 +57,15 @@
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
-                
+                <p:tab id="valuta" title="Valami" >
+                    <p:panel header="Valuta">
+                        <p:messages />
+                            <p:outputLabel for="advanced" value="Valuta:" />
+                            <p:selectOneListbox id="advanced" value="#{utazasiTerv.currency}" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{uazasiTerv.getValutaTypesKeret()}" />
+                            </p:selectOneListbox>
+                    </p:panel>
+                </p:tab>
                 <p:tab id="utaz" title="Personal" >
                     <p:panel header="Út célja">
                         <p:messages />

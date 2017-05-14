@@ -34,9 +34,11 @@ public class UtazasiTerv {
     private ProcedureManager SingletonDBMgr;
     
     
+    
     List<PDFDatas> acceptedSZGK=new ArrayList<>();
     PDFDatas selectedPDFDatas;
-
+    String currency;
+    
     public List<PDFDatas> getAcceptedSZGK() {
         return acceptedSZGK;
     }
@@ -82,7 +84,7 @@ public class UtazasiTerv {
     public void genPDF() throws SQLException, IOException{
         System.out.println("ElfogadottSZGK: "+acceptedSZGK.size());
         PDFGEN pdfgen=new PDFGEN();
-        byte[] pdfBytes=pdfgen.genUtazasiTerv(person.getVnev()+" "+person.getKnev(), egyebkeret, egyebkeret, egyebkeret, egyebkeret, egyebkeret,
+        byte[] pdfBytes=pdfgen.genUtazasiTerv(person.getVnev()+" "+person.getKnev(), person.getAdoszam(), person.getBeosztas(), "Pannon Egyetem", egyebkeret, egyebkeret,
                 utazas_celja, egyebkeret, egyebkeret, egyebkeret, PersonID, PersonID, PersonID, PersonID, egyebkeret,
                 PersonID, utazas_celja, PersonID, PersonID, PersonID, PersonID, utazas_celja, PersonID, egyebkeret);
         
@@ -98,7 +100,28 @@ public class UtazasiTerv {
     public void setUtazas_celja(String utazas_celja) {
         this.utazas_celja = utazas_celja;
     }
-
+    public List<String> getValutaTypesKeret()
+    {
+        List<String> tmp = Arrays.asList(
+                "ATS","AUD","AUP","BEF","BGL","BGN","BRL","CAD","CHF",
+                "CNY","CSD","CSK2","CYN","CZK","DDM","DEM","DKK","EEK",
+                "EGP","ESP","EUR","FIM","FRF","GBP","GHP","GRD","HKD",
+                "HRK","IDR","IEP","ILS","INR","ISK","ITL","JPY","KPW",
+                "KRW","KWD","LBP","LTL","LUF","LVL","MNT","MXN","MYR",
+                "NLG","NOK","NZD","OAL","OBL","OFR","ORB","PHP","PKR",
+                "PLN","PTE","ROL","RON","RSD","RUB","SDP","SEK","SGD",
+                "SIT","SKK","SUR","THB","TRY","UAH","USD","VND","XEU",
+                "XTR","YUD","ZAR");
+        return tmp;
+    }
+        public String getCurrency() {
+        return currency;
+    }
+    
+    public void setCurrency(String currency) {
+        System.out.println(currency);
+        this.currency = currency;
+    }
     public String getEgyebkeret() {
         return egyebkeret;
     }
