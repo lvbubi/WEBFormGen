@@ -5,6 +5,7 @@
  */
 package Beans;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import webformgen.PDFDatas;
 import webformgen.PDFGEN;
@@ -77,7 +79,7 @@ public class UtazasiTerv {
     //int honap_db, String utazasi_mod, int felhasznalt_napok,String velemeny)
   
     
-    public void genPDF() throws SQLException{
+    public void genPDF() throws SQLException, IOException{
         System.out.println("ElfogadottSZGK: "+acceptedSZGK.size());
         PDFGEN pdfgen=new PDFGEN();
         byte[] pdfBytes=pdfgen.genUtazasiTerv(person.getVnev()+" "+person.getKnev(), egyebkeret, egyebkeret, egyebkeret, egyebkeret, egyebkeret,
@@ -86,6 +88,7 @@ public class UtazasiTerv {
         
         SingletonDBMgr.InsertUtvonal(selectedPDFDatas.getId(), pdfBytes);
         System.out.println("PDF Generálása");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
     }
     
     public String getUtazas_celja() {
@@ -133,6 +136,10 @@ public class UtazasiTerv {
                 "TEMPUS", "egyéb EU - szintű együttműködés", "kormányközi együttműködés","intézményi együttműködés",
                 "alapítványi támogatás","meghívás","saját szervezés");
         return tmp;
+    }
+        
+    public void vissza() throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
     }
 
 }
