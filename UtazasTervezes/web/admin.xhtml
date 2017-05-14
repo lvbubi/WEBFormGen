@@ -15,10 +15,10 @@
         </div>
         <h:form id="form">
             <img src="images/pannon.PNG" alt="The ENIAC" />
-            <p:pieChart title="PDF-ek" value="#{sharedBean.adminDia}" legendPosition="w" id="adminDia" style="width:70%;height:40%; margin: auto;" />
-            <p:commandButton value="ShowAcceptedPDFS" ajax="false" action="#{sharedBean.redirectAccepted}" style="margin:20px;"/>          
-            <p:commandButton value="ShowDeletedPDFS" ajax="false" action="#{sharedBean.redirectDeleted}" style="margin:20px;"/>          
-            <p:commandButton value="ShowUncheckedPDFS" ajax="false" action="#{sharedBean.redirectPDFS}" style="margin:20px;"/>          
+            <p:pieChart title="PDF-ek" value="#{sharedBean.adminDia}" legendPosition="w" id="adminDia" style="width:70%;height:40%; margin: auto;" seriesColors="00FF00, 000000, FF0000" />
+            <p:commandButton value="Elfogadott PDF-ek" ajax="false" action="#{sharedBean.redirectAccepted}" style="margin:20px;"/>          
+            <p:commandButton value="Törölt PDF-ek" ajax="false" action="#{sharedBean.redirectDeleted}" style="margin:20px;"/>          
+            <p:commandButton value="Ellenőrizetlen PDF-ek" ajax="false" action="#{sharedBean.redirectPDFS}" style="margin:20px;"/>          
 
         </h:form>
     </h:body>

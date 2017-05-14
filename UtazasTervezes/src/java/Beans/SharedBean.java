@@ -56,10 +56,11 @@ public class SharedBean implements Serializable{
         return acceptedpdfDatas;
     }
     public PieChartModel getAdminDia() {
+        
         PieChartModel pieModel = new PieChartModel();
-        pieModel.set("Elfogadott PDF-ek", 10);
-        pieModel.set("Törölt PDF-ek", 12.5);
-        pieModel.set("Ellenőrizetlen PDF-ek", 30);
+        pieModel.set("Elfogadott PDF-ek", acceptedpdfDatas.size());
+        pieModel.set("Törölt PDF-ek", deletedpdfDatas.size());
+        pieModel.set("Ellenőrizetlen PDF-ek", pdfDatas.size());
         return pieModel;
     } 
     public void setAcceptedpdfDatas(List<PDFDatas> acceptedpdfDatas) {
@@ -91,6 +92,7 @@ public class SharedBean implements Serializable{
             FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
         }else if(isAdmin==1){
             FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
+            AdminShowPDFS(1);
         }else if(isAdmin==2){
             FacesContext.getCurrentInstance().getExternalContext().redirect("titkar.xhtml");
         }
