@@ -45,51 +45,51 @@ public class PDFGEN {
                   Paragraph p6 = new Paragraph("          Rendszam: " + rendszam);     
                   Paragraph p7 = new Paragraph("          Tipus: " + tipus);  
                   Paragraph p8 = new Paragraph("          Hengerurtatralom: "+henger);  
-                  Paragraph p9 = new Paragraph("          Üzemanyag fajta: "+uzemanyag);
-                  Paragraph p10 = new Paragraph("          Üzemanyag norma 1/100km(A): "+norma);
-                  Paragraph p11 = new Paragraph("          Amortizaciós költseg Ft/km(B): "+amortizacio);
-                  Paragraph p12 = new Paragraph("          Üzemanyag egységára Ft-ban(C): "+ ar);
-                  Paragraph p13 = new Paragraph("          A teljes útvonal hossza km(D): "+ utvonal);
+                  Paragraph p9 = new Paragraph("          Uzemanyag fajta: "+uzemanyag);
+                  Paragraph p10 = new Paragraph("          Uzemanyag norma 1/100km(A): "+norma);
+                  Paragraph p11 = new Paragraph("          Amortizacios koltseg Ft/km(B): "+amortizacio);
+                  Paragraph p12 = new Paragraph("          Uzemanyag egysegara Ft-ban(C): "+ ar);
+                  Paragraph p13 = new Paragraph("          A teljes utvonal hossza km(D): "+ utvonal);
                   
             
-            Chunk p14 = new Chunk("Atalany szerinti üzemanyag es amortizació: ");
+            Chunk p14 = new Chunk("Atalany szerinti uzemanyag es amortizacio: ");
             p14.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location
             
-            Paragraph p15 = new Paragraph("Üzemanyag költség (D/100xAxC): " + (utvonal/100*norma*ar));
+            Paragraph p15 = new Paragraph("üzemanyag koltség (D/100xAxC): " + (utvonal/100*norma*ar));
                 p15.setLeading(30);
-            Paragraph p16 = new Paragraph("Amortizációs költseg (BxD):"+(amortizacio*utvonal));
+            Paragraph p16 = new Paragraph("Amortizaciós koltseg (BxD):"+(amortizacio*utvonal));
                 p16.setLeading(30);
             Paragraph p17 = new Paragraph("__________________________________________________________________________");      
             
-            Chunk p18 = new Chunk("Esetleges számlával igazolt további költségek:");
+            Chunk p18 = new Chunk("Esetleges szamlaval igazolt tovabbi koltsegek:");
             p18.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location
             
             
-            Paragraph p19 = new Paragraph("Autópályadij Ft-ban: " + palya);
-            Paragraph p20 = new Paragraph("Autopalyadij valutában* és Ft-ban: " + palya );
-            Paragraph p21 = new Paragraph("Parkirozási dij valutában* és forintban: " + parkolas);
-            Paragraph p22 = new Paragraph("Valuta árfolyam**: "+ valuta);
+            Paragraph p19 = new Paragraph("Autopalyadij Ft-ban: " + palya);
+            Paragraph p20 = new Paragraph("Autopalyadij valutaban* es Ft-ban: " + palya );
+            Paragraph p21 = new Paragraph("Parkirozasi dij valutaban* és forintban: " + parkolas);
+            Paragraph p22 = new Paragraph("Valuta arfolyam**: "+ valuta);
             Osszkoltseg=((utvonal/100*norma*ar)+(amortizacio*utvonal)+parkolas+palya);
-            Paragraph p23 = new Paragraph("Összes költség Ft-ban: " +Osszkoltseg,FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
+            Paragraph p23 = new Paragraph("Osszes koltség Ft-ban: " +Osszkoltseg,FontFactory.getFont(FontFactory.TIMES_BOLD,12,Font.BOLD,BaseColor.BLACK));
                 
             Chunk p24 = new Chunk("Megjegyzesek: ");
             p24.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location   
            
             Paragraph p25 = new Paragraph
             ("* Bizonylat csatolando\n"
-             + "* A valuta váltás bizonylatán szereplő árfolyam, ennek hiányáan az utazást megelőző hónap 15-dikei MNB deviza középárfolyam.\n"
-             + "Utazási tervhez a kalkulációs lap kitöltése szükséges, elszámoláskor azonban kiküldetési rendelvényt kell kitölteni. "
+             + "* A valuta valtas bizonylatan szereplo árfolyam, ennek hianyaan az utazast megelozo honap 15-dikei MNB deviza középarfolyam.\n"
+             + "Utazasi tervhez a kalkulacios lap kitoltese szukseges, elszamolaskor azonban kiküldetesi rendelvenyt kell kitolteni. "
             );
             
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
            
             
-            Paragraph p26 = new Paragraph("Veszrpém, "+dateFormat.format(date));
+            Paragraph p26 = new Paragraph("Veszrpem, "+dateFormat.format(date));
             
-            Paragraph p27 = new Paragraph("Aláírások: ");
+            Paragraph p27 = new Paragraph("Alairasok: ");
             
-             Paragraph p28 = new Paragraph("Utazo: ___________   Logisztikai csoport: __________    Engedélyező Hivatal: ____________ ");
+             Paragraph p28 = new Paragraph("Utazo: ___________   Logisztikai csoport: __________    Engedelyezo Hivatal: ____________ ");
              
            
             document.add(p1);
