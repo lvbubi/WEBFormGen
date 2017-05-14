@@ -19,6 +19,10 @@ public class PDFDatas implements  org.primefaces.model.SelectableDataModel  {
         float OsszkoltsegFT;
         String DokumentumTipusa;
         int Ellenorizve;
+
+    public void setEllenorizve(int Ellenorizve) {
+        this.Ellenorizve = Ellenorizve;
+    }
         public int getId() {
             return id;
         }

@@ -53,8 +53,8 @@
             <p:commandButton id="downloadLink" title="Letöltés" value=" " ajax="false" actionListener="#{sharedBean.prepareDownload()}" styleClass="downl">
                 <p:fileDownload value="#{sharedBean.download()}" />
             </p:commandButton>
-            <p:commandButton id="Accept" title="Elfogadás" value=" " ajax="false" rendered="#{sharedBean.adminrender}" styleClass="ervenyes"/>
-            <p:commandButton id="Delete" title="Törlés" value=" " ajax="false" rendered="#{sharedBean.adminrender}" styleClass="torol" /> 
+            <p:commandButton id="Accept" title="Elfogadás" value=" " ajax="false" rendered="#{sharedBean.adminrender}" actionListener="#{sharedBean.setEllenoriz()}" styleClass="ervenyes"></p:commandButton>
+            <p:commandButton id="Delete" title="Törlés" value=" " ajax="false" rendered="#{sharedBean.adminrender}" actionListener="#{sharedBean.torol()}" styleClass="torol" ></p:commandButton>
         </h:form>
     </h:body>
 </html>
