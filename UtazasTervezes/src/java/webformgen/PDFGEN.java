@@ -143,21 +143,20 @@ public class PDFGEN {
         }
     }
      
-    public byte[] genUtazasiTerv(String nev , String adoszam, String beosztas,
+    public byte[] genUtazasiTerv(Person szemely,
             String  munkahely, String e_cim, String elfogadva, String program_tipus,
             String hely, String idotartam, String valuta, int napidij , int szallasdij,
-            double arfolyam, int nap_db, String fedezet, int egyeb, String bankszamla,
-            int eloleg,int deviza,int osztondij,int honap_db, String utazasi_mod,
-            int felhasznalt_napok,String velemeny)
+            double arfolyam, int nap_db, String fedezet, int egyeb,int eloleg,int deviza,
+            int osztondij,int honap_db, String utazasi_mod,int felhasznalt_napok,String velemeny)
     {
          Document document = new Document();
         try{
             PdfWriter.getInstance(document, byteArrayOutputStream);
             document.open();
-             
+             munkahely= "Pannon Egyetem";
             Paragraph p1 = new Paragraph("Utazasi terv*",FontFactory.getFont(FontFactory.TIMES_BOLD,15,Font.BOLD,BaseColor.BLACK));              
                 p1.setAlignment(Element.ALIGN_CENTER);
-            Paragraph p2 = new Paragraph("Nev(adoszam)beosztas: " + nev + " " + adoszam + " " + beosztas);
+            Paragraph p2 = new Paragraph("Nev(adoszam)beosztas: " + szemely.getVnev() + " " + szemely.getVnev() + " " + szemely.getAdoszam() +" "+ szemely.getBeosztas());
                  p2.setLeading(30);
             Paragraph p3 = new Paragraph("Munkahely(egység): " + munkahely);
             Paragraph p4 = new Paragraph("Konferencián valo reszvetel eseten a bejelentett eloadas/poszter* cime: " + e_cim); 
@@ -274,7 +273,7 @@ public class PDFGEN {
             
              c1 = new PdfPCell(new Phrase("6.)"));       
             table.addCell(c1);
-            c1 = new PdfPCell(new Phrase("Felvenni kivant eloleg: bankszamla(" + bankszamla +")"));
+            c1 = new PdfPCell(new Phrase("Felvenni kivant eloleg: bankszamla(" +  szemely.getBankszamlaszam() +")"));
             c1.setColspan(6);
             table.addCell(c1);
             c1 = new PdfPCell(new Phrase(" " + eloleg));  table.addCell(c1);
@@ -282,7 +281,7 @@ public class PDFGEN {
             
              c1 = new PdfPCell(new Phrase("7.)"));       
             table.addCell(c1);
-            c1 = new PdfPCell(new Phrase("atutalni kivant deviza" + bankszamla +")"));
+            c1 = new PdfPCell(new Phrase("atutalni kivant deviza"));
             c1.setColspan(4);
             table.addCell(c1);
             osszeg=(round(deviza/arfolyam,2));
