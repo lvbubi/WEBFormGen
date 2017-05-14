@@ -5,7 +5,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>PDFS</title>
+        <link rel="stylesheet" type="text/css" href="css/pdfs.css"/> 
     </h:head>
     <h:body>
         <h:form id="form">
@@ -49,11 +50,11 @@
                 </p:outputPanel>
             </p:dialog>
             
-            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{sharedBean.prepareDownload()}">
+            <p:commandButton id="downloadLink" title="Letöltés" value=" " ajax="false" actionListener="#{sharedBean.prepareDownload()}" styleClass="downl">
                 <p:fileDownload value="#{sharedBean.download()}" />
             </p:commandButton>
-            <p:commandButton id="Accept" value="Engedélyez" ajax="false" rendered="#{sharedBean.adminrender}" />
-            <p:commandButton id="Delete" value="Torol" ajax="false" rendered="#{sharedBean.adminrender}" />
+            <p:commandButton id="Accept" title="Elfogadás" value=" " ajax="false" rendered="#{sharedBean.adminrender}" styleClass="ervenyes"/>
+            <p:commandButton id="Delete" title="Törlés" value=" " ajax="false" rendered="#{sharedBean.adminrender}" styleClass="torol" /> 
         </h:form>
     </h:body>
 </html>

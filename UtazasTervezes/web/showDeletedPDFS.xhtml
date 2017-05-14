@@ -5,14 +5,15 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Törölt PDF-ek</title>
+        <link rel="stylesheet" type="text/css" href="css/pdfs.css"/> 
     </h:head>
     <h:body>
         <h:form id="form">
             <p:growl id="msgs" showDetail="true" />
             <p:dataTable id="eventsDT" var="PDFDatas" value="#{sharedBean.deletedpdfDatas}" selectionMode="single" selection="#{sharedBean.selectedPDFDatas}" rowKey="#{PDFDatas.id}" >
                 <f:facet name="header">
-                    Leadott utazási tervek
+                    Törölt utazási tervek
                 </f:facet>
                 <p:ajax event="rowSelect" listener="#{sharedBean.onRowSelect}" update=":form:msgs" />
                 <p:ajax event="rowUnselect" listener="#{sharedBean.onRowUnselect}" update=":form:msgs" />
@@ -48,7 +49,7 @@
                     </p:panelGrid>
                 </p:outputPanel>
             </p:dialog>
-            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{sharedBean.prepareDownload()}">
+            <p:commandButton id="downloadLink" title="Letöltés" value=" " ajax="false" actionListener="#{sharedBean.prepareDownload()}" styleClass="downl">
                 <p:fileDownload value="#{sharedBean.download()}" />
             </p:commandButton>
         </h:form>
