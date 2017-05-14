@@ -53,6 +53,10 @@ public class UtazasiTerv {
             felvEloleg,
             devizabankszamla,deviszaosszeg;
 
+    
+        //tartos kulfoldi utazasnal
+    String honapra,osztondij,
+           egyeb2,egyeb2_osszeg,uzatasimod;
     public Person getPerson() {
         return person;
     }
@@ -213,9 +217,6 @@ public class UtazasiTerv {
     }
 
     
-    //tartos kulfoldi utazasnal
-    String honapra,osztondij,
-           egyeb2,egyeb2_osszeg,uzatasimod;
 
     public String getUzatasimod() {
         return uzatasimod;
@@ -251,11 +252,6 @@ public class UtazasiTerv {
         
     }
     
-   //genUtazasiTerv(String nev , String adoszam, String beosztas, String  munkahely, String e_cim, String elfogadva, String program_tipus, String hely, String idotartam, 
-    //String valuta, int napidij , int szallasdij, double arfolyam, int nap_db, String fedezet, int egyeb, String bankszamla, int eloleg,int deviza,int osztondij,
-    //int honap_db, String utazasi_mod, int felhasznalt_napok,String velemeny)
-  
-    
         public List<PDFDatas> getAcceptedSZGK() {
         return acceptedSZGK;
     }
@@ -272,12 +268,24 @@ public class UtazasiTerv {
         this.selectedPDFDatas = selectedPDFDatas;
     }
     
-    
-    
+       /* public byte[] genUtazasiTerv(Person szemely,
+            String  munkahely, String e_cim, String elfogadva, String program_tipus,
+            String hely, String idotartam, String valuta, int napidij , int szallasdij,
+            double arfolyam, int nap_db, String fedezet, int egyeb,int eloleg,int deviza,
+            int osztondij,int honap_db, String utazasi_mod,int felhasznalt_napok,String velemeny)*/
+        //tartos kulfoldi utazasnal
+    /*String honapra,osztondij,
+           egyeb2,egyeb2_osszeg,uzatasimod;*/
     public void genPDF() throws SQLException, IOException{
         System.out.println("ElfogadottSZGK: "+acceptedSZGK.size());
         PDFGEN pdfgen=new PDFGEN();
         
+        double arfolyam=-1;
+        
+        byte[] pdfBytes=pdfgen.genUtazasiTerv(person, person.getBeosztas(), eloadas_cime, elfogadva, program_tipus, program_helye, idotartam, currency,
+                Integer.parseInt(osszeg_nap), Integer.parseInt(osszeg_ejjszaka), arfolyam, Integer.parseInt(nap),
+                fedezet, Integer.parseInt(egyeb_osszeg), Integer.parseInt(felvEloleg), Integer.parseInt(deviszaosszeg), Integer.parseInt(osztondij), 
+                Integer.parseInt(honapra), uzatasimod, 0, "nincs vélemény");
         SingletonDBMgr.InsertUtvonal(selectedPDFDatas.getId(), pdfBytes);
         System.out.println("PDF Generálása");
         FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
