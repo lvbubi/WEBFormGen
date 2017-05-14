@@ -80,7 +80,7 @@ public class UtazasiTerv {
     //String valuta, int napidij , int szallasdij, double arfolyam, int nap_db, String fedezet, int egyeb, String bankszamla, int eloleg,int deviza,int osztondij,
     //int honap_db, String utazasi_mod, int felhasznalt_napok,String velemeny)
   
-    
+   
     public void genPDF() throws SQLException, IOException{
         System.out.println("ElfogadottSZGK: "+acceptedSZGK.size());
         PDFGEN pdfgen=new PDFGEN();
