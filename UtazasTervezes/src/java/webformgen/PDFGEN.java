@@ -27,6 +27,10 @@ public class PDFGEN {
     public double getOsszkoltseg() {
         return Osszkoltseg;
     }
+
+    public void setOsszkoltseg(double Osszkoltseg) {
+        this.Osszkoltseg = Osszkoltseg;
+    }
      public byte[] genKalkulacio(String nev, String beosztas, String rendszam, double henger, String uzemanyag, double norma, int amortizacio, int ar, double utvonal, String terv, String tipus, double valuta, double palya, double parkolas)
     {
          Document document = new Document();
@@ -156,7 +160,7 @@ public class PDFGEN {
              munkahely= "Pannon Egyetem";
             Paragraph p1 = new Paragraph("Utazasi terv*",FontFactory.getFont(FontFactory.TIMES_BOLD,15,Font.BOLD,BaseColor.BLACK));              
                 p1.setAlignment(Element.ALIGN_CENTER);
-            Paragraph p2 = new Paragraph("Nev(adoszam)beosztas: " + szemely.getVnev() + " " + szemely.getVnev() + " " + szemely.getAdoszam() +" "+ szemely.getBeosztas());
+            Paragraph p2 = new Paragraph("Nev(adoszam)beosztas: " + szemely.getVnev() + " " + szemely.getKnev() + " " + szemely.getAdoszam() +" "+ szemely.getBeosztas());
                  p2.setLeading(30);
             Paragraph p3 = new Paragraph("Munkahely(egyseg): " + munkahely);
             Paragraph p4 = new Paragraph("Konferencian valo reszvetel eseten a bejelentett eloadas/poszter* cime: " + e_cim); 

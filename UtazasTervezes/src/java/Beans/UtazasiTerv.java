@@ -18,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import webformgen.DWNLDATA;
 import webformgen.PDFDatas;
 import webformgen.PDFGEN;
 import webformgen.Person;
@@ -187,6 +188,11 @@ public class UtazasiTerv {
     public String getHonapra() {
         return honapra;
     }
+    public double getArfolyam(String valuta) throws IOException
+    {
+        DWNLDATA ddata=new DWNLDATA();
+        return ddata.selectArfolyam(valuta);
+    }
 
     public void setHonapra(String honapra) {
         this.honapra = honapra;
@@ -279,13 +285,16 @@ public class UtazasiTerv {
     public void genPDF() throws SQLException, IOException{
         System.out.println("ElfogadottSZGK: "+acceptedSZGK.size());
         PDFGEN pdfgen=new PDFGEN();
-        
+        pdfgen.setOsszkoltseg(selectedPDFDatas.getOsszkoltsegFT());
         double arfolyam=-1;
+        System.out.println("Currency: "+currency);
+        int felhasznaltNapok=0;
+        String velemeny="nincs velemeny";
         //felhasznalt_napok,String velemeny
         byte[] pdfBytes=pdfgen.genUtazasiTerv(person, person.getBeosztas(), eloadas_cime, elfogadva, program_tipus, program_helye, idotartam, currency,
                 Integer.parseInt(osszeg_nap), Integer.parseInt(osszeg_ejjszaka), arfolyam, Integer.parseInt(nap),
                 fedezet, Integer.parseInt(egyeb_osszeg), Integer.parseInt(felvEloleg), Integer.parseInt(deviszaosszeg), Integer.parseInt(osztondij), 
-                Integer.parseInt(honapra), uzatasimod, 0, "nincs vélemény");
+                Integer.parseInt(honapra), uzatasimod, felhasznaltNapok, velemeny);
         SingletonDBMgr.InsertUtvonal(selectedPDFDatas.getId(), pdfBytes);
         System.out.println("PDF Generálása");
         SingletonDBMgr.setModosit(selectedPDFDatas.getId(), selectedPDFDatas.getDokumentumTipusa(), 2); //mit hogy törölt vagy elfogadott (3-1)
