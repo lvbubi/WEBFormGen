@@ -32,7 +32,8 @@
             <p id="details">Az utazásiterv elfogadása két fázisból áll. <b>Első lépésben</b> el kell készíteni az <b>személygépkocsi kalkulációt</b>, amit a dékánnak (vagy más erre hivatott szervezetnek) el kell bírálni. <b>Ha a tervet elfogadták</b>, akkor folytatni lehet egy <b>utazási terv</b> kitöltésével, amit ha elfogadnak, akkor az utazás finanszírozva lesz.</p>
     
             <br></br>
-            <p:pieChart title="Személygépkocsi Kalkulációk:" value="#{userBean.userDiaSZGK}" legendPosition="w" id="userDia" style="width:70%;height:40%; margin: auto;" seriesColors="00FF00, FF0000" showDataLabels="true"  dataFormat="value" />
+            <p:pieChart title="Személygépkocsi Kalkulációk:" value="#{userBean.userDiaSZGK}" legendPosition="w" id="userDiaSZGK" style="width:70%;height:40%; margin: auto;" seriesColors="00FF00, FF0000" showDataLabels="true"  dataFormat="value" />
+            <p:pieChart title="Útvonal Tervek:" value="#{userBean.userDiaUTV}" legendPosition="w" id="userDiaUTV" style="width:70%;height:40%; margin: auto;" seriesColors="00FF00, FF0000" showDataLabels="true"  dataFormat="value" />
 
             <p:commandButton value="Utazási Terv (folytatás)" ajax="false" action="#{userBean.utazasiTerv}" style="margin:20px;"/>          
             <p:commandButton value="Személygépkocsi Kalkuláció" ajax="false" action="#{userBean.szgkKalk}" style="margin:20px;"/>          

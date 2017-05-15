@@ -281,7 +281,7 @@ public class UtazasiTerv {
         PDFGEN pdfgen=new PDFGEN();
         
         double arfolyam=-1;
-        
+        //felhasznalt_napok,String velemeny
         byte[] pdfBytes=pdfgen.genUtazasiTerv(person, person.getBeosztas(), eloadas_cime, elfogadva, program_tipus, program_helye, idotartam, currency,
                 Integer.parseInt(osszeg_nap), Integer.parseInt(osszeg_ejjszaka), arfolyam, Integer.parseInt(nap),
                 fedezet, Integer.parseInt(egyeb_osszeg), Integer.parseInt(felvEloleg), Integer.parseInt(deviszaosszeg), Integer.parseInt(osztondij), 

@@ -47,15 +47,15 @@ public class UserBean implements Serializable {
         PieChartModel pieModel = new PieChartModel();
         int count=0;
         for( PDFDatas p : SharedBean.acceptedpdfDatas)
-            if("Szemelygepkocsi Kalkulacio".equals(p.getDokumentumTipusa()))
+            if(!"Szemelygepkocsi Kalkulacio".equals(p.getDokumentumTipusa()))
                 count++;
         
-        pieModel.set("Elfogadott Szemelygepkocsi Kalkulaciok", count);
+        pieModel.set("Elfogadott Utvonal Tervek", count);
         count=0;
         for( PDFDatas p : SharedBean.pdfDatas)
-            if("Szemelygepkocsi Kalkulacio".equals(p.getDokumentumTipusa()))
+            if(!"Szemelygepkocsi Kalkulacio".equals(p.getDokumentumTipusa()))
                 count++;
-        pieModel.set("Ellenőrizetlen Szemelygepkocsi Kalkulaciok", count);
+        pieModel.set("Ellenőrizetlen Utvonal Tervek", count);
         return pieModel;
     } 
 }
