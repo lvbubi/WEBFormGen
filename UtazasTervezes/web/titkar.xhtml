@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Titkar view</title>
-        <link rel="stylesheet" type="text/css" href="css/admin.css"/> 
+        <link rel="stylesheet" type="text/css" href="css/pdfs.css"/> 
     </h:head>
     <h:body>
         #{sharedBean.AdminShowPDFS(0)}
@@ -40,9 +40,9 @@
                     <h:outputText value="#{PDFDatas.ellenorizve}" />
                 </p:column>
             </p:dataTable>
-            <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{sharedBean.prepareDownload()}">
+            <p:commandButton id="downloadLink" title="Letöltés" value=" " ajax="false" actionListener="#{sharedBean.prepareDownload()}" styleClass="downl">
                 <p:fileDownload value="#{sharedBean.download()}" />
-            </p:commandButton>            
+            </p:commandButton>           
             <p:dialog header="PDF Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="carDetail" style="text-align:center;">
                     <p:panelGrid  columns="2" rendered="#{not empty sharedBean.selectedPDFDatas}" columnClasses="label,value">
