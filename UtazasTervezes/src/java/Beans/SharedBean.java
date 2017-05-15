@@ -159,12 +159,8 @@ public class SharedBean implements Serializable{
             System.out.println(p.getDokumentumTipusa());
         }
     }
- public void setEllenoriz() throws SQLException{
-        SingletonDBMgr.setElfogad(SelectedPDFDatas.getId(), SelectedPDFDatas.getDokumentumTipusa());
-        AdminShowPDFS(1);
-    }
-    public void torol() throws SQLException{
-        SingletonDBMgr.DeletePDF(SelectedPDFDatas.getId(), SelectedPDFDatas.getDokumentumTipusa());
+    public void setModosit(int mit) throws SQLException{
+        SingletonDBMgr.setModosit(SelectedPDFDatas.getId(), SelectedPDFDatas.getDokumentumTipusa(), mit); //mit hogy törölt vagy elfogadott (3-1)
         AdminShowPDFS(1);
     }
     

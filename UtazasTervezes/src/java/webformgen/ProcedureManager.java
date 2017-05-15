@@ -32,35 +32,12 @@ public class ProcedureManager {
     }
 
     
-    public void DeletePDF(int id,String doctype) throws SQLException{
-        CallableStatement cStmt;
-        if ("Szemelygepkocsi Kalkulacio".equals(doctype)){
-            cStmt=conn.prepareCall("{call DeleteGeneraltPDF(?)}");
-            cStmt.setInt(1, id);
-            cStmt.execute();
-        }else{
-            cStmt=conn.prepareCall("{call DeleteUtitervPDF(?)}");
-            cStmt.setInt(1, id);
-            cStmt.execute();
-        }
-        System.out.println("LEFUTOTT DELETEPDF");
-    }
-    public void setElfogad(int pdfID,String doctype) throws SQLException{
-        CallableStatement cStmt;
-        System.out.println("Belemegy Elfogadba");
-        if ("Szemelygepkocsi Kalkulacio".equals(doctype)){
-            System.out.println("SZGKKALK SETELFOGAD");
-            cStmt=conn.prepareCall("{call ElfogadGeneraltPDF(?)}");
-            cStmt.setInt(1, pdfID);
-            cStmt.execute();
-            
-        }else{
-            System.out.println("SUTVONAL SETELFOGAD");
-            cStmt=conn.prepareCall("{call ElfogadUtitervPDF(?)}");
-            cStmt.setInt(1, pdfID);
-            cStmt.execute();
-        } 
-        System.out.println("LEFUTOTT SETELFOGAD");
+    public void setModosit(int pdfID,String doctype,int value) throws SQLException{
+        Statement select;
+            select = new ConnectionManager().getConnection().createStatement();
+            if("Szemelygepkocsi Kalkulacio".equals(doctype))
+                 select.executeUpdate("UPDATE GeneraltPDF SET Ellenorizve="+value+" WHERE id = "+pdfID);         
+            else  select.executeUpdate("UPDATE GeneraltUtiterv SET Ellenorizve="+value+" WHERE id = "+pdfID); 
     }
     
     public int getPersonID(String neptun,String password) throws SQLException{
