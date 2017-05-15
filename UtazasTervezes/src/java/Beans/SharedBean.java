@@ -86,7 +86,9 @@ public class SharedBean implements Serializable{
     public boolean isLoggedIn() throws SQLException{
         return PersonID>=1;
     }
-    
+    public void vissza() throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
+    }
     public void Login() throws SQLException, IOException{
         PersonID=SingletonDBMgr.getPersonID(neptun, password);
         System.out.println(PersonID);

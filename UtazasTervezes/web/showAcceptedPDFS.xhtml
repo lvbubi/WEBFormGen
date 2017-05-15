@@ -52,6 +52,7 @@
             <p:commandButton id="downloadLink" title="Letöltés" value=" " ajax="false" actionListener="#{sharedBean.prepareDownload()}" styleClass="downl">
                 <p:fileDownload value="#{sharedBean.download()}" />
             </p:commandButton>
+            <p:commandButton value="Vissza" ajax="false" action="#{sharedBean.vissza()}" rendered="#{sharedBean.adminrender}"  styleClass="vissza"/>
         </h:form>
     </h:body>
 </html>
