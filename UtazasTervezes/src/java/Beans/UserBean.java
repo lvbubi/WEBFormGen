@@ -56,6 +56,12 @@ public class UserBean implements Serializable {
             if(!"Szemelygepkocsi Kalkulacio".equals(p.getDokumentumTipusa()))
                 count++;
         pieModel.set("Ellenőrizetlen Utvonal Tervek", count);
+        
+        count=0;
+        for( PDFDatas p : SharedBean.completepdfDatas)
+            if(!"Szemelygepkocsi Kalkulacio".equals(p.getDokumentumTipusa()))
+                count++;
+        pieModel.set("Végleges Leadott Utvonal Tervek", count);
         return pieModel;
     } 
 }

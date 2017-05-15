@@ -23,6 +23,7 @@
         <h:form >
             <p:commandButton value="ShowUncheckedPDFS" ajax="false" action="#{sharedBean.redirectPDFS}" style="margin:20px;"/>
             <p:commandButton value="CheckedPDFS" ajax="false" action="#{sharedBean.redirectAccepted}" style="margin:20px;"/>
+            <p:commandButton value="CompletePDFS" ajax="false" action="#{sharedBean.redirectCompleted}" style="margin:20px;"/>
         </h:form>
         </div>
         #{sharedBean.showPDFS()}
@@ -37,7 +38,6 @@
 
             <p:commandButton value="Utazási Terv (folytatás)" ajax="false" action="#{userBean.utazasiTerv}" style="margin:20px;"/>          
             <p:commandButton value="Személygépkocsi Kalkuláció" ajax="false" action="#{userBean.szgkKalk}" style="margin:20px;"/>          
-
         </h:form>
     </h:body>
 </html>

@@ -35,6 +35,15 @@ public class SharedBean implements Serializable{
     static List<PDFDatas> pdfDatas;
     static List<PDFDatas> deletedpdfDatas;
     static List<PDFDatas> acceptedpdfDatas;
+    static List<PDFDatas> completepdfDatas;
+
+    public  List<PDFDatas> getCompletepdfDatas() {
+        return completepdfDatas;
+    }
+
+    public  void setCompletepdfDatas(List<PDFDatas> completepdfDatas) {
+        SharedBean.completepdfDatas = completepdfDatas;
+    }
     byte[] receivedPDF=null;
     int receivedPDFID;
     static int PersonID;
@@ -145,6 +154,8 @@ public class SharedBean implements Serializable{
         pdfDatas.addAll(SingletonDBMgr.getPDFDatas(PersonID,0,"Utvonal Terv"));
         acceptedpdfDatas=SingletonDBMgr.getPDFDatas(PersonID,1,"Szemelygepkocsi Kalkulacio");
         acceptedpdfDatas.addAll(SingletonDBMgr.getPDFDatas(PersonID,1,"Utvonal Terv"));
+        completepdfDatas=SingletonDBMgr.getPDFDatas(PersonID,2,"Szemelygepkocsi Kalkulacio");
+        completepdfDatas.addAll(SingletonDBMgr.getPDFDatas(PersonID,2,"Utvonal Terv")); 
     }
     
     public void AdminShowPDFS(int ellenorz) throws SQLException{
@@ -209,7 +220,9 @@ public class SharedBean implements Serializable{
     public void redirectPDFS() throws IOException{
         FacesContext.getCurrentInstance().getExternalContext().redirect("showPDFS.xhtml");
     }
-    
+    public void redirectCompleted() throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("showCompletePDFS.xhtml");
+    }
     
     public String onFlowProcess(FlowEvent event) {
 
