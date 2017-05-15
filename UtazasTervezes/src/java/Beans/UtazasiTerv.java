@@ -288,6 +288,7 @@ public class UtazasiTerv {
                 Integer.parseInt(honapra), uzatasimod, 0, "nincs vélemény");
         SingletonDBMgr.InsertUtvonal(selectedPDFDatas.getId(), pdfBytes);
         System.out.println("PDF Generálása");
+        SingletonDBMgr.setModosit(selectedPDFDatas.getId(), selectedPDFDatas.getDokumentumTipusa(), 2); //mit hogy törölt vagy elfogadott (3-1)
         FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
     }
     
